@@ -4,27 +4,36 @@
 
   .columns
     .column.is-one-third
-      template(v-if="current_data")
-        img.weapon_image(:src="require(`@/assets/splatoon_weapon_list/${current_data.master.key}_xlarge.png`)")
-        progress(:value="progress_value")
+      template(v-if="play_mode === 'standby'")
+        .field.has-text-centered
+          a.button.is-primary(@click.prevent="game_start") START
 
-      .field.has-text-centered
-        small
-          //- | {{current_index}}/{{quiz_max}}
-          | 正解率:{{rate}}
-          p.has-text-grey-light
-            | {{time_format(total_counter)}}
+      template(v-if="play_mode === 'running'")
+        template(v-if="current_data && player_life >= 1")
+          img.weapon_image(:src="require(`@/assets/splatoon_weapon_list/${current_data.master.key}_xlarge.png`)")
+          div
+            div(:class="count_down_bar_class" ref="count_down_bar" :style="{animationDuration: `${quiz_life_max_seconds}s`}")
 
-        template(v-if="!current_data")
-          .field
-            br
-            a.button.is-info.tweet_button(:href="twitter_url" target="_blank") ツイート
+          //- progress(:value="progress_value2")
+          meter(:value="progress_value1")
 
-          .field
-            br
-            a.button(@click.prevent="retry") もっかいやる
+        .field.has-text-centered
+          small
+            //- | {{current_index}}/{{quiz_max}}
+            | 正解率:{{rate}}
+            //- p.has-text-grey-light
+            //-   | {{time_format(player_life)}}
 
-    template(v-if="current_data")
+          template(v-if="!current_data || player_life === 0")
+            .field
+              br
+              a.button.is-info.tweet_button(:href="twitter_url" target="_blank") ツイート
+
+            .field
+              br
+              a.button(@click.prevent="quiz_init") もっかいやる
+
+    template(v-if="playing_p")
       .column.is-size-7
         .box
           template(v-for="e in current_data.kotae_list")
@@ -48,7 +57,7 @@ export default {
   data() {
     return {
       quiz_max: this.$route.query.quiz_max || 20,
-      answer_max: parseInt(this.$route.query.answer_max || 5),
+      answer_max: parseInt(this.$route.query.answer_max || 3),
 
       splatoon_weapon_list,
       current_name: null,
@@ -58,32 +67,91 @@ export default {
       x_count: null,
       total_counter: null,
 
+      o_life: 5,
+      x_life: -10,
+      player_life_max: 100,
+      player_life: null,
+
+      quiz_life: null,
+      quiz_life_max_seconds: 3,
+      seido: 10,
+
       quiz_list: null,
       seikai_list: null,
+
+      count_down_bar_class: null,
+      play_mode: "standby",
     }
   },
 
   created() {
-    this.retry()
-    this.interval_id = setInterval(this.step_next, 1000)
+  },
+
+  mounted() {
+    this.interval_id1 = setInterval(this.step_next1, 1000 / this.seido)
+    // this.interval_id2 = setInterval(this.step_next2, 1000 * 0.1)
+  },
+
+  beforeDestroy() {
+    clearInterval(this.interval_id1)
+    // clearInterval(this.interval_id2)
   },
 
   methods: {
-    step_next() {
-      if (this.current_data) {
+    game_start() {
+      this.quiz_init()
+    },
+
+    step_next1() {
+      if (this.playing_p) {
         // this.total_counter += 1
-        this.total_counter += 1
+        // this.player_life -= 1
+
+        if (this.quiz_life > 0) {
+          this.quiz_life -= 1
+          // this.player_life -= 0.5
+          if (this.quiz_life === 0) {
+            this.count_add("x_count")
+          }
+        }
       }
     },
 
-    retry() {
+    step_next2() {
+    },
+
+    quiz_init() {
+      this.play_mode = "running"
+
       this.quiz_list = this.quiz_list_generate()
 
+      this.player_life = this.player_life_max
       this.seikai_list = []
       this.current_index = 0
       this.o_count = 0
       this.x_count = 0
       this.total_counter = 0
+      this.count_down_bar_class = "anime_on"
+
+      this.next_quiz()
+    },
+
+    next_quiz() {
+      this.quiz_life = this.quiz_life_max_seconds * this.seido
+
+      if (this.$refs.count_down_bar) {
+
+        // this.$refs.count_down_bar.classList.remove("anime_on")
+        // this.$nextTick(() => { this.$refs.count_down_bar.classList.add("anime_on") })
+
+        const parent = this.$refs.count_down_bar.parentElement
+        parent.removeChild(this.$refs.count_down_bar)
+        parent.appendChild(this.$refs.count_down_bar)
+      }
+
+      // this.$nextTick(() => {
+      //   this.$nextTick(() => { this.count_down_bar_class = "anime_on" })
+      // })
     },
 
     time_format(seconds) {
@@ -97,7 +165,7 @@ export default {
       } else {
         src = button62_mp3
       }
-      new Howl({src: src, autoplay: true, volume: 0.5})
+      // new Howl({src: src, autoplay: true, volume: 0.5})
 
       this.$data[v] = this.$data[v] + 1
       this.current_index += 1
@@ -106,6 +174,18 @@ export default {
         this.current_name = null
         document.activeElement.blur()
       })
+
+      if (v === "o_count") {
+        // this.player_life += this.o_life
+        this.player_life += (this.quiz_life / this.seido)
+      } else {
+        this.player_life += this.x_life
+      }
+      if (this.player_life <= 0) {
+        this.player_life = 0
+      }
+
+      this.next_quiz()
     },
 
     anser_valid() {
@@ -157,6 +237,16 @@ export default {
   },
 
   computed: {
+    game_over_p() {
+      return !this.playing_p
+    },
+
+    playing_p() {
+      if (this.play_mode === "running") {
+        return this.current_data && this.player_life >= 1
+      }
+    },
+
     // weapon_names() {
     //   // return _.sortBy(_.uniq(this.quiz_list.map(e => e.name)))
     // },
@@ -165,9 +255,13 @@ export default {
       return this.quiz_list[this.current_index]
     },
 
-    progress_value() {
-      return this.current_index / this.quiz_list.length
+    progress_value1() {
+      return this.player_life / this.player_life_max
     },
+
+    // progress_value2() {
+    //   return this.quiz_life / this.quiz_life_max_seconds
+    // },
 
     rate() {
       const all = this.o_count + this.x_count
@@ -189,14 +283,35 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
+<style lang="sass">
 @import "../assets/scss/variables"
 
+body
+  background: black
+
 .splatoon_weapon_quiz2
+  background: black
+
   .weapon_image
     width: 100%
-  progress
+  progress, meter
     width: 100%
+    // transition: all 1s 0s ease-in-out
+
   .radio_element
     line-height: 180%
+
+  .anime_off
+    animation-name: none
+
+  .anime_on
+    animation: bar_anime1 3s linear 0s
+    height: 6px
+    background: $primary
+
+  @keyframes bar_anime1
+    0%
+      width: 100%
+    100%
+      width: 0%
 </style>

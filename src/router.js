@@ -85,6 +85,6 @@ export default new Router({
     { path: '/sass_test',                   name: 'sass_test',                   component: () => import(/* webpackChunkName: "sass_test" */ './views/sass_test.vue'),                     },
     { path: '/text_overflow_ellipsis_test', name: 'text_overflow_ellipsis_test', component: () => import(/* webpackChunkName: "text_overflow_ellipsis_test" */ './views/text_overflow_ellipsis_test.vue'),                     },
     { path: '/tiptap_test',                 name: 'tiptap_test',                 component: () => import(/* webpackChunkName: "tiptap_test" */ './views/tiptap_test.vue'),                     },
-    { path: '/tinymce_test',                name: 'tinymce_test',                component: () => import(/* webpackChunkName: "tinymce_test" */ './views/tinymce_test.vue'),                     },
+    { path: '/tinymce_vue_test',                name: 'tinymce_vue_test',                component: () => import(/* webpackChunkName: "tinymce_vue_test" */ './views/tinymce_vue_test.vue'),                     },
   ]
 })
