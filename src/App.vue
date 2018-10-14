@@ -7,7 +7,8 @@
           ul
             li: router-link(to="/") Home
             li: router-link(to="/about") About
-            li: router-link(to="/geo_location") geo_location
+            li: router-link(to="/geo_location") 位置情報
+            li: router-link(to="/css_transform") CSS Transform
         .column
           router-view
 </template>

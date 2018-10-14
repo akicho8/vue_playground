@@ -23,8 +23,13 @@ export default new Router({
     },
     {
       path: '/geo_location',
-      name: 'geo_location',
+      name: '位置情報',
       component: () => import(/* webpackChunkName: "geo_location" */ './views/geo_location.vue')
+    },
+    {
+      path: '/css_transform',
+      name: 'CSS transform',
+      component: () => import(/* webpackChunkName: "css_transform" */ './views/css_transform.vue')
     },
   ]
 })
