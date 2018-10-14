@@ -38,7 +38,10 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
-  }
+  },
+  // created() {
+  //   this.$toast.open("ok")
+  // },
 }
 </script>
 

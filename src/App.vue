@@ -1,20 +1,21 @@
 <template lang="pug">
 #app
-  #nav
-    ul
-     li: router-link(to="/") Home
-     li: router-link(to="/about") About
-     li: router-link(to="/geo_location") geo_location
-  router-view
+  .section
+    .container.is-fluid
+      .columns
+        .column.is-2
+          ul
+            li: router-link(to="/") Home
+            li: router-link(to="/about") About
+            li: router-link(to="/geo_location") geo_location
+        .column
+          router-view
 </template>
 
 <style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
 }
 #nav {
   padding: 30px;
