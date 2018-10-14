@@ -8,6 +8,7 @@ import './registerServiceWorker'
 import Buefy from 'buefy'
 import './assets/scss/app.scss'
 Vue.use(Buefy)
+import './bulma_burger.js'      // バーガー開閉
 
 // Lodash
 import _ from "lodash"
