@@ -4,10 +4,16 @@ div
   hr
   table.table
     tr
-      th query
+      th $route.query
       td {{$route.query}}
     tr
-      th params
+      th $route.path
+      td {{$route.path}}
+    tr
+      th $route.name
+      td {{$route.name}}
+    tr
+      th $route.params
       td {{$route.params}}
     tr
       th $route

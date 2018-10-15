@@ -4,7 +4,7 @@
     .navbar-brand
       router-link.navbar-item(to="/")
         img(src="@/assets/logo.png" width="32")
-        | Vue Playground
+        | Vue.js Playground
       .navbar-burger.burger(data-target="main_navar")
         span
         span
@@ -63,6 +63,6 @@
 
 <style lang="sass">
 #app
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
 </style>
