@@ -37,5 +37,10 @@ export default new Router({
       name: 'css_flexbox',
       component: () => import(/* webpackChunkName: "css_flexbox" */ './views/css_flexbox.vue')
     },
+    {
+      path: '/color_scheme',
+      name: 'color_scheme',
+      component: () => import(/* webpackChunkName: "color_scheme" */ './views/color_scheme.vue')
+    },
   ]
 })

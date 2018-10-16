@@ -57,6 +57,7 @@
             li: router-link(:to="{name: 'geo_location'}") 位置情報
             li: router-link(:to="{name: 'css_transform'}") CSS Transform
             li: router-link(:to="{name: 'css_flexbox'}") CSS Flexbox
+            li: router-link(:to="{name: 'color_scheme'}") 配色見本
         .column
           router-view
 </template>
