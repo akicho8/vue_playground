@@ -22,7 +22,7 @@ div
       th $store
       td {{inspect($store)}}
 
-  h2.title Brawser
+  h2.title Browser
   hr
   table.table
     tr
