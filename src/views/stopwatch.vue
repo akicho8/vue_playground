@@ -18,7 +18,7 @@
 
   div
     template(v-if="mode == 'playing'")
-      button.button.is-rounded(@click="lap") ラップ
+      button.button.is-rounded(@click="lap" ref="lap") ラップ
     template(v-else)
       template(v-if="total_counter >= 1")
         button.button.is-rounded(@click="reset") リセット
@@ -79,6 +79,7 @@ export default {
   methods: {
     start_run() {
       this.mode = "playing"
+      this.$nextTick(() => this.$refs.lap.focus())
     },
 
     stop_run() {
