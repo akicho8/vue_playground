@@ -1,6 +1,6 @@
 <template lang="pug">
 .color_scheme
-  h2.title 配色見本
+  h2.title 配色エディター
   hr
 
   .field.is-horizontal
@@ -9,7 +9,7 @@
         | ベースカラー
     .field-body
       .field
-        input.input.is-small(type="color" v-model="base_color")
+        input.input.is-small(type="color" v-model="base_hex_color")
 
   .field.is-horizontal
     .field-label.is-small
@@ -18,33 +18,10 @@
     .field-body
       .field.is-narrow
         .controll
-          label.radio.is-size-7
-            input(type="radio" v-model="display_mode" value="hsl")
-            | HSL
-          label.radio.is-size-7
-            input(type="radio" v-model="display_mode" value="name")
-            | 名前
-          label.radio.is-size-7
-            input(type="radio" v-model="display_mode" value="rgb")
-            | RGB
-          label.radio.is-size-7
-            input(type="radio" v-model="display_mode" value="hex")
-            | HEX
-          label.radio.is-size-7
-            input(type="radio" v-model="display_mode" value="temperature")
-            | 温度
-          label.radio.is-size-7
-            input(type="radio" v-model="display_mode" value="luminance")
-            | 明るさ
-          label.radio.is-size-7
-            input(type="radio" v-model="display_mode" value="hsv")
-            | HSV
-          label.radio.is-size-7
-            input(type="radio" v-model="display_mode" value="hsi")
-            | HSI
-          label.radio.is-size-7
-            input(type="radio" v-model="display_mode" value="gl")
-            | gl
+          template(v-for="format_info in format_infos")
+            label.radio.is-size-7
+              input(type="radio" v-model="format_key" :value="format_info.key")
+              | {{format_info.name}}
 
   .field.is-horizontal
     .field-label.is-small
@@ -53,15 +30,15 @@
     .field-body
       .field.is-narrow
         .controll
-          input(type="range" v-model.number="sabun" :min="0.0" :max="0.5" :step="0.001")
+          input(type="range" v-model.number="monochromatic_step" :min="0.0" :max="0.5" :step="0.001")
           span.range_number
-            | {{sabun}}
+            | {{monochromatic_step}}
 
-  button.button(@click="random_run") ランダム
+  button.button(@click="rundom_set") ランダム
 
   //- .is-size-6 Split-Complement
   //- .color_bar
-  //-   .color_box.is-size-7.base(:style="{background: color0.css()}") {{color0.name()}}
+  //-   .color_box.is-size-7.base(:style="{background: base_color.css()}") {{base_color.name()}}
   //-   .color_box.is-size-7.main(:style="{background: color1.css()}") {{color1.name()}}
   //-   .color_box.is-size-7.wsize05(:style="{background: color2.css()}") {{color2.name()}}
 
@@ -73,25 +50,17 @@
           | {{preset_info.description}}
       .color_bar
         template(v-for="color_info in preset_info.color_infos")
-          .color_box.is-size-7(:class="color_info.css_class" :style="{background: color_info.color.css(), color: text_color(color_info.color)}")
-            template(v-if="display_mode === 'hsl'")
-              | {{color_info.color.css('hsl')}}
-            template(v-if="display_mode === 'rgb'")
-              | {{color_info.color.css('rgb')}}
-            template(v-if="display_mode === 'hex'")
-              | {{color_info.color.hex()}}
-            template(v-if="display_mode === 'temperature'")
-              | {{color_info.color.temperature()}}
-            template(v-if="display_mode === 'luminance'")
-              | {{color_info.color.luminance()}}
-            template(v-if="display_mode === 'name'")
-              | {{color_info.color.name()}}
-            template(v-if="display_mode === 'hsv'")
-              | {{color_info.color.hsv()}}
-            template(v-if="display_mode === 'hsi'")
-              | {{color_info.color.hsi()}}
-            template(v-if="display_mode === 'gl'")
-              | {{color_info.color.gl()}}
+          .color_box.is-size-7(:class="color_info.css_class" :style="{background: color_info.color.css(), color: text_color(color_info.color)}" @click.meta="set_this_color(color_info)")
+            | {{format_infos[format_key].func(color_info.color)}}
+  .section
+    .title CSS(sass)
+    hr
+    template(v-for="preset_info in preset_infos")
+      .box.is-size-7
+        | // {{preset_info.name}}
+        template(v-for="(color_info, i) in preset_info.color_infos")
+          div
+            | $preset_color{{i + 1}}: {{format_infos[format_key].func(color_info.color)}}
 </template>
 
 <script>
@@ -101,48 +70,40 @@ export default {
   name: 'color_scheme',
   data() {
     return {
-      base_color: null,
-      display_mode: "hsl",
-      sabun: 0.1,
+      base_hex_color: null,
+      format_key: "hsl",
+      monochromatic_step: 0.1,
     }
   },
+
   created() {
-    this.random_run()
+    this.rundom_set()
   },
+
+  watch: {
+    base_hex_color(color) {
+      const element = document.querySelector("nav")
+      element.style.backgroundColor = color
+    },
+  },
+
   methods: {
-    random_run() {
-      this.base_color = chroma.random().hex()
+    rundom_set() {
+      this.base_hex_color = chroma.random().hex()
+    },
+    set_this_color(color_info) {
+      this.base_hex_color = color_info.color.hex()
     },
     hue_add(v) {
-      return this.color0.set("hsl.h", this.color0.get("hsl.h") + v)
+      return this.base_color.set("hsl.h", this.base_color.get("hsl.h") + v)
     },
     lighten_add(v) {
-      return this.color0.set("hsl.l", this.color0.get("hsl.l") + v * this.sabun)
+      return this.base_color.set("hsl.l", this.base_color.get("hsl.l") + v * this.monochromatic_step)
     },
-    // lighten_add2(v) {
-    //   return this.color0.brighten(v)
-    // },
     saturation_add(v) {
-      return this.color0.set("hsl.s", this.color0.get("hsl.s") + v * this.sabun)
+      return this.base_color.set("hsl.s", this.base_color.get("hsl.s") + v * this.monochromatic_step)
     },
     text_color(color) {
-      // let sign = 1
-      // // if (color.get('hsl.l') >= 0.35) {
-      // if (color.luminance() >= 0.35) {
-      //   sign *= -1
-      // }
-      // return color.set('hsl.l', color.get('hsl.l') + (sign * 0.5))
-
-      // let sign = 1
-      // let center = 0.5
-      // let gap = color.luminance() - 0.5
-      // if (gap >= 0) {
-      //   return color.luminance(0.3 - gap * 3)
-      // } else {
-      //   return color.luminance(0.7 + gap * 3)
-      // }
-
-
       let center = 0.5
       let strong = 3
       let step = 5
@@ -156,7 +117,26 @@ export default {
   },
 
   computed: {
-    color0() { return chroma(this.base_color) },
+    base_color() {
+      return chroma(this.base_hex_color)
+    },
+
+    format_infos() {
+      return [
+        { key: "hsl",         name: 'HSL',         func: color => color.css('hsl')    },
+        { key: "rgb",         name: 'RGB',         func: color => color.css('rgb')    },
+        { key: "hex",         name: 'HEX',         func: color => color.hex()         },
+        { key: "temperature", name: '温度',        func: color => color.temperature() },
+        { key: "luminance",   name: '明るさ',      func: color => color.luminance()   },
+        { key: "name",        name: '色名',        func: color => color.name()        },
+        { key: "hsv",         name: 'HSV',         func: color => color.hsv()         },
+        { key: "hsi",         name: 'HSI',         func: color => color.hsi()         },
+        { key: "gl",          name: 'GL',          func: color => color.gl()          },
+      ].reduce((a, e, i) => {
+        a[e.key] = {code: i, ...e}
+        return a
+      }, {})
+    },
 
     preset_infos() {
       return [
