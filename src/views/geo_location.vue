@@ -1,6 +1,6 @@
 <template lang="pug">
 .geo_location
-  h2.title 位置情報
+  h2.title 位置情報チェッカー
   hr
 
   .field.is-horizontal
@@ -126,8 +126,8 @@ export default {
 
       error_messages: {
         0: "原因不明" ,
-        1: "位置情報の取得が許可されていない",
-        2: "電波状況などで位置情報が取得不能",
+        1: "位置の取得が許可されていない",
+        2: "電波状況などで位置が取得不能",
         3: "タイムアウト",
       },
     }
