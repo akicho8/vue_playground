@@ -42,5 +42,10 @@ export default new Router({
       name: 'color_scheme',
       component: () => import(/* webpackChunkName: "color_scheme" */ './views/color_scheme.vue')
     },
+    {
+      path: '/stopwatch',
+      name: 'stopwatch',
+      component: () => import(/* webpackChunkName: "stopwatch" */ './views/stopwatch.vue')
+    },
   ]
 })

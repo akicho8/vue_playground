@@ -12,7 +12,7 @@
     #main_navar.navbar-menu
       .navbar-start
         router-link.navbar-item.is-active(to="/about") About
-        router-link.navbar-item(to="/geo_location") 位置情報
+        router-link.navbar-item(to="/geo_location") 位置情報チェッカー
         .navbar-item.has-dropdown.is-hoverable
           span.navbar-link もっと見る
           .navbar-dropdown.is-boxed
@@ -54,10 +54,11 @@
           ul
             li: router-link(to="/") Home
             li: router-link(to="/about") About
-            li: router-link(:to="{name: 'geo_location'}") 位置情報
+            li: router-link(:to="{name: 'geo_location'}") 位置情報チェッカー
             li: router-link(:to="{name: 'css_transform'}") CSS Transform
             li: router-link(:to="{name: 'css_flexbox'}") CSS Flexbox
-            li: router-link(:to="{name: 'color_scheme'}") 配色見本
+            li: router-link(:to="{name: 'color_scheme'}") 配色エディター
+            li: router-link(:to="{name: 'stopwatch'}") ストップウォッチ
         .column
           router-view
 </template>
