@@ -411,4 +411,7 @@ export default {
 
   pre
     margin: 1rem 0
+
+  .default
+    font-weight: bold
 </style>
