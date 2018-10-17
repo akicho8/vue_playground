@@ -9,7 +9,7 @@
         | ラップ番号
     .field-body
       .field
-        input.input.is-small(type="number" v-model="current_number")
+        input.input.is-small(type="number" v-model.number="current_number")
 
   div
     .is-size-1
