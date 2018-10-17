@@ -12,6 +12,7 @@
   "dependencies": {
     "buefy": "^0.7.0",
     "chroma-js": "^1.4.0",
+    "dayjs": "^1.7.7",
     "lodash": "^4.17.11",
     "object-inspect": "^1.6.0",
     "register-service-worker": "^1.0.0",
