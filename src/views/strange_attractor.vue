@@ -190,7 +190,7 @@ export default {
 
 <style scoped lang="sass">
 .canvas_wrap
-  height: 68vh
+  height: 68vmin
   background: black
   canvas
     width: 100%
