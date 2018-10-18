@@ -132,10 +132,7 @@ export default {
         { key: "hsv",         name: 'HSV',         func: color => color.hsv()         },
         { key: "hsi",         name: 'HSI',         func: color => color.hsi()         },
         { key: "gl",          name: 'GL',          func: color => color.gl()          },
-      ].reduce((a, e, i) => {
-        a[e.key] = {code: i, ...e}
-        return a
-      }, {})
+      ].reduce((a, e, i) => ({...a, [e.key]: {code: i, ...e}}), {})
     },
 
     preset_infos() {
