@@ -24,6 +24,10 @@ Object.defineProperty(Vue.prototype, 'window', {value: window})
 
 Vue.config.productionTip = false
 
+Vue.config.errorHandler = (error, vm, info) => {
+  console.log(`Captured in Vue.config.errororHandler: ${info}`, error)
+}
+
 new Vue({
   router,
   store,
