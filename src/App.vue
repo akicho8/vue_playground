@@ -20,7 +20,7 @@
           .navbar-dropdown.is-boxed
             router-link.navbar-item(:to="{name: 'color_scheme'}") 配色エディター
             router-link.navbar-item(:to="{name: 'stopwatch'}") ストップウォッチ
-            router-link.navbar-item(:to="{name: 'strange_attractor'}") ストレンジアトラクター
+            router-link.navbar-item(:to="{name: 'strange_attractor'}") ストレンジアトラクターエディター
             hr.navbar-divider
             router-link.navbar-item(:to="{name: 'css_transform'}") CSS Transform
             router-link.navbar-item(:to="{name: 'css_flexbox'}") CSS Flexbox
