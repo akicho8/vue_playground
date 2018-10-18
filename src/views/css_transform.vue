@@ -169,9 +169,11 @@ export default {
   computed: {
     div2_style() {
       return {
-        "transform-style": this.transformStyle, // FIXME: 効いてなくね？
-        // "perspective": `${this.perspective}px`,
+        "transform-style": this.transformStyle,
         transform: `perspective(${this.perspective}px)`,
+
+        // こっちを使う場合 transform-style は効かない。常に 3D になる。
+        // "perspective": `${this.perspective}px`,
       }
     },
     div2_1_style() {
