@@ -1,6 +1,6 @@
 <template lang="pug">
 .color_scheme
-  h2.title 配色エディター
+  h2.title {{$options.title}}
   hr
 
   .field.is-horizontal
@@ -68,6 +68,7 @@ import chroma from "chroma-js"
 
 export default {
   name: 'color_scheme',
+  title: "配色エディター",
   data() {
     return {
       base_hex_color: null,

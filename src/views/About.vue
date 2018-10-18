@@ -1,6 +1,8 @@
 <template lang="pug">
 div
-  h2.title Vue.js
+  h2.title {{$options.title}}
+
+  h3.title Vue.js
   hr
   table.table
     tr
@@ -22,7 +24,7 @@ div
       th $store
       td {{inspect($store)}}
 
-  h2.title Browser
+  h3.title Browser
   hr
   table.table
     tr
@@ -45,6 +47,7 @@ div
 <script>
 export default {
   name: 'about',
+  title: "About",
   data() {
     return {
     }

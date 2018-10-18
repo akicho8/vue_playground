@@ -1,6 +1,6 @@
 <template lang="pug">
 .stopwatch
-  h2.title ストップウォッチ
+  h2.title {{$options.title}}
   hr
 
   .field.is-horizontal

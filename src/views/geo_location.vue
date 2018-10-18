@@ -1,6 +1,6 @@
 <template lang="pug">
 .geo_location
-  h2.title 位置情報チェッカー
+  h2.title {{$options.title}}
   hr
 
   .field.is-horizontal
@@ -105,6 +105,7 @@
 <script>
 export default {
   name: 'geo_location',
+  title: "位置情報チェッカー",
   data() {
     return {
       counter: 0,

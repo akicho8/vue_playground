@@ -1,6 +1,6 @@
 <template lang="pug">
 .css_flexbox
-  h2.title CSS Flexbox
+  h2.title {{$options.title}}
   hr
 
   .container_wrap
@@ -91,6 +91,7 @@ import css_flexbox_inputs from "./css_flexbox_inputs"
 
 export default {
   name: 'css_flexbox',
+  title: "CSS Flexbox",
   components: {
     css_flexbox_inputs,
   },
