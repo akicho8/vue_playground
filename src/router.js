@@ -47,5 +47,10 @@ export default new Router({
       name: 'stopwatch',
       component: () => import(/* webpackChunkName: "stopwatch" */ './views/stopwatch.vue')
     },
+    {
+      path: '/strange_attractor',
+      name: 'strange_attractor',
+      component: () => import(/* webpackChunkName: "strange_attractor" */ './views/strange_attractor.vue')
+    },
   ]
 })
