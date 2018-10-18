@@ -74,6 +74,10 @@ div
         div
           | {{div2_1_style}}
 
+      ul.is-size-7.has-text-grey-light
+        li transform-style: {{transformStyle}} は transform: perspective({{perspective}}) の組み合わせのときだけ効く
+        li perspective: {{this.perspective}}px を直接使った場合は常に 3D になる
+
     .column
       .box
         .relative_div
@@ -104,7 +108,6 @@ div
               | div2_1
           .div3
             | div3
-
 </template>
 
 <script>
@@ -166,9 +169,9 @@ export default {
   computed: {
     div2_style() {
       return {
-        "transform-style": this.transformStyle,
-        "perspective": `${this.perspective}px`,
-        // transform: `perspective(${this.perspective}px)`,
+        "transform-style": this.transformStyle, // FIXME: 効いてなくね？
+        // "perspective": `${this.perspective}px`,
+        transform: `perspective(${this.perspective}px)`,
       }
     },
     div2_1_style() {

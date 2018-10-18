@@ -68,6 +68,7 @@ export default {
   },
 
   created() {
+    // FIXME: stop のときに完全停止する
     setInterval(() => {
       if (this.mode === "playing") {
         this.total_counter += 1
