@@ -9,7 +9,7 @@
         | ラップ番号
     .field-body
       .field
-        input.input.is-small(type="number" v-model.number="current_number")
+        input.input.is-small(type="number" v-model.number="current_code")
 
   div
     .is-size-1
@@ -39,17 +39,16 @@
   .box.is-size-7
 
     template(v-for="row in rows")
-      | {{row.current_number}}
+      | {{row.current_code}}
       | -
-      | {{time_format(row.local_counter)}}
+      | {{time_format(row.lap_counter)}}
       br
     template(v-if="mode == 'playing'")
       span.has-text-grey-light
-        | {{current_number}}
+        | {{current_code}}
         | -
-        | {{time_format(local_counter)}}
+        | {{time_format(lap_counter)}}
       br
-
 </template>
 
 <script>
@@ -60,38 +59,34 @@ export default {
   title: "ストップウォッチ",
   data() {
     return {
-      current_number: 1,
+      current_code: 1,
       total_counter: 0,
-      local_counter: 0,
+      lap_counter: 0,
       mode: "standby",
       rows: [],
+      interval_id: null,
     }
-  },
-
-  created() {
-    // FIXME: stop のときに完全停止する
-    setInterval(() => {
-      if (this.mode === "playing") {
-        this.total_counter += 1
-        this.local_counter += 1
-      }
-    }, 1000)
   },
 
   methods: {
     start_run() {
       this.mode = "playing"
-      this.$nextTick(() => this.$refs.lap.focus())
+      this.clear_interval_safe()
+      this.interval_id = setInterval(this.step_next, 1000)
+
+      //- LAP にフォーカスさせる
+      //- this.$nextTick(() => this.$refs.lap.focus())
     },
 
     stop_run() {
       this.mode = "standby"
+      this.clear_interval_safe()
     },
 
     reset() {
       this.rows = []
       this.total_counter = 0
-      this.local_counter = 0
+      this.lap_counter = 0
     },
 
     time_format(seconds) {
@@ -101,13 +96,25 @@ export default {
     lap() {
       if (this.mode === "playing") {
         this.rows.push({
-          current_number: this.current_number,
+          current_code: this.current_code,
           total_counter: this.total_counter,
-          local_counter: this.local_counter,
+          lap_counter: this.lap_counter,
         })
-        this.current_number += 1
-        this.local_counter = 0
+        this.current_code += 1
+        this.lap_counter = 0
       }
+    },
+
+    clear_interval_safe() {
+      if (this.interval_id) {
+        clearInterval(this.interval_id)
+        this.interval_id = null
+      }
+    },
+
+    step_next() {
+      this.total_counter += 1
+      this.lap_counter += 1
     },
   },
 
@@ -117,7 +124,7 @@ export default {
     },
 
     tweet_body() {
-      return this.rows.map(e => `${e.current_number} - ${this.time_format(e.local_counter)}`).join("\n")
+      return this.rows.map(e => `${e.current_code} - ${this.time_format(e.lap_counter)}`).join("\n")
     },
   },
 }
