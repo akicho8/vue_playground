@@ -57,6 +57,7 @@ import dayjs from "dayjs"
 
 export default {
   name: "stopwatch",
+  title: "ストップウォッチ",
   data() {
     return {
       current_number: 1,

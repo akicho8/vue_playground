@@ -28,6 +28,18 @@ Vue.config.errorHandler = (error, vm, info) => {
   console.log(`Captured in Vue.config.errororHandler: ${info}`, error)
 }
 
+Vue.mixin({
+  mounted() {
+    let { title } = this.$options
+    if (title) {
+      if (typeof title === 'function') {
+        title = title.call(this)
+      }
+      document.title = `${title} - Vue Playground`
+    }
+  },
+})
+
 new Vue({
   router,
   store,
