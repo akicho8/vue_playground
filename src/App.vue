@@ -51,14 +51,23 @@
     .container.is-fluid
       .columns
         .column.is-2
-          ul
-            li: router-link(to="/") Home
-            li: router-link(to="/about") About
-            li: router-link(:to="{name: 'geo_location'}") 位置情報チェッカー
-            li: router-link(:to="{name: 'css_transform'}") CSS Transform
-            li: router-link(:to="{name: 'css_flexbox'}") CSS Flexbox
-            li: router-link(:to="{name: 'color_scheme'}") 配色エディター
-            li: router-link(:to="{name: 'stopwatch'}") ストップウォッチ
+          aside.menu
+            p.menu-label
+              | General
+            ul.menu-list
+              li: router-link(to="/") Home
+              li: router-link(to="/about") About
+              li: router-link(:to="{name: 'color_scheme'}") 配色エディター
+              li: router-link(:to="{name: 'stopwatch'}") ストップウォッチ
+            p.menu-label
+              | CSS
+            ul.menu-list
+              li: router-link(:to="{name: 'css_transform'}") CSS Transform
+              li: router-link(:to="{name: 'css_flexbox'}") CSS Flexbox
+            p.menu-label
+              | JavaScript
+            ul.menu-list
+              li: router-link(:to="{name: 'geo_location'}") 位置情報チェッカー
         .column
           router-view
 </template>
