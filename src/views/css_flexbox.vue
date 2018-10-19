@@ -3,87 +3,88 @@
   h2.title {{$options.title}}
   hr
 
-  .container_wrap
-    .container(:style="container_style")
-      .container_text.has-text-grey-light.is-size-7
-        | .container
-      .item(v-for="i in box_count" :class="item_class(i)" @click="active_toggle(i)" :style="item_style(i)" v-text="i")
+  .columns
+    .column
+      .box
+        css_flexbox_inputs(:all="parent_elems")
 
-  section
-    .box
-      css_flexbox_inputs(:all="parent_elems")
+        template(v-if="active_item")
+          hr
+          css_flexbox_inputs(:all="child_elems")
 
-      template(v-if="active_item")
-        hr
-        css_flexbox_inputs(:all="child_elems")
+      .field.is-horizontal
+        .field-label.is-small
+          label.label
+            | 個数
+        .field-body
+          .field
+            .control
+              input(type="range" v-model.number="box_count" min="1" max="50" step="1")
+              span.range_number
+                | {{box_count}}
 
-    .field.is-horizontal
-      .field-label.is-small
-        label.label
-          | 個数
-      .field-body
-        .field
-          .control
-            input(type="range" v-model.number="box_count" min="1" max="50" step="1")
-            span.range_number
-              | {{box_count}}
+      .field.is-horizontal
+        .field-label.is-small
+          label.label
+            | サイズ
+        .field-body
+          .field.has-addons.is-narrow
+            p.control
+              span.button.is-static.is-small
+                | 親
+            p.control
+              input.input.is-small(type="text" v-model.trim="parent_w" placeholder="w" size="4")
+            p.control
+              input.input.is-small(type="text" v-model.trim="parent_h" placeholder="h" size="4")
 
-    .field.is-horizontal
-      .field-label.is-small
-        label.label
-          | サイズ
-      .field-body
-        .field.has-addons.is-narrow
-          p.control
-            span.button.is-static.is-small
-              | 親
-          p.control
-            input.input.is-small(type="text" v-model.trim="parent_w" placeholder="w" size="4")
-          p.control
-            input.input.is-small(type="text" v-model.trim="parent_h" placeholder="h" size="4")
+          .field.has-addons.is-narrow
+            p.control
+              span.button.is-static.is-small
+                | 子
+            p.control
+              input.input.is-small(type="text" v-model.trim="item_w" placeholder="w" size="4")
+            p.control
+              input.input.is-small(type="text" v-model.trim="item_h" placeholder="h" size="4")
 
-        .field.has-addons.is-narrow
-          p.control
-            span.button.is-static.is-small
-              | 子
-          p.control
-            input.input.is-small(type="text" v-model.trim="item_w" placeholder="w" size="4")
-          p.control
-            input.input.is-small(type="text" v-model.trim="item_h" placeholder="h" size="4")
+      .field.is-horizontal
+        .field-label.is-small
+          label.label
+        .field-body
 
-    .field.is-horizontal
-      .field-label.is-small
-        label.label
-      .field-body
+          .field.is-narrow
+            .control
+              label.checkbox
+                input(type="checkbox" v-model="real_value_p")
+                span.is-size-7
+                  | 実際の値
 
-        .field.is-narrow
-          .control
-            label.checkbox
-              input(type="checkbox" v-model="real_value_p")
-              span.is-size-7
-                | 実際の値
+          .field.is-narrow
+            .control
+              label.checkbox
+                input(type="checkbox" v-model="show_all_p")
+                span.is-size-7
+                  | 初期値も表示
 
-        .field.is-narrow
-          .control
-            label.checkbox
-              input(type="checkbox" v-model="show_all_p")
-              span.is-size-7
-                | 初期値も表示
+          .field.is-narrow
+            .control
+              a.button.is-small(@click="var_reset")
+                | リセット
 
-        .field.is-narrow
-          .control
-            a.button.is-small(@click="var_reset")
-              | リセット
+      .content.is-size-7.has-text-grey-light
+        ul
+          li 子にサイズが指定されていると「伸」びない
+          li 並び「↓」のとき3時の方向を上と考えると理解しやすい
+          li 並び「↑」のときは9時の方向
+          li 折り返さないとき「行」の効果なし
 
-  pre.is-size-6(v-text="flex_css")
+    .column
+      .container_wrap
+        .container(:style="container_style")
+          .container_text.has-text-grey-light.is-size-7
+            | .container
+          .item(v-for="i in box_count" :class="item_class(i)" @click="active_toggle(i)" :style="item_style(i)" v-text="i")
 
-  .content.is-size-7
-    ul
-      li 子にサイズが指定されていると「伸」びない
-      li 並び「↓」のとき3時の方向を上と考えると理解しやすい
-      li 並び「↑」のときは9時の方向
-      li 折り返さないとき「行」の効果なし
-
+      pre.is-size-6(v-text="flex_css")
 </template>
 
 <script>
@@ -369,7 +370,6 @@ export default {
 
 <style lang="sass">
   .container_wrap
-    margin: 1rem
     display: flex
     justify-content: center
     align-items: center
