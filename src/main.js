@@ -12,7 +12,10 @@ import './bulma_burger.js'      // バーガー開閉
 
 // Lodash
 import _ from "lodash"
+window.lodash = _
+window._ = _
 Object.defineProperty(Vue.prototype, '_', {value: _})
+Object.defineProperty(Vue.prototype, 'lodash', {value: _})
 
 // object-inspect
 import inspect from 'object-inspect'
