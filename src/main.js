@@ -22,6 +22,8 @@ Object.defineProperty(Vue.prototype, 'inspect', {value: inspect})
 // window
 Object.defineProperty(Vue.prototype, 'window', {value: window})
 
+// NODE_ENV
+Object.defineProperty(Vue.prototype, 'NODE_ENV', {value: process.env.NODE_ENV})
 Vue.config.productionTip = false
 
 Vue.config.errorHandler = (error, vm, info) => {
