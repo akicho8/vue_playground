@@ -52,5 +52,15 @@ export default new Router({
       name: 'strange_attractor',
       component: () => import(/* webpackChunkName: "strange_attractor" */ './views/strange_attractor.vue')
     },
+    {
+      path: '/css_relative',
+      name: 'css_relative',
+      component: () => import(/* webpackChunkName: "css_relative" */ './views/css_relative.vue')
+    },
+    {
+      path: '/navigator_vibrate',
+      name: 'navigator_vibrate',
+      component: () => import(/* webpackChunkName: "navigator_vibrate" */ './views/navigator_vibrate.vue')
+    },
   ]
 })
