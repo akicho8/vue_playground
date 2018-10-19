@@ -37,7 +37,11 @@ Vue.mixin({
       if (typeof title === 'function') {
         title = title.call(this)
       }
-      document.title = `${title} - Vue Playground`
+      if (this.$route.query['single']) {
+        document.title = title
+      } else {
+        document.title = `${title} - Vue Playground`
+      }
     }
   },
 })
