@@ -187,7 +187,7 @@ export default {
       }
       if (this.result_detail) {
         row = Object.assign({}, row, {
-          "正確性": position.coords.accuracy,
+          "誤差(m)": position.coords.accuracy,
           "方位": position.coords.heading,
           "速度": position.coords.speed,
           "高度": position.coords.altitude,
