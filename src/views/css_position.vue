@@ -4,28 +4,29 @@ div
   hr
   .columns
     .column
-      .field.is-horizontal(v-for="record in input_elements")
-        .field-label.is-small
-          label.label
-            template(v-if="real_value_p")
-              span(v-text="record.name2 || record.name" :title="record.name")
-            template(v-else)
-              span(v-text="record.name")
-        .field-body
-          .field.is-narrow
-            .controll
-              template(v-if="record.list")
-                template(v-for="e in record.list")
-                  label.radio.is-size-7
-                    input(type="radio" v-model="$data[record.key]" :value="e.value")
-                    template(v-if="real_value_p")
-                      span(v-text="e.value" :title="e.name || e.value")
-                    template(v-else)
-                      span(v-text="e.name || e.value" :title="e.value")
-              template(v-if="record.range")
-                input(type="range" v-model.number="$data[record.key]" :min="record.range.min" :max="record.range.max" :step="record.range.step")
-                span.range_number
-                  | {{$data[record.key]}}
+      template(v-for="record in input_elements")
+        .field.is-horizontal
+          .field-label.is-small
+            label.label
+              template(v-if="real_value_p")
+                span(v-text="record.real_name || record.name" :title="record.name")
+              template(v-else)
+                span(v-text="record.name")
+          .field-body
+            .field.is-narrow
+              .controll
+                template(v-if="record.list")
+                  template(v-for="e in record.list")
+                    label.radio.is-size-7
+                      input(type="radio" v-model="$data[record.key]" :value="e.value")
+                      template(v-if="real_value_p")
+                        span(v-text="e.value" :title="e.name || e.value")
+                      template(v-else)
+                        span(v-text="e.name || e.value" :title="e.value")
+                template(v-if="record.range")
+                  input(type="range" v-model.number="$data[record.key]" :min="record.range.min" :max="record.range.max" :step="record.range.step" :disabled="!(!record.display_key || $data[record.display_key])")
+                  span.range_number
+                    | {{$data[record.key]}}
 
       .field.is-horizontal
         .field-label.is-small
@@ -125,6 +126,10 @@ export default {
         { key: "params_left",    name: "左", name2: "left",   range: { min: -0, max: 100, step: 1,    }, },
         { key: "params_right",   name: "右", name2: "right",  range: { min: -0, max: 100, step: 1,    }, },
         { key: "params_bottom",  name: "下", name2: "bottom", range: { min: -0, max: 100, step: 1,    }, },
+        { key: "params_top",     name: "上", real_name: "top",    range: { min: -0, max: 100, step: 1,  }, display_key: "params_top_p",    },
+        { key: "params_left",    name: "左", real_name: "left",   range: { min: -0, max: 100, step: 1,  }, display_key: "params_left_p",   },
+        { key: "params_bottom",  name: "下", real_name: "bottom", range: { min: -0, max: 100, step: 1,  }, display_key: "params_bottom_p", },
+        { key: "params_right",   name: "右", real_name: "right",  range: { min: -0, max: 100, step: 1,  }, display_key: "params_right_p",  },
         {
           key: "div0_position",
           name: "div0 position",
