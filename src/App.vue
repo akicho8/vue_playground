@@ -25,7 +25,7 @@
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'css_transform'}") CSS Transform
               router-link.navbar-item(:to="{name: 'css_flexbox'}") CSS Flexbox
-              router-link.navbar-item(:to="{name: 'css_relative'}") CSS Absolute
+              router-link.navbar-item(:to="{name: 'css_position'}") CSS Position
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'geo_location'}") 位置情報チェッカー
               router-link.navbar-item(:to="{name: 'navigator_vibrate'}") 振動機能チェッカー

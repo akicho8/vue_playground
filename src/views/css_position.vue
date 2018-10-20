@@ -98,8 +98,8 @@ div
 
 <script>
 export default {
-  name: "css_relative",
-  title: "CSS Absolute",
+  name: "css_position",
+  title: "CSS Position",
   data() {
     return {
       real_value_p: false,
