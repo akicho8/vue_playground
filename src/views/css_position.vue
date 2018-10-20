@@ -62,21 +62,51 @@ div
           .field.is-narrow
             .control
               label.checkbox
-                input(type="checkbox" v-model="params_bottom_p")
-                span.is-size-7
-                  | 下
-          .field.is-narrow
-            .control
-              label.checkbox
                 input(type="checkbox" v-model="params_left_p")
                 span.is-size-7
                   | 左
           .field.is-narrow
             .control
               label.checkbox
+                input(type="checkbox" v-model="params_bottom_p")
+                span.is-size-7
+                  | 下
+          .field.is-narrow
+            .control
+              label.checkbox
                 input(type="checkbox" v-model="params_right_p")
                 span.is-size-7
                   | 右
+
+      .field.is-horizontal
+        .field-label.is-small
+          label.label
+            | サイズ
+        .field-body
+          .field.has-addons.is-narrow
+            p.control
+              span.button.is-static.is-small
+                | 親
+            p.control
+              input.input.is-small(type="text" v-model.trim="parent_w" placeholder="w" size="4")
+            p.control
+              input.input.is-small(type="text" v-model.trim="parent_h" placeholder="h" size="4")
+
+          .field.has-addons.is-narrow
+            p.control
+              span.button.is-static.is-small
+                | 子
+            p.control
+              input.input.is-small(type="text" v-model.trim="item_w" placeholder="w" size="4")
+            p.control
+              input.input.is-small(type="text" v-model.trim="item_h" placeholder="h" size="4")
+
+      .buttons
+        button.button.is-small(@click="mode1") 設定なし
+        button.button.is-small(@click="mode2") div1浮遊
+        button.button.is-small(@click="mode3") 位置25%
+        button.button.is-small(@click="mode4") 位置0%
+        button.button.is-small(@click="mode5") 中央配置
 
       .box
         div {{div0_style}}
@@ -85,8 +115,9 @@ div
       pre.is-size-6(v-text="flex_css")
 
       ul.is-size-7.has-text-grey-light
-        li transform-style: {{div0_position}} は transform: perspective({{perspective}}) の組み合わせのときだけ効く
-        li perspective: {{this.perspective}}px を直接使った場合は常に 3D になる
+        li 親は absolute でも relative でもどちらでもよい
+        li div1 が relative なときサイズを持つので div1 のあとに div2 が配置される
+        li 配置なら flexbox を使った方が簡単
 
     .column
       .div0.has-text-grey-light(:style="div0_style")
@@ -121,11 +152,12 @@ export default {
       div0_position: "relative",
       div1_position: "absolute",
 
+      parent_w: "",
+      parent_h: "",
+      item_w: "",
+      item_h: "",
+
       input_elements: [
-        { key: "params_top",     name: "上", name2: "top",    range: { min: -0, max: 100, step: 1,    }, },
-        { key: "params_left",    name: "左", name2: "left",   range: { min: -0, max: 100, step: 1,    }, },
-        { key: "params_right",   name: "右", name2: "right",  range: { min: -0, max: 100, step: 1,    }, },
-        { key: "params_bottom",  name: "下", name2: "bottom", range: { min: -0, max: 100, step: 1,    }, },
         { key: "params_top",     name: "上", real_name: "top",    range: { min: -0, max: 100, step: 1,  }, display_key: "params_top_p",    },
         { key: "params_left",    name: "左", real_name: "left",   range: { min: -0, max: 100, step: 1,  }, display_key: "params_left_p",   },
         { key: "params_bottom",  name: "下", real_name: "bottom", range: { min: -0, max: 100, step: 1,  }, display_key: "params_bottom_p", },
@@ -151,30 +183,75 @@ export default {
       ],
     }
   },
+
+  methods: {
+    mode1() {
+      this.div0_position = null
+      this.div1_position = null
+    },
+    mode2() {
+      this.div0_position = "relative" // absolute でもよい
+      this.div1_position = "absolute"
+    },
+    mode3() {
+      this.params_top    = 100 / 4
+      this.params_bottom = 100 / 4
+      this.params_left   = 100 / 4
+      this.params_right  = 100 / 4
+    },
+    mode4() {
+      this.params_top    = 0
+      this.params_bottom = 0
+      this.params_left   = 0
+      this.params_right  = 0
+    },
+    mode5() {
+      this.mode2()
+      this.mode3()
+      this.params_top_p    = true
+      this.params_bottom_p = true
+      this.params_left_p   = true
+      this.params_right_p  = true
+    },
+  },
+
   computed: {
     div0_style() {
       let hash = {}
       if (this.div0_position) {
         hash["position"] = this.div0_position
       }
+      if (this.parent_w !== "") {
+        hash["width"] = `${this.parent_w}px`
+      }
+      if (this.parent_h !== "") {
+        hash["height"] = `${this.parent_h}px`
+      }
       return hash
     },
     div1_style() {
       let hash = {}
+
       if (this.div1_position) {
         hash["position"] = this.div1_position
+        if (this.params_top_p) {
+          hash["top"] = `${this.params_top}%`
+        }
+        if (this.params_left_p) {
+          hash["left"] = `${this.params_left}%`
+        }
+        if (this.params_right_p) {
+          hash["right"] = `${this.params_right}%`
+        }
+        if (this.params_bottom_p) {
+          hash["bottom"] = `${this.params_bottom}%`
+        }
       }
-      if (this.params_top_p) {
-        hash["top"] = `${this.params_top}%`
+      if (this.item_w !== "") {
+        hash["width"] = `${this.item_w}px`
       }
-      if (this.params_left_p) {
-        hash["left"] = `${this.params_left}%`
-      }
-      if (this.params_right_p) {
-        hash["right"] = `${this.params_right}%`
-      }
-      if (this.params_bottom_p) {
-        hash["bottom"] = `${this.params_bottom}%`
+      if (this.item_h !== "") {
+        hash["height"] = `${this.item_h}px`
       }
       return hash
     },
@@ -185,25 +262,36 @@ export default {
       if (this.div0_position) {
         str += `  position: ${this.div0_position}\n`
       }
+      if (this.parent_w !== "") {
+        str += `  width: ${this.parent_w}px\n`
+      }
+      if (this.parent_h !== "") {
+        str += `  height: ${this.parent_h}px\n`
+      }
+
       str += `  .div1\n`
       if (this.div1_position) {
         str += `      position: ${this.div1_position}\n`
+        if (this.params_top_p) {
+          str += `      top: ${this.params_top}%\n`
+        }
+        if (this.params_left_p) {
+          str += `      left: ${this.params_left}%\n`
+        }
+        if (this.params_right_p) {
+          str += `      right: ${this.params_right}%\n`
+        }
+        if (this.params_bottom_p) {
+          str += `      bottom: ${this.params_bottom}%\n`
+        }
       }
-      if (this.params_top_p) {
-        str += `      top: ${this.params_top}%\n`
+      if (this.item_w !== "") {
+        str += `      width: ${this.item_w}px\n`
       }
-      if (this.params_left_p) {
-        str += `      left: ${this.params_left}%\n`
+      if (this.item_h !== "") {
+        str += `      height: ${this.item_h}px\n`
       }
-      if (this.params_right_p) {
-        str += `      right: ${this.params_right}%\n`
-      }
-      if (this.params_bottom_p) {
-        str += `      bottom: ${this.params_bottom}%\n`
-      }
-      // str += `      border: 1px solid blue\n`
       str += `  .div2\n`
-      // str += `    border: 1px solid green\n`
       return str
     },
   },
@@ -211,15 +299,18 @@ export default {
 </script>
 
 <style lang="sass">
+// アナロガス
+$preset_color1: hsl(309.18,45.79%,41.96%)
+$preset_color2: hsl(9.18,45.79%,41.96%)
+
 .div0
   border: 1px dotted #888
-  width: 320px
-  height: 240px
-  background: linear-gradient(to bottom, transparent, rgba(#888888, 0.2))
+  background: linear-gradient(to bottom, rgba(#888888, 0.2), transparent)
+  transition: all 0.5s 0s ease-in-out
   .div1
-    border: 1px dotted #0000ff
-    background: linear-gradient(to bottom, transparent, rgba(#0000ff, 0.2))
+    border: 1px dotted $preset_color1
+    background: linear-gradient(to bottom, rgba($preset_color1, 0.2), transparent)
   .div2
-    border: 1px dotted #00ff00
-    background: linear-gradient(to bottom, transparent, rgba(#00ff00, 0.2))
+    border: 1px dotted $preset_color2
+    background: linear-gradient(to bottom, rgba($preset_color2, 0.2), transparent)
 </style>
