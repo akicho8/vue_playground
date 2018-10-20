@@ -33,7 +33,7 @@
 
     template(v-if="rows.length >= 1")
       | &nbsp;
-      a.button.is-rounded.is-info(:href="twitter_url" target="_blank") Tweet
+      a.button.is-rounded.is-info.is-pulled-right(:href="twitter_url" target="_blank") Tweet
   br
 
   .box.is-size-7
