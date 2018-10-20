@@ -10,6 +10,9 @@
     .field-body
       .field
         input.input.is-small(type="color" v-model="base_hex_color")
+      .field
+        //- v-model だと 0000FF を入力したくても 000 の時点で #000000 に展開されてしまうため変更のタイミングを考慮
+        input.input.is-small(type="text" :value="direct_hex_color" @keypress.enter="direct_hex_color_set($event.target.value)" @blur="direct_hex_color_set($event.target.value)" placeholder="曖昧入力可")
 
   .field.is-horizontal
     .field-label.is-small
@@ -55,6 +58,11 @@
         template(v-for="color_info in preset_info.color_infos")
           .color_box.is-size-7(:class="color_info.css_class" :style="{background: color_info.color.css(), color: text_color(color_info.color)}" @click.meta="set_this_color(color_info)")
             | {{format_infos[format_key].func(color_info.color)}}
+
+  .content.is-size-7.has-text-grey-light
+    ul
+      li Command + クリックで色をスポイト
+
   .section
     .title CSS(sass)
     hr
@@ -121,9 +129,27 @@ export default {
         return color.brighten(strong + -gap * step)
       }
     },
+    direct_hex_color_set(v) {
+      this.direct_hex_color = v
+    },
   },
 
   computed: {
+    direct_hex_color: {
+      set(value) {
+        if (value !== "") {
+          try {
+            this.base_hex_color = chroma(value).hex()
+          } catch (error) {
+            console.warn(`chroma(${JSON.stringify(value)})`, error)
+          }
+        }
+      },
+      get(v) {
+        return this.base_color.hex()
+      },
+    },
+
     base_color() {
       return chroma(this.base_hex_color)
     },
@@ -159,8 +185,9 @@ export default {
           name_en: "Analogous",
           description: "隣合う色。調和がとれる",
           color_infos: [
-            { css_class: "wsize50", color: this.hue_add(0),   },
-            { css_class: "wsize50", color: this.hue_add(60),  },
+            { css_class: "wsize50", color: this.hue_add(-30),  },
+            { css_class: "wsize50", color: this.hue_add(0),    },
+            { css_class: "wsize50", color: this.hue_add(30),   },
           ],
         },
         {
