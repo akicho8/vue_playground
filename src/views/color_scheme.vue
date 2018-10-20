@@ -36,6 +36,9 @@
 
   button.button(@click="rundom_set") ランダム
 
+  .is-pulled-right
+    router-link(:to="{name: 'color_scheme', query: {color: base_hex_color}}") パーマリンク
+
   //- .is-size-6 Split-Complement
   //- .color_bar
   //-   .color_box.is-size-7.base(:style="{background: base_color.css()}") {{base_color.name()}}
