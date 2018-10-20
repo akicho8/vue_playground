@@ -73,15 +73,18 @@ export default {
   name: 'color_scheme',
   title: "配色エディター",
   data() {
+    let color = chroma.random().hex()
+    if (this.$route.query.color) {
+      color = chroma(this.$route.query.color).hex()
+    }
     return {
-      base_hex_color: null,
+      base_hex_color: color,
       format_key: "hsl",
       monochromatic_step: 0.1,
     }
   },
 
   created() {
-    this.rundom_set()
   },
 
   watch: {
