@@ -90,7 +90,7 @@
 
   small
     ul
-      li GPS: {{navigator_info()}}
+      li 位置情報: {{navigator_info()}}
       li 追跡ID: {{watch_id}}
       li オプション: {{position_options}}
       li ブラウザ: {{user_agent}}
