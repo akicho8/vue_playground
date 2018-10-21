@@ -2,6 +2,7 @@
 div
   .h2.title {{$options.title}}
   hr
+
   .columns
     .column
       template(v-for="record in input_elements")
@@ -88,36 +89,39 @@ div
               span.button.is-static.is-small
                 | 親
             p.control
-              input.input.is-small(type="text" v-model.trim="parent_w" placeholder="w" size="4")
+              input.input.is-small(type="text" v-model.trim="div0_w" placeholder="w")
             p.control
-              input.input.is-small(type="text" v-model.trim="parent_h" placeholder="h" size="4")
+              input.input.is-small(type="text" v-model.trim="div0_h" placeholder="h")
 
           .field.has-addons.is-narrow
             p.control
               span.button.is-static.is-small
                 | 子
             p.control
-              input.input.is-small(type="text" v-model.trim="item_w" placeholder="w" size="4")
+              input.input.is-small(type="text" v-model.trim="div1_w" placeholder="w")
             p.control
-              input.input.is-small(type="text" v-model.trim="item_h" placeholder="h" size="4")
+              input.input.is-small(type="text" v-model.trim="div1_h" placeholder="h")
 
       .buttons
-        button.button.is-small(@click="mode1") 設定なし
-        button.button.is-small(@click="mode2") div1浮遊
-        button.button.is-small(@click="mode3") 位置25%
-        button.button.is-small(@click="mode4") 位置0%
-        button.button.is-small(@click="mode5") 中央配置
+        button.button.is-small(@click="mode1_reset") 設定なし
+        button.button.is-small(@click="mode2_absolute") div1浮遊
+        button.button.is-small(@click="mode3_25p") 位置25%
+        button.button.is-small(@click="mode4_0p") 位置0%
+        button.button.is-small(@click="mode5_center") 中央配置
+        button.button.is-small(@click="mode6_bottom_right") 右下配置
 
-      .box
-        div {{div0_style}}
-        div {{div1_style}}
+      pre.is-size-7(v-text="flex_css")
 
-      pre.is-size-6(v-text="flex_css")
+      .content
+        ul.is-size-7.has-text-grey-light
+          li 親は absolute でも relative でもどちらでもよい
+          li div1 が relative なときサイズを持つので div1 のあとに div2 が配置される
+          li 配置なら flexbox を使った方が簡単
 
-      ul.is-size-7.has-text-grey-light
-        li 親は absolute でも relative でもどちらでもよい
-        li div1 が relative なときサイズを持つので div1 のあとに div2 が配置される
-        li 配置なら flexbox を使った方が簡単
+      template(v-if="NODE_ENV !== 'production'")
+        .box
+          div {{div0_style}}
+          div {{div1_style}}
 
     .column
       .div0.has-text-grey-light(:style="div0_style")
@@ -152,10 +156,10 @@ export default {
       div0_position: "relative",
       div1_position: "absolute",
 
-      parent_w: "",
-      parent_h: "",
-      item_w: "",
-      item_h: "",
+      div0_w: "",
+      div0_h: "320",
+      div1_w: "",
+      div1_h: "",
 
       input_elements: [
         { key: "params_top",     name: "上", real_name: "top",    range: { min: -0, max: 100, step: 1,  }, display_key: "params_top_p",    },
@@ -164,7 +168,7 @@ export default {
         { key: "params_right",   name: "右", real_name: "right",  range: { min: -0, max: 100, step: 1,  }, display_key: "params_right_p",  },
         {
           key: "div0_position",
-          name: "div0 position",
+          name: ".container",
           list: [
             { name: "なし", value: null,       },
             { name: "絶対", value: "absolute", },
@@ -173,7 +177,7 @@ export default {
         },
         {
           key: "div1_position",
-          name: "div1 position",
+          name: ".div1",
           list: [
             { name: "なし", value: null,       },
             { name: "絶対", value: "absolute", },
@@ -184,33 +188,50 @@ export default {
     }
   },
 
+  created() {
+    this.mode5_center()
+  },
+
   methods: {
-    mode1() {
+    mode1_reset() {
       this.div0_position = null
       this.div1_position = null
     },
-    mode2() {
+
+    mode2_absolute() {
       this.div0_position = "relative" // absolute でもよい
       this.div1_position = "absolute"
     },
-    mode3() {
+
+    mode3_25p() {
       this.params_top    = 100 / 4
       this.params_bottom = 100 / 4
       this.params_left   = 100 / 4
       this.params_right  = 100 / 4
     },
-    mode4() {
+
+    mode4_0p() {
       this.params_top    = 0
       this.params_bottom = 0
       this.params_left   = 0
       this.params_right  = 0
     },
-    mode5() {
-      this.mode2()
-      this.mode3()
+
+    mode5_center() {
+      this.mode2_absolute()
+      this.mode3_25p()
       this.params_top_p    = true
       this.params_bottom_p = true
       this.params_left_p   = true
+      this.params_right_p  = true
+    },
+
+    mode6_bottom_right() {
+      this.mode2_absolute()
+      this.mode4_0p()
+      this.params_top_p    = false
+      this.params_bottom_p = true
+      this.params_left_p   = false
       this.params_right_p  = true
     },
   },
@@ -221,14 +242,15 @@ export default {
       if (this.div0_position) {
         hash["position"] = this.div0_position
       }
-      if (this.parent_w !== "") {
-        hash["width"] = `${this.parent_w}px`
+      if (this.div0_w !== "") {
+        hash["width"] = `${this.div0_w}px`
       }
-      if (this.parent_h !== "") {
-        hash["height"] = `${this.parent_h}px`
+      if (this.div0_h !== "") {
+        hash["height"] = `${this.div0_h}px`
       }
       return hash
     },
+
     div1_style() {
       let hash = {}
 
@@ -247,11 +269,11 @@ export default {
           hash["bottom"] = `${this.params_bottom}%`
         }
       }
-      if (this.item_w !== "") {
-        hash["width"] = `${this.item_w}px`
+      if (this.div1_w !== "") {
+        hash["width"] = `${this.div1_w}px`
       }
-      if (this.item_h !== "") {
-        hash["height"] = `${this.item_h}px`
+      if (this.div1_h !== "") {
+        hash["height"] = `${this.div1_h}px`
       }
       return hash
     },
@@ -262,11 +284,11 @@ export default {
       if (this.div0_position) {
         str += `  position: ${this.div0_position}\n`
       }
-      if (this.parent_w !== "") {
-        str += `  width: ${this.parent_w}px\n`
+      if (this.div0_w !== "") {
+        str += `  width: ${this.div0_w}px\n`
       }
-      if (this.parent_h !== "") {
-        str += `  height: ${this.parent_h}px\n`
+      if (this.div0_h !== "") {
+        str += `  height: ${this.div0_h}px\n`
       }
 
       str += `  .div1\n`
@@ -285,11 +307,11 @@ export default {
           str += `      bottom: ${this.params_bottom}%\n`
         }
       }
-      if (this.item_w !== "") {
-        str += `      width: ${this.item_w}px\n`
+      if (this.div1_w !== "") {
+        str += `      width: ${this.div1_w}px\n`
       }
-      if (this.item_h !== "") {
-        str += `      height: ${this.item_h}px\n`
+      if (this.div1_h !== "") {
+        str += `      height: ${this.div1_h}px\n`
       }
       str += `  .div2\n`
       return str
