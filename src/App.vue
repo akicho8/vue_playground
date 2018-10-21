@@ -12,6 +12,8 @@
           span
       #main_navar.navbar-menu
         .navbar-start
+          router-link.navbar-item(:to="{name: 'stopwatch'}") ストップウォッチ
+
           template(v-if="false")
             router-link.navbar-item(to="/about") About
             router-link.navbar-item(to="/geo_location") 位置情報チェッカー
@@ -32,6 +34,8 @@
               hr.navbar-divider
               router-link.navbar-item(to="/about") About
         .navbar-end
+          router-link.navbar-item(:to="{name: 'about'}") About
+
           // - if current_user
           //   .navbar-item.has-dropdown.is-hoverable
           //     = link_to([current_user], class: "navbar-link", slot: "trigger") do
