@@ -62,5 +62,10 @@ export default new Router({
       name: 'navigator_vibrate',
       component: () => import(/* webpackChunkName: "navigator_vibrate" */ './views/navigator_vibrate.vue')
     },
+    {
+      path: '/css_filter',
+      name: 'css_filter',
+      component: () => import(/* webpackChunkName: "css_filter" */ './views/css_filter.vue')
+    },
   ]
 })
