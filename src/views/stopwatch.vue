@@ -53,8 +53,8 @@ export default {
       current_code: parseInt(localStorage.getItem("stopwatch:current_code") || 1),
       total_counter: parseInt(localStorage.getItem("stopwatch:total_counter") || 0),
       lap_counter: parseInt(localStorage.getItem("stopwatch:lap_counter") || 0),
+      rows: JSON.parse(localStorage.getItem("stopwatch:rows") || "[]"),
       mode: "standby",
-      rows: [],
       interval_id: null,
     }
   },
@@ -106,9 +106,10 @@ export default {
   },
 
   watch: {
-    current_code(v)  { localStorage.setItem("stopwatch:current_code", v)  },
-    total_counter(v) { localStorage.setItem("stopwatch:total_counter", v) },
-    lap_counter(v)   { localStorage.setItem("stopwatch:lap_counter", v)   },
+    current_code(v)  { localStorage.setItem("stopwatch:current_code", v)         },
+    total_counter(v) { localStorage.setItem("stopwatch:total_counter", v)        },
+    lap_counter(v)   { localStorage.setItem("stopwatch:lap_counter", v)          },
+    rows(v)          { localStorage.setItem("stopwatch:rows", JSON.stringify(v)) },
   },
 
   computed: {

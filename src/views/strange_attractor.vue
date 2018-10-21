@@ -16,12 +16,13 @@
                 input(type="range" v-model.number="$data[param_info.key]" :min="param_info.min" :max="param_info.max" :step="param_info.step")
                 | {{$data[param_info.key]}}
 
-      template(v-if="interval_id")
-        button.button.is-rounded.is-danger(@click="stop_run") 停止
-      template(v-else)
-        button.button.is-rounded.is-primary(@click="start_run") 自動
-      button.button.is-rounded(@click="params_reset") リセット
-      //- button.button.is-rounded(@click="random_run") ランダム
+      .buttons
+        template(v-if="interval_id")
+          button.button.is-rounded.is-danger(@click="stop_run") 停止
+        template(v-else)
+          button.button.is-rounded.is-primary(@click="start_run") 自動
+        button.button.is-rounded(@click="params_reset") リセット
+        button.button.is-rounded(@click="random_run") ランダム
 
     .column
       .canvas_wrap
@@ -47,12 +48,12 @@ export default {
   },
 
   watch: {
-    param_a()  { this.reset() },
-    param_b()  { this.reset() },
-    param_c()  { this.reset() },
-    param_d()  { this.reset() },
-    arc_size() { this.reset() },
-    speed()    { this.reset() },
+    param_a()  { this.canvas_clear() },
+    param_b()  { this.canvas_clear() },
+    param_c()  { this.canvas_clear() },
+    param_d()  { this.canvas_clear() },
+    arc_size() { this.canvas_clear() },
+    speed()    { this.canvas_clear() },
   },
 
   created() {
@@ -67,18 +68,26 @@ export default {
       this.param_d = -0.77
     },
 
-    // random_run() {
-    //   this.param_a = Math.random() - 0.5
-    //   this.param_b = Math.random() - 0.5
-    //   this.param_c = Math.random() - 0.5
-    //   this.param_d = Math.random() - 0.5
-    // },
+    random_run() {
+      this.param_a = Math.random() - 0.5
+      this.param_b = Math.random() - 0.5
+      this.param_c = Math.random() - 0.5
+      this.param_d = Math.random() - 0.5
+    },
 
-    reset() {
-      const canvas = document.querySelector(".canvas_wrap canvas")
-      const ctx = canvas.getContext("2d")
-      ctx.fillStyle = "rgb(0, 0, 0)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
+    canvas_clear() {
+      this.context.fillStyle = "rgb(0, 0, 0)"
+      this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
+    },
+
+    canvas_resize_hook() {
+      const resize = () => {
+        const canvas = document.querySelector(".canvas_wrap canvas")
+        canvas.width = canvas.offsetWidth
+        canvas.height = canvas.offsetHeight
+      }
+      resize()
+      window.addEventListener("resize", resize, false)
     },
 
     start_run() {
@@ -105,9 +114,18 @@ export default {
       this.param_c = -0.61 + Math.sin((this.counter + 3) / 64) * 2.0
       this.param_d = -0.77 + Math.sin((this.counter + 4) / 64) * 2.0
     },
+
   },
 
   computed: {
+    canvas() {
+      return document.querySelector(".canvas_wrap canvas")
+    },
+
+    context() {
+      return this.canvas.getContext("2d")
+    },
+
     param_infos() {
       return [
         { key: "param_a",  name: "a",             min: -3, max: 3,    step: 0.01, },
@@ -124,24 +142,14 @@ export default {
   },
 
   mounted() {
-    const canvas = document.querySelector(".canvas_wrap canvas")
-    const ctx = canvas.getContext("2d")
+    setInterval(() => { this.counter += 1 }, 1000)
 
-    if (true) {
-      function resize() {
-        canvas.width = canvas.offsetWidth
-        canvas.height = canvas.offsetHeight
-      }
-      resize()
-      window.addEventListener("resize", () => resize(), false)
-    }
+    this.canvas_resize_hook()
 
     // const a = 1.93
     // const b = -1.7
     // const c = -0.61
     // const d = -0.77
-
-    setInterval(() => { this.counter += 1 }, 1000)
 
     let x = 1.0
     let y = 1.0
@@ -158,12 +166,12 @@ export default {
         const yn = Math.sin(b * x) - d * Math.cos(b * y)
         x = xn
         y = yn
-        const cx = canvas.width / 2
-        const cy = canvas.height / 2
-        const dx = cx + x * canvas.width * 0.25
-        const dy = cy + y * canvas.height * 0.25
+        const cx = this.canvas.width / 2
+        const cy = this.canvas.height / 2
+        const dx = cx + x * this.canvas.width * 0.25
+        const dy = cy + y * this.canvas.height * 0.25
 
-        const pixel = ctx.getImageData(dx, dy, 1, 1)
+        const pixel = this.context.getImageData(dx, dy, 1, 1)
         const data = pixel.data
         let r0 = data[0] + 4 * 1
         let g0 = data[1] + 4 * 2
@@ -177,10 +185,10 @@ export default {
         if (b0 > 255) {
           b0 = 255
         }
-        ctx.beginPath()
-        ctx.fillStyle = `rgb(${r0}, ${g0}, ${b0})`
-        ctx.arc(dx, dy, this.arc_size, 0, 2 * Math.PI)
-        ctx.fill()
+        this.context.beginPath()
+        this.context.fillStyle = `rgb(${r0}, ${g0}, ${b0})`
+        this.context.arc(dx, dy, this.arc_size, 0, 2 * Math.PI)
+        this.context.fill()
       }
     }
     run()
