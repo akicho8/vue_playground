@@ -11,12 +11,11 @@
       .field
         input.input.is-small(type="number" v-model.number="current_code")
 
-  div
+  .content
     .is-size-1
       | {{time_format(total_counter)}}
-  br
 
-  div
+  .buttons
     template(v-if="mode == 'playing'")
       button.button.is-rounded(@click="lap" ref="lap") ラップ
     template(v-else)
@@ -24,31 +23,23 @@
         button.button.is-rounded(@click="reset") リセット
       template(v-else)
         button.button.is-rounded(disabled) ラップ
-    | &nbsp;
-
     template(v-if="mode == 'standby'")
       button.button.is-rounded.is-primary(@click="start_run") 開始
     template(v-else)
       button.button.is-rounded.is-danger(@click="stop_run") 停止
-
-    template(v-if="rows.length >= 1")
-      | &nbsp;
-      a.button.is-rounded.is-info.is-pulled-right(:href="twitter_url" target="_blank") Tweet
-  br
+    template(v-if="rows.length >= 1 || true")
+      a.button.is-rounded.is-info(:href="twitter_url" target="_blank") Tweet
 
   .box.is-size-7
-
     template(v-for="row in rows")
-      | {{row.current_code}}
-      | -
-      | {{time_format(row.lap_counter)}}
-      br
-    template(v-if="mode == 'playing'")
-      span.has-text-grey-light
-        | {{current_code}}
+      div
+        | {{row.current_code}}
         | -
-        | {{time_format(lap_counter)}}
-      br
+        | {{time_format(row.lap_counter)}}
+    span.has-text-grey-light
+      | {{current_code}}
+      | -
+      | {{time_format(lap_counter)}}
 </template>
 
 <script>
@@ -95,11 +86,7 @@ export default {
 
     lap() {
       if (this.mode === "playing") {
-        this.rows.push({
-          current_code: this.current_code,
-          total_counter: this.total_counter,
-          lap_counter: this.lap_counter,
-        })
+        this.rows.push(this.row_record)
         this.current_code += 1
         this.lap_counter = 0
       }
@@ -129,8 +116,16 @@ export default {
       return `https://twitter.com/intent/tweet?text=${encodeURIComponent(this.tweet_body)}`
     },
 
+    row_record() {
+      return {
+        current_code: this.current_code,
+        total_counter: this.total_counter,
+        lap_counter: this.lap_counter,
+      }
+    },
+
     tweet_body() {
-      return this.rows.map(e => `${e.current_code} - ${this.time_format(e.lap_counter)}`).join("\n")
+      return _.concat(this.rows, this.row_record).map(e => `${e.current_code} - ${this.time_format(e.lap_counter)}`).join("\n")
     },
   },
 }
