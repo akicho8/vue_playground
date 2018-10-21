@@ -1,6 +1,6 @@
 <template lang="pug">
 #app
-  template(v-if="$route.query.layout !== 'full'")
+  template(v-if="$route.query.layout !== 'simple'")
     nav.navbar.is-transparent.is-primary
       .navbar-brand
         router-link.navbar-item(to="/")
