@@ -59,9 +59,9 @@ export default {
   title: "ストップウォッチ",
   data() {
     return {
-      current_code: 1,
-      total_counter: 0,
-      lap_counter: 0,
+      current_code: parseInt(localStorage.getItem("stopwatch:current_code") || 1),
+      total_counter: parseInt(localStorage.getItem("stopwatch:total_counter") || 0),
+      lap_counter: parseInt(localStorage.getItem("stopwatch:lap_counter") || 0),
       mode: "standby",
       rows: [],
       interval_id: null,
@@ -116,6 +116,12 @@ export default {
       this.total_counter += 1
       this.lap_counter += 1
     },
+  },
+
+  watch: {
+    current_code(v)  { localStorage.setItem("stopwatch:current_code", v)  },
+    total_counter(v) { localStorage.setItem("stopwatch:total_counter", v) },
+    lap_counter(v)   { localStorage.setItem("stopwatch:lap_counter", v)   },
   },
 
   computed: {
