@@ -53,7 +53,8 @@ div
         //- button.button.is-small(@click="mode5_center") 中央配置
         //- button.button.is-small(@click="mode6_bottom_saturate") 右下配置
 
-      pre.is-size-7(v-text="css_body")
+      .content
+        pre.is-size-7(v-text="css_body")
 
       //- .content
       //-   ul.is-size-7.has-text-grey-light
@@ -98,14 +99,26 @@ export default {
       params_invert: 0,
       params_invert_p: false,
 
+      params_blur: 0,
+      params_blur_p: false,
+
+      params_opacity: 0,
+      params_opacity_p: false,
+
+      params_shadow: 0,
+      params_shadow_p: false,
+
       input_elements: [
-        { key: "params_brightness", name: "明るさ",         real_name: "brightness", default: 100, range: { min: 0, max: 300, step: 1, }, display_key: "params_brightness_p", func: (v) => `brightness(${v}%)`,  },
-        { key: "params_contrast",   name: "コントラスト",   real_name: "contrast",   default: 100, range: { min: 0, max: 300, step: 1, }, display_key: "params_contrast_p",   func: (v) => `contrast(${v}%)`,    },
-        { key: "params_grayscale",  name: "グレースケール", real_name: "grayscale",  default:   0, range: { min: 0, max: 100, step: 1, }, display_key: "params_grayscale_p",  func: (v) => `grayscale(${v}%)`,   },
-        { key: "params_saturate",   name: "彩度",           real_name: "saturate",   default: 100, range: { min: 0, max: 300, step: 1, }, display_key: "params_saturate_p",   func: (v) => `saturate(${v}%)`,    },
-        { key: "params_sepia",      name: "セピア",         real_name: "sepia",      default:   0, range: { min: 0, max: 300, step: 1, }, display_key: "params_sepia_p",      func: (v) => `sepia(${v}%)`,       },
-        { key: "params_hue",        name: "色相回転",       real_name: "hue-rotate", default:   0, range: { min: 0, max: 360, step: 1, }, display_key: "params_hue_p",        func: (v) => `hue-rotate(${v}deg)`,},
-        { key: "params_invert",     name: "階調反転",       real_name: "invert",     default: 100, range: { min: 0, max: 100, step: 1, }, display_key: "params_invert_p",     func: (v) => `invert(${v}%)`,      },
+        { key: "params_brightness", name: "明るさ",         real_name: "brightness", default: 100, range: { min: 0,    max: 500,  step: 1,    }, display_key: "params_brightness_p", func: (v) => `brightness(${v}%)`,    },
+        { key: "params_contrast",   name: "コントラスト",   real_name: "contrast",   default: 100, range: { min: 0,    max: 500,  step: 1,    }, display_key: "params_contrast_p",   func: (v) => `contrast(${v}%)`,      },
+        { key: "params_grayscale",  name: "グレースケール", real_name: "grayscale",  default:   0, range: { min: 0,    max: 100,  step: 1,    }, display_key: "params_grayscale_p",  func: (v) => `grayscale(${v}%)`,     },
+        { key: "params_saturate",   name: "彩度",           real_name: "saturate",   default: 100, range: { min: 0,    max: 300,  step: 1,    }, display_key: "params_saturate_p",   func: (v) => `saturate(${v}%)`,      },
+        { key: "params_sepia",      name: "セピア",         real_name: "sepia",      default:   0, range: { min: 0,    max: 100,  step: 1,    }, display_key: "params_sepia_p",      func: (v) => `sepia(${v}%)`,         },
+        { key: "params_hue",        name: "色相回転",       real_name: "hue-rotate", default:   0, range: { min: -360, max: 360,  step: 1,    }, display_key: "params_hue_p",        func: (v) => `hue-rotate(${v}deg)`,  }, // 180deg と 0.5turn は同じ
+        { key: "params_invert",     name: "階調反転",       real_name: "invert",     default:   0, range: { min: 0,    max: 100,  step: 1,    }, display_key: "params_invert_p",     func: (v) => `invert(${v}%)`,        },
+        { key: "params_blur",       name: "ぼかし",         real_name: "blur",       default:   0, range: { min: 0,    max: 100,  step: 1,    }, display_key: "params_blur_p",       func: (v) => `blur(${v}px)`,         },
+        { key: "params_opacity",    name: "非透明度",       real_name: "opacity",    default: 100, range: { min: 0,    max: 100,  step: 1,    }, display_key: "params_opacity_p",    func: (v) => `opacity(${v}%)`,       },
+        { key: "params_shadow",     name: "影",             real_name: "shadow",     default:   0, range: { min: 0,    max: 100,  step: 1,    }, display_key: "params_shadow_p",     func: (v) => `drop-shadow(0px 0px ${v}px gray)`, },
       ],
     }
   },
@@ -118,6 +131,8 @@ export default {
   methods: {
     mode1_reset() {
       this.input_elements.forEach(e => {
+        this.$data[e.display_key] = true
+
         const v = e.default
         if (v !== undefined) {
           this.$data[e.key] = v
@@ -188,6 +203,8 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style scoped lang="sass">
+pre
+  white-space: pre-wrap
 .div1
 </style>
