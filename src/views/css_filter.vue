@@ -80,47 +80,47 @@ export default {
     return {
       real_value_p: false,
 
-      params_brightness: 0,
+      params_brightness: null,
       params_brightness_p: true,
 
-      params_grayscale: 0,
+      params_grayscale: null,
       params_grayscale_p: true,
 
-      params_saturate: 0,
+      params_saturate: null,
       params_saturate_p: false,
 
-      params_contrast: 0,
+      params_contrast: null,
       params_contrast_p: false,
 
-      params_sepia: 0,
+      params_sepia: null,
       params_sepia_p: false,
 
-      params_hue: 0,
+      params_hue: null,
       params_hue_p: false,
 
-      params_invert: 0,
+      params_invert: null,
       params_invert_p: false,
 
-      params_blur: 0,
+      params_blur: null,
       params_blur_p: false,
 
-      params_opacity: 0,
+      params_opacity: null,
       params_opacity_p: false,
 
-      params_shadow: 0,
+      params_shadow: null,
       params_shadow_p: false,
 
       input_elements: [
-        { key: "params_brightness", name: "明るさ",         real_name: "brightness", default: 100, range: { min: 0,    max: 500,  step: 1,    }, display_key: "params_brightness_p", func: (v) => `brightness(${v}%)`,    },
-        { key: "params_contrast",   name: "コントラスト",   real_name: "contrast",   default: 100, range: { min: 0,    max: 500,  step: 1,    }, display_key: "params_contrast_p",   func: (v) => `contrast(${v}%)`,      },
-        { key: "params_grayscale",  name: "グレースケール", real_name: "grayscale",  default:   0, range: { min: 0,    max: 100,  step: 1,    }, display_key: "params_grayscale_p",  func: (v) => `grayscale(${v}%)`,     },
-        { key: "params_saturate",   name: "彩度",           real_name: "saturate",   default: 100, range: { min: 0,    max: 300,  step: 1,    }, display_key: "params_saturate_p",   func: (v) => `saturate(${v}%)`,      },
-        { key: "params_sepia",      name: "セピア",         real_name: "sepia",      default:   0, range: { min: 0,    max: 100,  step: 1,    }, display_key: "params_sepia_p",      func: (v) => `sepia(${v}%)`,         },
-        { key: "params_hue",        name: "色相回転",       real_name: "hue-rotate", default:   0, range: { min: -360, max: 360,  step: 1,    }, display_key: "params_hue_p",        func: (v) => `hue-rotate(${v}deg)`,  }, // 180deg と 0.5turn は同じ
-        { key: "params_invert",     name: "階調反転",       real_name: "invert",     default:   0, range: { min: 0,    max: 100,  step: 1,    }, display_key: "params_invert_p",     func: (v) => `invert(${v}%)`,        },
-        { key: "params_blur",       name: "ぼかし",         real_name: "blur",       default:   0, range: { min: 0,    max: 100,  step: 1,    }, display_key: "params_blur_p",       func: (v) => `blur(${v}px)`,         },
-        { key: "params_opacity",    name: "非透明度",       real_name: "opacity",    default: 100, range: { min: 0,    max: 100,  step: 1,    }, display_key: "params_opacity_p",    func: (v) => `opacity(${v}%)`,       },
-        { key: "params_shadow",     name: "影",             real_name: "shadow",     default:   0, range: { min: 0,    max: 100,  step: 1,    }, display_key: "params_shadow_p",     func: (v) => `drop-shadow(0px 0px ${v}px gray)`, },
+        { key: "params_brightness", name: "明るさ",         real_name: "brightness",  default: 100, range: { min: 0,    max: 500,  step: 1,    }, display_key: "params_brightness_p", func: (v) => `brightness(${v}%)`,    },
+        { key: "params_contrast",   name: "コントラスト",   real_name: "contrast",    default: 100, range: { min: 0,    max: 500,  step: 1,    }, display_key: "params_contrast_p",   func: (v) => `contrast(${v}%)`,      },
+        { key: "params_saturate",   name: "彩度",           real_name: "saturate",    default: 100, range: { min: 0,    max: 300,  step: 1,    }, display_key: "params_saturate_p",   func: (v) => `saturate(${v}%)`,      },
+        { key: "params_sepia",      name: "セピア",         real_name: "sepia",       default:   0, range: { min: 0,    max: 100,  step: 1,    }, display_key: "params_sepia_p",      func: (v) => `sepia(${v}%)`,         },
+        { key: "params_grayscale",  name: "グレースケール", real_name: "grayscale",   default:   0, range: { min: 0,    max: 100,  step: 1,    }, display_key: "params_grayscale_p",  func: (v) => `grayscale(${v}%)`,     },
+        { key: "params_hue",        name: "色相回転",       real_name: "hue-rotate",  default:   0, range: { min: -360, max: 360,  step: 1,    }, display_key: "params_hue_p",        func: (v) => `hue-rotate(${v}deg)`,  }, // 180deg と 0.5turn は同じ
+        { key: "params_invert",     name: "階調反転",       real_name: "invert",      default:   0, range: { min: 0,    max: 100,  step: 1,    }, display_key: "params_invert_p",     func: (v) => `invert(${v}%)`,        },
+        { key: "params_blur",       name: "ぼかし",         real_name: "blur",        default:   0, range: { min: 0,    max: 100,  step: 1,    }, display_key: "params_blur_p",       func: (v) => `blur(${v}px)`,         },
+        { key: "params_opacity",    name: "非透明度",       real_name: "opacity",     default: 100, range: { min: 0,    max: 100,  step: 1,    }, display_key: "params_opacity_p",    func: (v) => `opacity(${v}%)`,       },
+        { key: "params_shadow",     name: "影",             real_name: "drop-shadow", default:   0, range: { min: 0,    max: 100,  step: 1,    }, display_key: "params_shadow_p",     func: (v) => `drop-shadow(0px 0px ${v}px gray)`, },
       ],
     }
   },
@@ -128,6 +128,7 @@ export default {
   created() {
     // this.mode5_center()
     this.mode1_reset()
+    this.params_shadow = 10
   },
 
   methods: {
@@ -141,13 +142,22 @@ export default {
         }
       })
     },
-    //
 
     mode2_reset() {
       this.mode1_reset()
       this.params_invert = 100
       this.params_contrast = 110
     },
+
+    mode3_reset() {
+      this.mode1_reset()
+      this.params_contrast = 70
+      this.params_sepia = 100
+      this.params_grayscale = 85
+      this.params_blur = 1
+      this.params_shadow = 20
+    },
+
     // mode2_absolute() {
     // },
     //
