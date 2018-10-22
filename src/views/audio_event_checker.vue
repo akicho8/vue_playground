@@ -38,10 +38,10 @@
           span.is-static.is-size-7
             | の中で
         .control
-          input.input.is-small(type="number" v-model.number="timer_delay")
+          input.input.is-small(type="number" v-model.number="timer_delay" step="0.1")
         .control
           span.is-static.is-size-7
-            | ms後に実行
+            | 秒後に実行
       .field.is-narrow
         .controll
           label.radio.is-size-7
@@ -51,10 +51,23 @@
             input(type="radio" v-model="timer_use_p" :value="false")
             | しない
 
+  .field.is-horizontal
+    .field-label.is-small
+      label.label setTimeoutの外で事前にload
+    .field-body
+      .field.is-narrow
+        .controll
+          label.radio.is-size-7
+            input(type="radio" v-model="load_outside_set_timeout_p" :value="true")
+            | する
+          label.radio.is-size-7
+            input(type="radio" v-model="load_outside_set_timeout_p" :value="false")
+            | しない
+
   .buttons
     button.button.is-small(@click="run_play")
       | 実行
-    button.button.is-small(@click="reslt_rows = []") 結果クリア
+    button.button.is-small(@click="reslt_rows = []") クリア
 
   b-table(:data="reslt_rows" :hoverable="true" :columns="table_columns" narrowed)
 </template>
@@ -68,10 +81,11 @@ export default {
   title: "Audioイベントチェッカー",
   data() {
     return {
-      timer_delay: 3,
-      singleton_p: true,
+      timer_delay: 0.5,
+      singleton_p: false,
       play_call_p: true,
       timer_use_p: false,
+      load_outside_set_timeout_p: false,
       reslt_rows: [],
       instance: null,
     }
@@ -83,13 +97,19 @@ export default {
   methods: {
     run_play() {
       if (this.timer_use_p) {
-        setTimeout(this.play_main, this.timer_delay)
+        if (this.load_outside_set_timeout_p) {
+          this.source_set()
+          this.instance.load()
+          setTimeout(this.play_only, this.timer_delay * 1000)
+        } else {
+          setTimeout(this.src_set_and_play, this.timer_delay * 1000)
+        }
       } else {
-        this.play_main()
+        this.src_set_and_play()
       }
     },
 
-    play_main() {
+    source_set() {
       if (this.singleton_p) {
         if (!this.instance) {
           this.instance = this.instance_create()
@@ -97,9 +117,15 @@ export default {
       } else {
         this.instance = this.instance_create()
       }
-
       this.instance.src = pekowave1_wav
+    },
 
+    src_set_and_play() {
+      this.source_set()
+      this.play_only()
+    },
+
+    play_only() {
       if (this.play_call_p) {
         this.instance.play()
       }
