@@ -47,6 +47,8 @@ div
 
       .buttons
         button.button.is-small(@click="mode1_reset") リセット
+        button.button.is-small(@click="mode2_reset") ホラー
+        button.button.is-small(@click="mode3_reset") 昔の写真
         //- button.button.is-small(@click="mode2_absolute") div1浮遊
         //- button.button.is-small(@click="mode3_25p") 位置25%
         //- button.button.is-small(@click="mode4_0p") 位置0%
@@ -140,6 +142,12 @@ export default {
       })
     },
     //
+
+    mode2_reset() {
+      this.mode1_reset()
+      this.params_invert = 100
+      this.params_contrast = 110
+    },
     // mode2_absolute() {
     // },
     //
