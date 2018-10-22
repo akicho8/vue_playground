@@ -32,8 +32,8 @@
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'geo_location'}") 位置情報チェッカー
               router-link.navbar-item(:to="{name: 'navigator_vibrate'}") 振動機能チェッカー
-              hr.navbar-divider
-              router-link.navbar-item(to="/about") About
+              //- hr.navbar-divider
+              //- router-link.navbar-item(to="/about") About
         .navbar-end
           router-link.navbar-item(:to="{name: 'about'}") About
 
