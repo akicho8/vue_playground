@@ -171,6 +171,7 @@ export default {
           name: ".container",
           list: [
             { name: "なし", value: null,       },
+            { name: "固定", value: "fixed", },
             { name: "絶対", value: "absolute", },
             { name: "相対", value: "relative", },
           ],
@@ -180,6 +181,7 @@ export default {
           name: ".div1",
           list: [
             { name: "なし", value: null,       },
+            { name: "固定", value: "fixed", },
             { name: "絶対", value: "absolute", },
             { name: "相対", value: "relative", },
           ],
