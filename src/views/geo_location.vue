@@ -73,18 +73,18 @@
 
   hr
 
-  button.button(@click="run_once")
-    | {{delay}}秒後に取得({{run_state}})
-
-  | &nbsp;
-  template(v-if="watch_id === null")
-    button.button(@click="start") 追跡開始
-  template(v-else)
-    button.button(@click="stop") 追跡停止
-
-  template(v-if="true")
-    | &nbsp;
-    button.button(@click="rows = []") 結果クリア
+  .buttons
+    button.button.is-small(@click="run_once")
+      template(v-if="delay === 0")
+        | 取得({{run_state}})
+      template(v-else)
+        | {{delay}}秒後に取得({{run_state}})
+    template(v-if="watch_id === null")
+      button.button.is-small(@click="start") 追跡開始
+    template(v-else)
+      button.button.is-small(@click="stop") 追跡停止
+    template(v-if="true")
+      button.button.is-small(@click="rows = []") 結果クリア
 
   hr
 

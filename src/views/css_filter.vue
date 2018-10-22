@@ -224,5 +224,6 @@ export default {
 <style scoped lang="sass">
 pre
   white-space: pre-wrap
-.div1
+img
+  transition: all 1s 0s ease-in-out
 </style>
