@@ -64,6 +64,19 @@
             input(type="radio" v-model="load_outside_set_timeout_p" :value="false")
             | しない
 
+  .field.is-horizontal
+    .field-label.is-small
+      label.label WebAudioAPI
+    .field-body
+      .field.is-narrow
+        .controll
+          label.radio.is-size-7
+            input(type="radio" v-model="audio_api_use_p" :value="true")
+            | 使う
+          label.radio.is-size-7
+            input(type="radio" v-model="audio_api_use_p" :value="false")
+            | 使わない(HTML Audio)
+
   .buttons
     button.button.is-small(@click="run_play")
       | 実行
@@ -88,6 +101,7 @@ export default {
       load_outside_set_timeout_p: false,
       reslt_rows: [],
       instance: null,
+      audio_api_use_p: false,
     }
   },
 
@@ -96,16 +110,24 @@ export default {
 
   methods: {
     run_play() {
-      if (this.timer_use_p) {
-        if (this.load_outside_set_timeout_p) {
-          this.source_set()
-          this.instance.load()
-          setTimeout(this.play_only, this.timer_delay * 1000)
+      if (this.audio_api_use_p) {
+        if (this.timer_use_p) {
+          setTimeout(this.audio_api_call, this.timer_delay * 1000)
         } else {
-          setTimeout(this.src_set_and_play, this.timer_delay * 1000)
+          this.audio_api_call()
         }
       } else {
-        this.src_set_and_play()
+        if (this.timer_use_p) {
+          if (this.load_outside_set_timeout_p) {
+            this.source_set()
+            this.instance.load()
+            setTimeout(this.play_only, this.timer_delay * 1000)
+          } else {
+            setTimeout(this.src_set_and_play, this.timer_delay * 1000)
+          }
+        } else {
+          this.src_set_and_play()
+        }
       }
     },
 
@@ -144,6 +166,20 @@ export default {
         }, false)
       })
       return audio
+    },
+
+    audio_api_call() {
+      const context = new AudioContext()
+      fetch(pekowave1_wav)
+        .then(response => response.arrayBuffer())
+        .then(bin => context.decodeAudioData(bin))
+        .then(buffer => {
+          const source = context.createBufferSource()
+          source.buffer = buffer
+          source.connect(context.destination)
+          source.start(0)
+          // context.close()
+        })
     },
   },
 
