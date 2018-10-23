@@ -3,98 +3,107 @@
   h2.title {{$options.title}}
   hr
 
-  .field.is-horizontal
-    .field-label.is-small
-      label.label モード
-    .field-body
-      .field.is-narrow
-        .controll
-          label.radio.is-size-7
-            input(type="radio" v-model="web_audio_api_use_p" :value="false")
-            | HTML Audio
-          label.radio.is-size-7
-            input(type="radio" v-model="web_audio_api_use_p" :value="true")
-            | WebAudioAPI
+  .columns
+    .column
+      .field.is-horizontal
+        .field-label.is-small
+          label.label モード
+        .field-body
+          .field.is-narrow
+            .controll
+              label.radio.is-size-7
+                input(type="radio" v-model="run_mode" value="html_audio")
+                | HTML Audio
+              label.radio.is-size-7
+                input(type="radio" v-model="run_mode" value="web_audio")
+                | WebAudioAPI
 
-  .field.is-horizontal
-    .field-label.is-small
-      label.label シングルトン
-    .field-body
-      .field.is-narrow
-        .controll
-          label.radio.is-size-7
-            input(type="radio" v-model="singleton_p" :value="true")
-            | 有効
-          label.radio.is-size-7
-            input(type="radio" v-model="singleton_p" :value="false")
-            | 無効
+      .field.is-horizontal
+        .field-label.is-small
+          label.label シングルトン
+        .field-body
+          .field.is-narrow
+            .controll
+              label.radio.is-size-7
+                input(type="radio" v-model="singleton_p" :value="true")
+                | 有効
+              label.radio.is-size-7
+                input(type="radio" v-model="singleton_p" :value="false")
+                | 無効
 
-  .field.is-horizontal
-    .field-label.is-small
-      label.label setTimeout()
-    .field-body
-      .field.has-addons.is-narrow
-        .control
-          span.is-static.is-size-7
-            | の中で
-        .control
-          input.input.is-small(type="number" v-model.number="timer_delay" step="0.1")
-        .control
-          span.is-static.is-size-7
-            | 秒後に実行
-      .field.is-narrow
-        .controll
-          label.radio.is-size-7
-            input(type="radio" v-model="timer_use_p" :value="true")
-            | する
-          label.radio.is-size-7
-            input(type="radio" v-model="timer_use_p" :value="false")
-            | しない
+      .field.is-horizontal
+        .field-label.is-small
+          label.label setTimeout
+        .field-body
+          .field.has-addons.is-narrow
+            .control
+              input.input.is-small(type="number" v-model.number="timer_delay" step="0.1")
+            .control
+              span.is-static.is-size-7
+                | 秒
 
-  template(v-if="!web_audio_api_use_p")
-    .field.is-horizontal
-      .field-label.is-small
-        label.label play()
-      .field-body
-        .field.is-narrow
-          .controll
-            label.radio.is-size-7
-              input(type="radio" v-model="play_call_p" :value="true")
-              | 実行する
-            label.radio.is-size-7
-              input(type="radio" v-model="play_call_p" :value="false")
-              | 実行しない
+      template(v-if="run_mode === 'web_audio'")
+        .field.is-horizontal
+          .field-label.is-small
+            label.label source共有
+          .field-body
+            .field.is-narrow
+              .controll
+                label.radio.is-size-7
+                  input(type="radio" v-model="source_singleton_p" :value="true")
+                  | 有効
+                label.radio.is-size-7
+                  input(type="radio" v-model="source_singleton_p" :value="false")
+                  | 無効
 
-    .field.is-horizontal
-      .field-label.is-small
-        label.label setTimeoutの外で事前にload
-      .field-body
-        .field.is-narrow
-          .controll
-            label.radio.is-size-7
-              input(type="radio" v-model="load_outside_set_timeout_p" :value="true")
-              | する
-            label.radio.is-size-7
-              input(type="radio" v-model="load_outside_set_timeout_p" :value="false")
-              | しない
+      template(v-if="run_mode === 'html_audio'")
+        .field.is-horizontal
+          .field-label.is-small
+            label.label setTimeoutの外で事前にload
+          .field-body
+            .field.is-narrow
+              .controll
+                label.radio.is-size-7
+                  input(type="radio" v-model="load_outside_set_timeout_p" :value="true")
+                  | する
+                label.radio.is-size-7
+                  input(type="radio" v-model="load_outside_set_timeout_p" :value="false")
+                  | しない
+        .field.is-horizontal
+          .field-label.is-small
+            label.label play()
+          .field-body
+            .field.is-narrow
+              .controll
+                label.radio.is-size-7
+                  input(type="radio" v-model="play_call_p" :value="true")
+                  | 実行する
+                label.radio.is-size-7
+                  input(type="radio" v-model="play_call_p" :value="false")
+                  | 実行しない
 
-  .field.is-horizontal
-    .field-label.is-small
-      label.label play()
-    .field-body
-      .field.is-narrow
-        .controll
-          label.radio.is-size-7
-            input(type="radio" v-model="play_call_p" :value="true")
-            | 実行する
-          label.radio.is-size-7
-            input(type="radio" v-model="play_call_p" :value="false")
-            | 実行しない
-
-  .buttons
-    button.button.is-small(@click="run_play")
-      | 実行
-    button.button.is-small(@click="reslt_rows = []") クリア
+      .buttons
+        button.button.is-small(@click="run_play")
+          template(v-if="timer_use_p")
+            | {{timer_delay}}秒後に実行
+          template(v-else)
+            | 実行
+        button.button.is-small(@click="reslt_rows = []") クリア
+        template(v-if="run_mode === 'html_audio'")
+          button.button.is-small(@click="html_audio_instance_clear") インスタンスクリア
+        template(v-if="run_mode === 'web_audio'")
+          button.button.is-small(@click="run_resume") resume
+          button.button.is-small(@click="run_close") close
+          button.button.is-small(@click="run_null") インスタンスクリア
+          button.button.is-small(@click="run_disconnect") source.disconnect()
+    .column
+      .content.is-size-7
+        ul
+          li AudioContext: {{!!window.AudioContext}}
+          li webkitAudioContext: {{!!window.webkitAudioContext}}
+          li Audioインスタンス: {{html_audio_instance ? html_audio_instance.constructor.name : 'null'}}
+          li AudioContextインスタンス: {{web_audio_context ? web_audio_context.constructor.name : 'null'}}
+          li source: {{source ? source.constructor.name : 'null'}}
 
   .content.is-size-7.has-text-grey-light
     ul
@@ -111,18 +120,19 @@ import dayjs from "dayjs"
 
 export default {
   name: 'audio_event_checker',
-  title: "Audioイベントチェッカー",
+  title: "HTML Audio / Web Audio API 挙動確認",
   data() {
     return {
-      timer_delay: 0.5,
+      timer_delay: "",
       singleton_p: false,
+      source_singleton_p: false,
       play_call_p: true,
-      timer_use_p: false,
       load_outside_set_timeout_p: false,
       reslt_rows: [],
-      instance: null,
-      web_audio_api_use_p: false,
-      context: null,
+      html_audio_instance: null,
+      run_mode: 'html_audio',
+      web_audio_context: null,
+      source: null,
     }
   },
 
@@ -130,51 +140,80 @@ export default {
   },
 
   methods: {
+    run_resume() {
+      this.web_audio_context_set()
+      this.web_audio_context.resume()
+    },
+
+    run_close() {
+      if (this.web_audio_context) {
+        this.web_audio_context.close().then(() => console.log("web_audio_context.close()"))
+      }
+    },
+
+    run_null() {
+      if (this.web_audio_context) {
+        this.web_audio_context = null
+      }
+    },
+
+    html_audio_instance_clear() {
+      if (this.html_audio_instance) {
+        this.html_audio_instance = null
+      }
+    },
+
+    run_disconnect() {
+      if (this.source) {
+        this.source.disconnect()
+      }
+    },
+
     run_play() {
-      if (this.web_audio_api_use_p) {
-        if (this.timer_use_p) {
-          setTimeout(this.audio_api_call, this.timer_delay * 1000)
-        } else {
-          this.audio_api_call()
-        }
-      } else {
+      if (this.run_mode === 'html_audio') {
         if (this.timer_use_p) {
           if (this.load_outside_set_timeout_p) {
-            this.source_set()
-            this.instance.load()
+            this.html_audio_source_set()
+            this.html_audio_instance.load()
             setTimeout(this.play_only, this.timer_delay * 1000)
           } else {
-            setTimeout(this.src_set_and_play, this.timer_delay * 1000)
+            setTimeout(this.html_audio_run, this.timer_delay * 1000)
           }
         } else {
-          this.src_set_and_play()
-        }
-      }
-    },
-
-    source_set() {
-      if (this.singleton_p) {
-        if (!this.instance) {
-          this.instance = this.instance_create()
+          this.html_audio_run()
         }
       } else {
-        this.instance = this.instance_create()
+        if (this.timer_use_p) {
+          setTimeout(this.web_audio_run, this.timer_delay * 1000)
+        } else {
+          this.web_audio_run()
+        }
       }
-      this.instance.src = pekowave1_wav
     },
 
-    src_set_and_play() {
-      this.source_set()
+    html_audio_source_set() {
+      if (this.singleton_p) {
+        if (!this.html_audio_instance) {
+          this.html_audio_instance = this.html_audio_instance_create()
+        }
+      } else {
+        this.html_audio_instance = this.html_audio_instance_create()
+      }
+      this.html_audio_instance.src = pekowave1_wav
+    },
+
+    html_audio_run() {
+      this.html_audio_source_set()
       this.play_only()
     },
 
     play_only() {
       if (this.play_call_p) {
-        this.instance.play()
+        this.html_audio_instance.play()
       }
     },
 
-    instance_create() {
+    html_audio_instance_create() {
       const audio = new Audio()
       Object.values(this.EventInfo).forEach(event_info => {
         audio.addEventListener(event_info.key, event => {
@@ -189,27 +228,71 @@ export default {
       return audio
     },
 
-    audio_api_call() {
-      const AudioContext = window.AudioContext || window.webkitAudioContext
+    web_audio_context_set() {
       if (this.singleton_p) {
-        this.context = this.context || new AudioContext()
+        if (!this.web_audio_context) {
+          this.web_audio_context = this.web_audio_context_create()
+        }
       } else {
-        this.context = new AudioContext()
+        this.web_audio_context = this.web_audio_context_create()
       }
-      const context = this.context
-      const source = context.createBufferSource()
+    },
+
+    web_audio_context_create() {
+      const web_audio_context = new this.AudioContext()
+      // Object.values(this.EventInfo2).forEach(event_info => {
+      //   web_audio_context.addEventListener(event_info.key, event => {
+      //     console.log(event)
+      //     this.reslt_rows.push({
+      //       time: dayjs(event.timeStamp).format("mm:ss.SSS"),
+      //       type: event.type,
+      //       name: this.EventInfo[event.type].name,
+      //     })
+      //   }, false)
+      // })
+      return web_audio_context
+    },
+
+    source_create() {
+      const source = this.web_audio_context.createBufferSource()
+      Object.values(this.EventInfo2).forEach(event_info => {
+        source.addEventListener(event_info.key, event => {
+          console.log(event)
+          this.reslt_rows.push({
+            time: dayjs(event.timeStamp).format("mm:ss.SSS"),
+            type: event.type,
+            name: this.EventInfo[event.type].name,
+          })
+        }, false)
+      })
+      return source
+    },
+
+    web_audio_source_set() {
+      if (this.source_singleton_p) {
+        if (!this.source) {
+          this.source = this.source_create()
+        }
+      } else {
+        this.source = this.source_create()
+      }
+    },
+
+    web_audio_run() {
+      this.web_audio_context_set()
+      this.web_audio_source_set()
 
       // Safari は Promise 構文に対応していない
       // https://qiita.com/zprodev/items/7fcd8335d7e8e613a01f#%E3%83%9A%E3%83%BC%E3%82%B8%E3%83%AA%E3%83%AD%E3%83%BC%E3%83%89%E3%81%A7%E3%83%A1%E3%83%A2%E3%83%AA%E3%83%AA%E3%83%BC%E3%82%AF
       if (false) {
         fetch(pekowave1_wav)
           .then(response => response.arrayBuffer())
-          .then(bin => context.decodeAudioData(bin))
+          .then(bin => this.web_audio_context.decodeAudioData(bin))
           .then(buffer => {
-            source.buffer = buffer
-            source.connect(context.destination)
-            source.start(0)
-            // context.close()
+            this.source.buffer = buffer
+            this.source.connect(this.web_audio_context.destination)
+            this.source.start(0)
+            // this.web_audio_context.close()
         })
       }
 
@@ -219,13 +302,13 @@ export default {
         req.onreadystatechange = () => {
           if (req.readyState === 4) {
             if (req.status === 0 || req.status === 200) {
-              context.decodeAudioData(req.response, buffer => {
+              this.web_audio_context.decodeAudioData(req.response, buffer => {
                 // Safari ではここで createBufferSource() すると鳴らない
-                // const source = context.createBufferSource()
-                source.buffer = buffer
-                source.connect(context.destination)
-                source.start(0)
-                // context.close()
+                // const this.source = this.web_audio_context.createBufferSource()
+                this.source.buffer = buffer
+                this.source.connect(this.web_audio_context.destination)
+                this.source.start(0)
+                // this.web_audio_context.close()
               })
             }
           }
@@ -264,12 +347,26 @@ export default {
       ].reduce((a, e, i) => ({...a, [e.key]: {code: i, ...e}}), {})
     },
 
+    EventInfo2() {
+      return [
+        { key: "ended",          name: "完了",                   description: "?", },
+      ].reduce((a, e, i) => ({...a, [e.key]: {code: i, ...e}}), {})
+    },
+
     table_columns() {
       return [
         { field: 'time', label: '時間',   sortable: true, numeric: true, },
         { field: 'type', label: 'タイプ', sortable: true,                },
         { field: 'name', label: '意味',                                  },
       ]
+    },
+
+    timer_use_p() {
+      return typeof this.timer_delay === "number"
+    },
+
+    AudioContext() {
+      return window.AudioContext || window.webkitAudioContext
     },
   },
 }
