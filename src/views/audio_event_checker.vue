@@ -78,6 +78,19 @@
               input(type="radio" v-model="load_outside_set_timeout_p" :value="false")
               | しない
 
+  .field.is-horizontal
+    .field-label.is-small
+      label.label play()
+    .field-body
+      .field.is-narrow
+        .controll
+          label.radio.is-size-7
+            input(type="radio" v-model="play_call_p" :value="true")
+            | 実行する
+          label.radio.is-size-7
+            input(type="radio" v-model="play_call_p" :value="false")
+            | 実行しない
+
   .buttons
     button.button.is-small(@click="run_play")
       | 実行
