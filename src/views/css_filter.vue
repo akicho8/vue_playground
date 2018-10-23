@@ -30,7 +30,7 @@ div
                       template(v-else)
                         span(v-text="e.name || e.value" :title="e.value")
                 template(v-if="record.range")
-                  input(type="range" v-model.number="$data[record.key]" :min="record.range.min" :max="record.range.max" :step="record.range.step" :disabled="!(!record.display_key || $data[record.display_key])")
+                  input(type="range" v-model.number="$data[record.key]" @input="smooth_p = false" :min="record.range.min" :max="record.range.max" :step="record.range.step" :disabled="!(!record.display_key || $data[record.display_key])")
                   span.range_number
                     | {{$data[record.key]}}
 
@@ -67,9 +67,10 @@ div
       template(v-if="NODE_ENV !== 'production'")
         .box
           div {{img_style}}
+          div smooth_p: {{smooth_p}}
 
     .column
-      img(:style="img_style" src="@/assets/ISG106132539_TP_V.jpg")
+      img(:style="img_style" :class="{smooth_p: smooth_p}" src="@/assets/ISG106132539_TP_V.jpg")
 </template>
 
 <script>
@@ -79,6 +80,7 @@ export default {
   data() {
     return {
       real_value_p: false,
+      smooth_p: false,
 
       params_brightness: null,
       params_brightness_p: true,
@@ -133,6 +135,8 @@ export default {
 
   methods: {
     mode1_reset() {
+      this.smooth_p = true
+
       this.input_elements.forEach(e => {
         this.$data[e.display_key] = true
 
@@ -225,5 +229,6 @@ export default {
 pre
   white-space: pre-wrap
 img
-  transition: all 1s 0s ease-in-out
+  &.smooth_p
+    transition: all 0.5s 0s ease-in-out
 </style>
