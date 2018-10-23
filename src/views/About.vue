@@ -33,13 +33,15 @@ export default {
   computed: {
     vuejs_infos() {
       return [
-        { name: "$route.query",  value: this.$route.query    },
-        { name: "$route.path",   value: this.$route.path     },
-        { name: "$route.name",   value: this.$route.name     },
-        { name: "$route.params", value: this.$route.params   },
-        { name: "$route",        value: inspect(this.$route) },
-        { name: "$store",        value: inspect(this.$store) },
-        { name: "NODE_ENV",      value: this.NODE_ENV        },
+        { name: "NODE_ENV",        value: this.NODE_ENV                 },
+        { name: "$route.query",    value: this.$route.query             },
+        { name: "$route.path",     value: this.$route.path              },
+        { name: "$route.name",     value: this.$route.name              },
+        { name: "$route.params",   value: this.$route.params            },
+        { name: "$route",          value: inspect(this.$route)          },
+        { name: "$store",          value: inspect(this.$store)          },
+        { name: "$router.mode",    value: this.$router.mode             },
+        { name: "$router.options", value: inspect(this.$router.options) },
       ]
     },
 
