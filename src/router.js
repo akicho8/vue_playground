@@ -72,5 +72,10 @@ export default new Router({
       name: 'audio_event_checker',
       component: () => import(/* webpackChunkName: "audio_event_checker" */ './views/audio_event_checker.vue')
     },
+    {
+      path: '/audio_api',
+      name: 'audio_api',
+      component: () => import(/* webpackChunkName: "audio_api" */ './views/audio_api.vue')
+    },
   ]
 })

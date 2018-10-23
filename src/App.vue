@@ -33,6 +33,7 @@
               router-link.navbar-item(:to="{name: 'geo_location'}") 位置情報チェッカー
               router-link.navbar-item(:to="{name: 'navigator_vibrate'}") 振動機能チェッカー
               router-link.navbar-item(:to="{name: 'audio_event_checker'}") Audioイベントチェッカー
+              router-link.navbar-item(:to="{name: 'audio_api'}") Audio API
               //- hr.navbar-divider
               //- router-link.navbar-item(to="/about") About
         .navbar-end
