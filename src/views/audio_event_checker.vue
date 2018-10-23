@@ -5,6 +5,19 @@
 
   .field.is-horizontal
     .field-label.is-small
+      label.label モード
+    .field-body
+      .field.is-narrow
+        .controll
+          label.radio.is-size-7
+            input(type="radio" v-model="web_audio_api_use_p" :value="false")
+            | HTML Audio
+          label.radio.is-size-7
+            input(type="radio" v-model="web_audio_api_use_p" :value="true")
+            | WebAudioAPI
+
+  .field.is-horizontal
+    .field-label.is-small
       label.label シングルトン
     .field-body
       .field.is-narrow
@@ -15,19 +28,6 @@
           label.radio.is-size-7
             input(type="radio" v-model="singleton_p" :value="false")
             | 無効
-
-  .field.is-horizontal
-    .field-label.is-small
-      label.label play()
-    .field-body
-      .field.is-narrow
-        .controll
-          label.radio.is-size-7
-            input(type="radio" v-model="play_call_p" :value="true")
-            | 実行する
-          label.radio.is-size-7
-            input(type="radio" v-model="play_call_p" :value="false")
-            | 実行しない
 
   .field.is-horizontal
     .field-label.is-small
@@ -51,31 +51,32 @@
             input(type="radio" v-model="timer_use_p" :value="false")
             | しない
 
-  .field.is-horizontal
-    .field-label.is-small
-      label.label setTimeoutの外で事前にload
-    .field-body
-      .field.is-narrow
-        .controll
-          label.radio.is-size-7
-            input(type="radio" v-model="load_outside_set_timeout_p" :value="true")
-            | する
-          label.radio.is-size-7
-            input(type="radio" v-model="load_outside_set_timeout_p" :value="false")
-            | しない
+  template(v-if="!web_audio_api_use_p")
+    .field.is-horizontal
+      .field-label.is-small
+        label.label play()
+      .field-body
+        .field.is-narrow
+          .controll
+            label.radio.is-size-7
+              input(type="radio" v-model="play_call_p" :value="true")
+              | 実行する
+            label.radio.is-size-7
+              input(type="radio" v-model="play_call_p" :value="false")
+              | 実行しない
 
-  .field.is-horizontal
-    .field-label.is-small
-      label.label WebAudioAPI
-    .field-body
-      .field.is-narrow
-        .controll
-          label.radio.is-size-7
-            input(type="radio" v-model="audio_api_use_p" :value="true")
-            | 使う
-          label.radio.is-size-7
-            input(type="radio" v-model="audio_api_use_p" :value="false")
-            | 使わない(HTML Audio)
+    .field.is-horizontal
+      .field-label.is-small
+        label.label setTimeoutの外で事前にload
+      .field-body
+        .field.is-narrow
+          .controll
+            label.radio.is-size-7
+              input(type="radio" v-model="load_outside_set_timeout_p" :value="true")
+              | する
+            label.radio.is-size-7
+              input(type="radio" v-model="load_outside_set_timeout_p" :value="false")
+              | しない
 
   .buttons
     button.button.is-small(@click="run_play")
@@ -107,7 +108,7 @@ export default {
       load_outside_set_timeout_p: false,
       reslt_rows: [],
       instance: null,
-      audio_api_use_p: false,
+      web_audio_api_use_p: false,
       context: null,
     }
   },
@@ -117,7 +118,7 @@ export default {
 
   methods: {
     run_play() {
-      if (this.audio_api_use_p) {
+      if (this.web_audio_api_use_p) {
         if (this.timer_use_p) {
           setTimeout(this.audio_api_call, this.timer_delay * 1000)
         } else {
@@ -185,6 +186,8 @@ export default {
       const context = this.context
       const source = context.createBufferSource()
 
+      // Safari は Promise 構文に対応していない
+      // https://qiita.com/zprodev/items/7fcd8335d7e8e613a01f#%E3%83%9A%E3%83%BC%E3%82%B8%E3%83%AA%E3%83%AD%E3%83%BC%E3%83%89%E3%81%A7%E3%83%A1%E3%83%A2%E3%83%AA%E3%83%AA%E3%83%BC%E3%82%AF
       if (false) {
         fetch(pekowave1_wav)
           .then(response => response.arrayBuffer())
