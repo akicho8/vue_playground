@@ -64,29 +64,10 @@
             input(type="radio" v-model="load_outside_set_timeout_p" :value="false")
             | しない
 
-  .field.is-horizontal
-    .field-label.is-small
-      label.label WebAudioAPI
-    .field-body
-      .field.is-narrow
-        .controll
-          label.radio.is-size-7
-            input(type="radio" v-model="audio_api_use_p" :value="true")
-            | 使う
-          label.radio.is-size-7
-            input(type="radio" v-model="audio_api_use_p" :value="false")
-            | 使わない(HTML Audio)
-
   .buttons
     button.button.is-small(@click="run_play")
       | 実行
     button.button.is-small(@click="reslt_rows = []") クリア
-
-  .content.is-size-7.has-text-grey-light
-    ul
-      li Safari では fetch を使うと動かない。XMLHttpRequest では動く
-      li Safari では AudioContext をシングルトンにしなかったら数回目でエラー
-      li Safari では source = context.createBufferSource() を decodeAudioData のブロック内で行うと鳴らない
 
   b-table(:data="reslt_rows" :hoverable="true" :columns="table_columns" narrowed)
 </template>
@@ -107,8 +88,6 @@ export default {
       load_outside_set_timeout_p: false,
       reslt_rows: [],
       instance: null,
-      audio_api_use_p: false,
-      context: null,
     }
   },
 
@@ -117,25 +96,28 @@ export default {
 
   methods: {
     run_play() {
-      if (this.audio_api_use_p) {
-        if (this.timer_use_p) {
-          setTimeout(this.audio_api_call, this.timer_delay * 1000)
-        } else {
-          this.audio_api_call()
-        }
-      } else {
-        if (this.timer_use_p) {
-          if (this.load_outside_set_timeout_p) {
-            this.source_set()
-            this.instance.load()
-            setTimeout(this.play_only, this.timer_delay * 1000)
-          } else {
-            setTimeout(this.src_set_and_play, this.timer_delay * 1000)
-          }
-        } else {
-          this.src_set_and_play()
-        }
-      }
+      const AudioContext = window.AudioContext || window.webkitAudioContext
+      const context = new AudioContext()
+      fetch(pekowave1_wav)
+        .then(response => response.arrayBuffer())
+        .then(bin => context.decodeAudioData(bin))
+        .then(buffer => {
+          const source = context.createBufferSource()
+          source.buffer = buffer
+          source.connect(context.destination)
+          source.start(0)
+          // context.close()
+        })
+
+      // fetch(pekowave1_wav)
+      //   .then(response => response.arrayBuffer())
+      //   .then(bin => context.decodeAudioData(bin, buffer => {
+      //     const source = context.createBufferSource()
+      //     source.buffer = buffer
+      //     source.connect(context.destination)
+      //     source.start(0)
+      //   }))
+
     },
 
     source_set() {
@@ -173,50 +155,6 @@ export default {
         }, false)
       })
       return audio
-    },
-
-    audio_api_call() {
-      const AudioContext = window.AudioContext || window.webkitAudioContext
-      if (this.singleton_p) {
-        this.context = this.context || new AudioContext()
-      } else {
-        this.context = new AudioContext()
-      }
-      const context = this.context
-      const source = context.createBufferSource()
-
-      if (false) {
-        fetch(pekowave1_wav)
-          .then(response => response.arrayBuffer())
-          .then(bin => context.decodeAudioData(bin))
-          .then(buffer => {
-            source.buffer = buffer
-            source.connect(context.destination)
-            source.start(0)
-            // context.close()
-        })
-      }
-
-      if (true) {
-        const req = new XMLHttpRequest()
-        req.responseType = "arraybuffer"
-        req.onreadystatechange = () => {
-          if (req.readyState === 4) {
-            if (req.status === 0 || req.status === 200) {
-              context.decodeAudioData(req.response, buffer => {
-                // Safari ではここで createBufferSource() すると鳴らない
-                // const source = context.createBufferSource()
-                source.buffer = buffer
-                source.connect(context.destination)
-                source.start(0)
-                // context.close()
-              })
-            }
-          }
-        }
-        req.open("GET", pekowave1_wav, true)
-        req.send("")
-      }
     },
   },
 
