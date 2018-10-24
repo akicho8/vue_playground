@@ -16,7 +16,7 @@
 
           template(v-if="false")
             router-link.navbar-item(to="/about") About
-            router-link.navbar-item(to="/geo_location") 位置情報チェッカー
+            router-link.navbar-item(to="/geo_location") 位置情報
 
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link 機能
@@ -30,8 +30,8 @@
               router-link.navbar-item(:to="{name: 'css_position'}") CSS Position
               router-link.navbar-item(:to="{name: 'css_filter'}") CSS Filter
               hr.navbar-divider
-              router-link.navbar-item(:to="{name: 'geo_location'}") 位置情報チェッカー
-              router-link.navbar-item(:to="{name: 'navigator_vibrate'}") 振動機能チェッカー
+              router-link.navbar-item(:to="{name: 'geo_location'}") 位置情報
+              router-link.navbar-item(:to="{name: 'navigator_vibrate'}") 振動機能
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'html_audio_checker'}") HTML Audio
               router-link.navbar-item(:to="{name: 'web_audio_api_checker'}") Web Audio API
@@ -93,7 +93,7 @@
               p.menu-label
                 | JavaScript
               ul.menu-list
-                li: router-link(:to="{name: 'geo_location'}") 位置情報チェッカー
+                li: router-link(:to="{name: 'geo_location'}") 位置情報
           .column
             router-view
   template(v-if="false")

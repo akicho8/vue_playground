@@ -105,7 +105,7 @@
 <script>
 export default {
   name: 'geo_location',
-  title: "位置情報チェッカー",
+  title: "位置情報",
   data() {
     return {
       counter: 0,

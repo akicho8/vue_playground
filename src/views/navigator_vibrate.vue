@@ -24,7 +24,7 @@ div
 <script>
 export default {
   name: "navigator_vibrate",
-  title: "振動機能チェッカー",
+  title: "振動機能",
 
   data() {
     return {
