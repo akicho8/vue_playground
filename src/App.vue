@@ -32,8 +32,10 @@
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'geo_location'}") 位置情報チェッカー
               router-link.navbar-item(:to="{name: 'navigator_vibrate'}") 振動機能チェッカー
-              router-link.navbar-item(:to="{name: 'audio_event_checker'}") HTML Audio / Web Audio API 挙動確認
-              router-link.navbar-item(:to="{name: 'audio_api'}") Audio API
+              hr.navbar-divider
+              router-link.navbar-item(:to="{name: 'html_audio_checker'}") HTML Audio
+              router-link.navbar-item(:to="{name: 'web_audio_api_checker'}") Web Audio API
+              router-link.navbar-item(:to="{name: 'web_audio_api_checker2'}") Web Audio API2
               //- hr.navbar-divider
               //- router-link.navbar-item(to="/about") About
         .navbar-end

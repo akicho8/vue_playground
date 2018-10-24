@@ -1,5 +1,5 @@
 <template lang="pug">
-.audio_event_checker
+.html_audio_checker
   h2.title {{$options.title}}
   hr
   .buttons
@@ -11,7 +11,7 @@
 import pekowave1_wav from "@/assets/pekowave1.wav"
 
 export default {
-  name: 'audio_api',
+  name: 'web_audio_api_checker2',
   title: "Web Audio API 挙動確認",
   data() {
     return {

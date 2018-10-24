@@ -68,14 +68,19 @@ export default new Router({
       component: () => import(/* webpackChunkName: "css_filter" */ './views/css_filter.vue')
     },
     {
-      path: '/audio_event_checker',
-      name: 'audio_event_checker',
-      component: () => import(/* webpackChunkName: "audio_event_checker" */ './views/audio_event_checker.vue')
+      path: '/html_audio_checker',
+      name: 'html_audio_checker',
+      component: () => import(/* webpackChunkName: "html_audio_checker" */ './views/html_audio_checker.vue')
     },
     {
-      path: '/audio_api',
-      name: 'audio_api',
-      component: () => import(/* webpackChunkName: "audio_api" */ './views/audio_api.vue')
+      path: '/web_audio_api_checker',
+      name: 'web_audio_api_checker',
+      component: () => import(/* webpackChunkName: "web_audio_api_checker" */ './views/web_audio_api_checker.vue')
+    },
+    {
+      path: '/web_audio_api_checker2',
+      name: 'web_audio_api_checker2',
+      component: () => import(/* webpackChunkName: "web_audio_api_checker2" */ './views/web_audio_api_checker2.vue')
     },
   ]
 })

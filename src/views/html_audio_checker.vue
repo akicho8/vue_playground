@@ -1,5 +1,5 @@
 <template lang="pug">
-.audio_event_checker
+.html_audio_checker
   h2.title {{$options.title}}
   hr
 
@@ -92,6 +92,7 @@
         template(v-if="run_mode === 'html_audio'")
           button.button.is-small(@click="html_audio_instance_clear") インスタンスクリア
         template(v-if="run_mode === 'web_audio'")
+          button.button.is-small(@click="run_suspend") suspend
           button.button.is-small(@click="run_resume") resume
           button.button.is-small(@click="run_close") close
           button.button.is-small(@click="run_null") インスタンスクリア
@@ -103,6 +104,7 @@
           li webkitAudioContext: {{!!window.webkitAudioContext}}
           li Audioインスタンス: {{html_audio_instance ? html_audio_instance.constructor.name : 'null'}}
           li AudioContextインスタンス: {{web_audio_context ? web_audio_context.constructor.name : 'null'}}
+          li state: {{state}}
           li source: {{source ? source.constructor.name : 'null'}}
 
   .content.is-size-7.has-text-grey-light
@@ -119,20 +121,21 @@ import pekowave1_wav from "@/assets/pekowave1.wav"
 import dayjs from "dayjs"
 
 export default {
-  name: 'audio_event_checker',
+  name: 'html_audio_checker',
   title: "HTML Audio / Web Audio API 挙動確認",
   data() {
     return {
       timer_delay: "",
-      singleton_p: false,
+      singleton_p: true,
       source_singleton_p: false,
       play_call_p: true,
       load_outside_set_timeout_p: false,
       reslt_rows: [],
       html_audio_instance: null,
-      run_mode: 'html_audio',
+      run_mode: 'web_audio',
       web_audio_context: null,
       source: null,
+      state: null,
     }
   },
 
@@ -142,13 +145,19 @@ export default {
   methods: {
     run_resume() {
       this.web_audio_context_set()
-      this.web_audio_context.resume()
+      this.web_audio_context.resume().then(() => {})
     },
 
     run_close() {
-      if (this.web_audio_context) {
-        this.web_audio_context.close().then(() => console.log("web_audio_context.close()"))
-      }
+      this.web_audio_context_set()
+      this.web_audio_context.close().then(() => {})
+      // this.web_audio_context.close().then(this.state_update)
+    },
+
+    run_suspend() {
+      this.web_audio_context_set()
+      this.web_audio_context.suspend().then(() => {})
+      // this.web_audio_context.suspend().then(this.state_update)
     },
 
     run_null() {
@@ -239,17 +248,21 @@ export default {
     },
 
     web_audio_context_create() {
-      const web_audio_context = new this.AudioContext()
-      // Object.values(this.EventInfo2).forEach(event_info => {
-      //   web_audio_context.addEventListener(event_info.key, event => {
-      //     console.log(event)
-      //     this.reslt_rows.push({
-      //       time: dayjs(event.timeStamp).format("mm:ss.SSS"),
-      //       type: event.type,
-      //       name: this.EventInfo[event.type].name,
-      //     })
-      //   }, false)
-      // })
+      const web_audio_context = new this.AudioContextClass()
+      Object.values(this.EventInfo3).forEach(event_info => {
+        web_audio_context.addEventListener(event_info.key, event => {
+          console.log(event)
+          const info = this.EventInfo3[event.type]
+          this.reslt_rows.push({
+            time: dayjs(event.timeStamp).format("mm:ss.SSS"),
+            type: event.type,
+            name: info.name,
+          })
+          if (info.func) {
+            info.func(event)
+          }
+        }, false)
+      })
       return web_audio_context
     },
 
@@ -281,6 +294,7 @@ export default {
     web_audio_run() {
       this.web_audio_context_set()
       this.web_audio_source_set()
+      // this.state_update()
 
       // Safari は Promise 構文に対応していない
       // https://qiita.com/zprodev/items/7fcd8335d7e8e613a01f#%E3%83%9A%E3%83%BC%E3%82%B8%E3%83%AA%E3%83%AD%E3%83%BC%E3%83%89%E3%81%A7%E3%83%A1%E3%83%A2%E3%83%AA%E3%83%AA%E3%83%BC%E3%82%AF
@@ -309,6 +323,7 @@ export default {
                 this.source.connect(this.web_audio_context.destination)
                 this.source.start(0)
                 // this.web_audio_context.close()
+                // this.state_update()
               })
             }
           }
@@ -317,6 +332,16 @@ export default {
         req.send("")
       }
     },
+  },
+
+  watch: {
+    // "web_audio_context.state": {
+    //   deep: true,
+    //   immediate: true,
+    //   handler() {
+    //     this.state_update()
+    //   },
+    // },
   },
 
   computed: {
@@ -349,7 +374,19 @@ export default {
 
     EventInfo2() {
       return [
-        { key: "ended",          name: "完了",                   description: "?", },
+        { key: "ended",              name: "完了", description: "?", },
+      ].reduce((a, e, i) => ({...a, [e.key]: {code: i, ...e}}), {})
+    },
+
+    EventInfo3() {
+      return [
+        { key: "statechange",        name: "",     description: "", func: (e) => { this.state = e.target.state }}, // or this.web_audio_context.state
+        { key: "complete",           name: "",     description: "", },
+        { key: "ended",              name: "",     description: "", },
+        { key: "message",            name: "",     description: "", },
+        { key: "loaded",             name: "",     description: "", },
+        { key: "audioprocess",       name: "",     description: "", },
+        { key: "nodecreate        ", name: "",     description: "", },
       ].reduce((a, e, i) => ({...a, [e.key]: {code: i, ...e}}), {})
     },
 
@@ -365,7 +402,7 @@ export default {
       return typeof this.timer_delay === "number"
     },
 
-    AudioContext() {
+    AudioContextClass() {
       return window.AudioContext || window.webkitAudioContext
     },
   },
