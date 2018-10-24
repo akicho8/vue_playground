@@ -75,8 +75,7 @@
 </template>
 
 <script>
-import se_maoudamashii_chime13 from "@/assets/se_maoudamashii_chime13.wav" // https://maoudamashii.jokersounds.com/list/se4.html
-
+import pekowave1_wav from "@/assets/pekowave1.wav"
 import dayjs from "dayjs"
 
 export default {
@@ -88,7 +87,6 @@ export default {
       singleton_p: true,
       source_singleton_p: false,
       reslt_rows: [],
-      html_audio_instance: null,
       web_audio_context: null,
       source: null,
       state: null,
@@ -152,8 +150,8 @@ export default {
 
     web_audio_context_create() {
       const web_audio_context = new this.AudioContextClass()
-      Object.values(this.EventInfo3).forEach(event_info => {
-        web_audio_context.addEventListener(event_info.key, event => {
+      Object.values(this.EventInfo3).forEach(info => {
+        web_audio_context.addEventListener(info.key, event => {
           console.log(event)
           const info = this.EventInfo3[event.type]
           this.reslt_rows.push({
@@ -172,8 +170,8 @@ export default {
 
     source_create() {
       const source = this.web_audio_context.createBufferSource()
-      Object.values(this.EventInfo2).forEach(event_info => {
-        source.addEventListener(event_info.key, event => {
+      Object.values(this.EventInfo2).forEach(info => {
+        source.addEventListener(info.key, event => {
           console.log(event)
           this.reslt_rows.push({
             target: event.target.constructor.name,
@@ -202,7 +200,7 @@ export default {
       // Safari は Promise 構文に対応していない
       // https://qiita.com/zprodev/items/7fcd8335d7e8e613a01f#%E3%83%9A%E3%83%BC%E3%82%B8%E3%83%AA%E3%83%AD%E3%83%BC%E3%83%89%E3%81%A7%E3%83%A1%E3%83%A2%E3%83%AA%E3%83%AA%E3%83%BC%E3%82%AF
       if (false) {
-        fetch(se_maoudamashii_chime13)
+        fetch(pekowave1_wav)
           .then(response => response.arrayBuffer())
           .then(bin => this.web_audio_context.decodeAudioData(bin))
           .then(buffer => {
@@ -225,13 +223,17 @@ export default {
               this.web_audio_context.decodeAudioData(req.response, buffer => {
                 // 【重要】Safari ではここで createBufferSource() すると鳴らない
                 this.source.buffer = buffer
+                // console.log(this.source)
+                // this.source.stop()
                 this.source.connect(this.web_audio_context.destination)
-                this.source.start(0)
+                console.log(this.source)
+                this.source.start()
+                console.log(this.source)
               })
             }
           }
         }
-        req.open("GET", se_maoudamashii_chime13, true)
+        req.open("GET", pekowave1_wav, true)
         req.send("")
       }
     },

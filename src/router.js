@@ -78,9 +78,9 @@ export default new Router({
       component: () => import(/* webpackChunkName: "web_audio_api_checker" */ './views/web_audio_api_checker.vue')
     },
     {
-      path: '/web_audio_api_checker2',
-      name: 'web_audio_api_checker2',
-      component: () => import(/* webpackChunkName: "web_audio_api_checker2" */ './views/web_audio_api_checker2.vue')
+      path: '/web_audio_api_for_mobile',
+      name: 'web_audio_api_for_mobile',
+      component: () => import(/* webpackChunkName: "web_audio_api_for_mobile" */ './views/web_audio_api_for_mobile.vue')
     },
   ]
 })

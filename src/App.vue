@@ -35,7 +35,7 @@
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'html_audio_checker'}") HTML Audio
               router-link.navbar-item(:to="{name: 'web_audio_api_checker'}") Web Audio API
-              router-link.navbar-item(:to="{name: 'web_audio_api_checker2'}") Web Audio API2
+              router-link.navbar-item(:to="{name: 'web_audio_api_for_mobile'}") Chrome(PC), Safari(PC, Mobile) で確実に鳴る Web Audio API
               //- hr.navbar-divider
               //- router-link.navbar-item(to="/about") About
         .navbar-end
