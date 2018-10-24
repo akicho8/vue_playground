@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+.css_position
   .h2.title {{$options.title}}
   hr
 
@@ -109,6 +109,11 @@ div
         button.button.is-small(@click="mode4_0p") 位置0%
         button.button.is-small(@click="mode5_center") 中央配置
         button.button.is-small(@click="mode6_bottom_right") 右下配置
+        button.button.is-small(@click="mode7_func") 画面中央
+        button.button.is-small(@click="mode8_func") 画面上
+        button.button.is-small(@click="mode9_func") 画面下
+        button.button.is-small(@click="mode10_func") 画面右
+        button.button.is-small(@click="mode11_func") 画面左
 
       pre.is-size-7(v-text="flex_css")
 
@@ -157,7 +162,7 @@ export default {
       div1_position: "absolute",
 
       div0_w: "",
-      div0_h: "320",
+      div0_h: "320px",
       div1_w: "",
       div1_h: "",
 
@@ -236,6 +241,45 @@ export default {
       this.params_left_p   = false
       this.params_right_p  = true
     },
+
+    mode7_func() {
+      this.mode5_center()
+      this.div1_position = "fixed"
+    },
+
+    mode8_func() {
+      this.mode4_0p()
+      this.div1_position = "fixed"
+      this.div1_w = ""
+      this.div1_h = "25%"
+      this.params_top_p    = true
+      this.params_bottom_p = false
+      this.params_left_p   = true
+      this.params_right_p  = true
+    },
+
+    mode9_func() {
+      this.mode8_func()
+      this.params_top_p    = false
+      this.params_bottom_p = true
+    },
+
+    mode10_func() {
+      this.mode4_0p()
+      this.div1_position = "fixed"
+      this.div1_w = "25%"
+      this.div1_h = ""
+      this.params_top_p    = true
+      this.params_bottom_p = true
+      this.params_left_p   = true
+      this.params_right_p  = false
+    },
+
+    mode11_func() {
+      this.mode10_func()
+      this.params_left_p   = false
+      this.params_right_p  = true
+    },
   },
 
   computed: {
@@ -245,10 +289,10 @@ export default {
         hash["position"] = this.div0_position
       }
       if (this.div0_w !== "") {
-        hash["width"] = `${this.div0_w}px`
+        hash["width"] = `${this.div0_w}`
       }
       if (this.div0_h !== "") {
-        hash["height"] = `${this.div0_h}px`
+        hash["height"] = `${this.div0_h}`
       }
       return hash
     },
@@ -272,10 +316,10 @@ export default {
         }
       }
       if (this.div1_w !== "") {
-        hash["width"] = `${this.div1_w}px`
+        hash["width"] = `${this.div1_w}`
       }
       if (this.div1_h !== "") {
-        hash["height"] = `${this.div1_h}px`
+        hash["height"] = `${this.div1_h}`
       }
       return hash
     },
@@ -287,10 +331,10 @@ export default {
         str += `  position: ${this.div0_position}\n`
       }
       if (this.div0_w !== "") {
-        str += `  width: ${this.div0_w}px\n`
+        str += `  width: ${this.div0_w}\n`
       }
       if (this.div0_h !== "") {
-        str += `  height: ${this.div0_h}px\n`
+        str += `  height: ${this.div0_h}\n`
       }
 
       str += `  .div1\n`
@@ -310,10 +354,10 @@ export default {
         }
       }
       if (this.div1_w !== "") {
-        str += `      width: ${this.div1_w}px\n`
+        str += `      width: ${this.div1_w}\n`
       }
       if (this.div1_h !== "") {
-        str += `      height: ${this.div1_h}px\n`
+        str += `      height: ${this.div1_h}\n`
       }
       str += `  .div2\n`
       return str
@@ -322,10 +366,13 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style scoped lang="sass">
 // アナロガス
 $preset_color1: hsl(309.18,45.79%,41.96%)
 $preset_color2: hsl(9.18,45.79%,41.96%)
+
+.css_position
+  min-height: 200vh
 
 .div0
   border: 1px dotted #888
