@@ -57,7 +57,8 @@
       .color_bar
         template(v-for="color_info in preset_info.color_infos")
           .color_box.is-size-7(:class="color_info.css_class" :style="{background: color_info.color.css(), color: text_color(color_info.color)}" @click.meta="set_this_color(color_info)")
-            | {{format_infos[format_key].func(color_info.color)}}
+            b-tooltip(:label="[color_info.color.hex(), color_info.color.css(), color_info.color.css('hsl')].join(' ')" multilined type="is-black")
+              | {{format_infos[format_key].func(color_info.color)}}
 
   .content.is-size-7.has-text-grey-light
     ul
