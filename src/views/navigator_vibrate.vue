@@ -10,11 +10,9 @@ div
       .field
         input.input.is-small(type="text" v-model.trim="numbers_string")
 
-  button.button.is-rounded.is-primary(@click="vibrate_run") 実行
-  button.button.is-rounded(@click="timer_vibrate_run") {{delay}}秒後に実行
-
-  br
-  br
+  .buttons
+    button.button.is-primary(@click="vibrate_run") 実行
+    button.button(@click="timer_vibrate_run") {{delay}}秒後に実行
 
   .box
     div navigator.vibrate: {{navigator_vibrate_active_p}}
