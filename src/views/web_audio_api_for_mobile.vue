@@ -4,16 +4,16 @@
   hr
 
   .buttons
-    button.button.is-small(@click="run_play_delay(0.0)") 0.0秒後
-    button.button.is-small(@click="run_play_delay(0.5)") 0.5秒後
-    button.button.is-small(@click="run_play_delay(1.0)") 1.0秒後
-    button.button.is-small(@click="run_play_delay(1.1)") 1.1秒後
-    button.button.is-small(@click="run_play_delay(1.5)") 1.5秒後
-    button.button.is-small(@click="run_play_delay(2.0)") 2.0秒後
+    button.button.is-small(@click="waa_play_delay(0.0)") 0.0秒後
+    button.button.is-small(@click="waa_play_delay(0.5)") 0.5秒後
+    button.button.is-small(@click="waa_play_delay(1.0)") 1.0秒後
+    button.button.is-small(@click="waa_play_delay(1.1)") 1.1秒後
+    button.button.is-small(@click="waa_play_delay(1.5)") 1.5秒後
+    button.button.is-small(@click="waa_play_delay(2.0)") 2.0秒後
 
   .box
     ul
-      li {{event_key}}: {{touchstart}}
+      li {{waa_touch_event_key}}: {{touchstart}}
       li resumed: {{resumed}}
       li state: {{state}}
 
@@ -22,8 +22,9 @@
       h5 Google Chrome (PC) の特徴
       ul
         li AudioContext のインスタンスを close せずに毎回生成してもおかしくならない
-        li 通常は touchstart に反応しないが、デベロッパー画面にすると反応する
-        li とはいえ document は touchstart に反応しないためこのプログラムでは mousedown でフックしている
+        li クリックに同期せずに鳴らせるのでアンロック的な処理は必要ない
+        li 基本 touchstart に反応しないがデベロッパーツール画面では反応する
+        li このプログラムでは安全のため touchstart が使えなかったら mousedown を使ってアンロックしている
       br
       h5 iPhone (モバイル版 Safari) への対応
       ul
@@ -51,12 +52,11 @@ export default {
       state: null,
       touchstart: null,
       resumed: null,
-      event_key: "touchstart" in document ? "touchstart" : "mousedown",
     }
   },
 
   created() {
-    document.addEventListener(this.event_key, this.run_unlock, {once: true})
+    this.waa_unlock_hook()
   },
 
   destroyed() {
@@ -67,7 +67,7 @@ export default {
   },
 
   methods: {
-    context_setup() {
+    waa_context_open() {
       const AudioContext = window.AudioContext || window.webkitAudioContext
 
       // Safari では context を解放しないと数回目でバグる
@@ -85,23 +85,20 @@ export default {
       // this.context = new AudioContext()
     },
 
-    run_unlock() {
-      this.touchstart = true
-
-      this.context_setup()
-      this.resumed = false
-      this.context.resume().then(() => {
-        this.resumed = true
-        console.log("resumed", this.resumed)
-      })
+    waa_context_close() {
+      if (this.context) {
+        this.context.close()
+        console.log("this.context.close()")
+        this.context = null
+      }
     },
 
-    run_play_delay(delay) {
-      setTimeout(this.run_play, delay * 1000)
+    waa_play_delay(delay) {
+      setTimeout(this.waa_play, delay * 1000)
     },
 
-    run_play() {
-      this.context_setup()
+    waa_play() {
+      this.waa_context_open()
 
       // fetch(pekowave1_wav)
       //   .then(response => response.arrayBuffer())
@@ -129,6 +126,27 @@ export default {
       }
       req.open("GET", pekowave1_wav, true)
       req.send("")
+    },
+
+    waa_unlock() {
+      this.touchstart = true
+
+      this.waa_context_open()
+      this.resumed = false
+      this.context.resume().then(() => {
+        this.resumed = true
+        console.log("resumed", this.resumed)
+      })
+    },
+
+    waa_unlock_hook() {
+      document.addEventListener(this.waa_touch_event_key, this.waa_unlock, {once: true})
+    },
+  },
+
+  computed: {
+    waa_touch_event_key() {
+      return ("on" + "touchstart") in document ? "touchstart" : "mousedown"
     },
   },
 }
