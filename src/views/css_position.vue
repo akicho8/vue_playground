@@ -228,6 +228,10 @@ export default {
     mode5_center() {
       this.mode2_absolute()
       this.mode3_25p()
+
+      this.div1_w = ""
+      this.div1_h = ""
+
       this.params_top_p    = true
       this.params_bottom_p = true
       this.params_left_p   = true
