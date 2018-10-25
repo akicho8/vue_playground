@@ -82,5 +82,10 @@ export default new Router({
       name: 'web_audio_api_for_mobile',
       component: () => import(/* webpackChunkName: "web_audio_api_for_mobile" */ './views/web_audio_api_for_mobile.vue')
     },
+    {
+      path: '/google_maps_test1',
+      name: 'google_maps_test1',
+      component: () => import(/* webpackChunkName: "google_maps_test1" */ './views/google_maps_test1.vue')
+    },
   ]
 })
