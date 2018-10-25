@@ -14,6 +14,11 @@
               template(v-else)
                 span(v-text="record.name")
           .field-body
+            template(v-if="record.display_key")
+              .field.is-narrow
+                .control
+                  input(type="checkbox" v-model="$data[record.display_key]")
+
             .field.is-narrow
               .controll
                 template(v-if="record.list")
@@ -54,31 +59,6 @@
                 span.is-size-7
                   | div2
 
-          .field.is-narrow
-            .control
-              label.checkbox
-                input(type="checkbox" v-model="params_top_p")
-                span.is-size-7
-                  | 上
-          .field.is-narrow
-            .control
-              label.checkbox
-                input(type="checkbox" v-model="params_left_p")
-                span.is-size-7
-                  | 左
-          .field.is-narrow
-            .control
-              label.checkbox
-                input(type="checkbox" v-model="params_bottom_p")
-                span.is-size-7
-                  | 下
-          .field.is-narrow
-            .control
-              label.checkbox
-                input(type="checkbox" v-model="params_right_p")
-                span.is-size-7
-                  | 右
-
       .field.is-horizontal
         .field-label.is-small
           label.label
@@ -89,32 +69,35 @@
               span.button.is-static.is-small
                 | 親
             p.control
-              input.input.is-small(type="text" v-model.trim="div0_w" placeholder="w")
+              input.input.is-small(type="text" v-model.trim="div0_w" placeholder="width")
             p.control
-              input.input.is-small(type="text" v-model.trim="div0_h" placeholder="h")
+              input.input.is-small(type="text" v-model.trim="div0_h" placeholder="height")
 
           .field.has-addons.is-narrow
             p.control
               span.button.is-static.is-small
                 | 子
             p.control
-              input.input.is-small(type="text" v-model.trim="div1_w" placeholder="w")
+              input.input.is-small(type="text" v-model.trim="div1_w" placeholder="width")
             p.control
-              input.input.is-small(type="text" v-model.trim="div1_h" placeholder="h")
+              input.input.is-small(type="text" v-model.trim="div1_h" placeholder="height")
+            p.control
+              input.input.is-small(type="text" v-model.trim="div1_margin" placeholder="margin")
 
       .buttons
-        button.button.is-small(@click="mode1_reset") 設定なし
-        button.button.is-small(@click="mode2_absolute") div1浮遊
-        button.button.is-small(@click="mode3_25p") 位置25%
-        button.button.is-small(@click="mode4_0p") 位置0%
-        button.button.is-small(@click="mode5_center") 中央配置
-        button.button.is-small(@click="mode6_bottom_right") 右下配置
+        button.button.is-small(@click="mode_reset") 設定なし
+        button.button.is-small(@click="mode_absolute") div1浮遊
+        button.button.is-small(@click="mode_25p") 位置25%
+        button.button.is-small(@click="mode_0p") 位置0%
+        button.button.is-small(@click="mode_center1") 中央1
+        button.button.is-small(@click="mode_center2") 中央2
+        button.button.is-small(@click="mode_bottom_right") 右下配置
       .buttons
-        button.button.is-small(@click="mode7_func") 画面中央
-        button.button.is-small(@click="mode8_func") 画面上
-        button.button.is-small(@click="mode9_func") 画面下
-        button.button.is-small(@click="mode10_func") 画面右
-        button.button.is-small(@click="mode11_func") 画面左
+        button.button.is-small(@click="fixed_mode_center") 画面中央
+        button.button.is-small(@click="fixed_mode_top") 画面上
+        button.button.is-small(@click="fixed_mode_bottom") 画面下
+        button.button.is-small(@click="fixed_mode_right") 画面右
+        button.button.is-small(@click="fixed_mode_left") 画面左
 
       pre.is-size-7(v-text="flex_css")
 
@@ -123,6 +106,7 @@
           li 親は absolute でも relative でもどちらでもよい
           li div1 が relative なときサイズを持つので div1 のあとに div2 が配置される
           li 配置なら flexbox を使った方が簡単
+          li 子のサイズが決まっていてそれを中央に配置するには margin: auto が便利
 
       template(v-if="NODE_ENV !== 'production'")
         .box
@@ -166,6 +150,7 @@ export default {
       div0_h: "320px",
       div1_w: "",
       div1_h: "",
+      div1_margin: "",
 
       input_elements: [
         { key: "params_top",     name: "上", real_name: "top",    range: { min: -0, max: 100, step: 1,  }, display_key: "params_top_p",    },
@@ -176,20 +161,22 @@ export default {
           key: "div0_position",
           name: ".container",
           list: [
-            { name: "なし", value: null,       },
-            { name: "固定", value: "fixed", },
+            { name: "初期", value: "static",   },
+            { name: "固定", value: "fixed",    },
             { name: "絶対", value: "absolute", },
             { name: "相対", value: "relative", },
+            { name: "固定2", value: "sticky",   },
           ],
         },
         {
           key: "div1_position",
           name: ".div1",
           list: [
-            { name: "なし", value: null,       },
-            { name: "固定", value: "fixed", },
+            { name: "初期", value: "static",   },
+            { name: "固定", value: "fixed",    },
             { name: "絶対", value: "absolute", },
             { name: "相対", value: "relative", },
+            { name: "固定2", value: "sticky", },
           ],
         },
       ],
@@ -197,40 +184,41 @@ export default {
   },
 
   created() {
-    this.mode5_center()
+    this.mode_center1()
   },
 
   methods: {
-    mode1_reset() {
+    mode_reset() {
       this.div0_position = null
       this.div1_position = null
     },
 
-    mode2_absolute() {
+    mode_absolute() {
       this.div0_position = "relative" // absolute でもよい
       this.div1_position = "absolute"
     },
 
-    mode3_25p() {
+    mode_25p() {
       this.params_top    = 100 / 4
       this.params_bottom = 100 / 4
       this.params_left   = 100 / 4
       this.params_right  = 100 / 4
     },
 
-    mode4_0p() {
+    mode_0p() {
       this.params_top    = 0
       this.params_bottom = 0
       this.params_left   = 0
       this.params_right  = 0
     },
 
-    mode5_center() {
-      this.mode2_absolute()
-      this.mode3_25p()
+    mode_center2() {
+      this.mode_absolute()
+      this.mode_25p()
 
       this.div1_w = ""
       this.div1_h = ""
+      this.div1_margin = ""
 
       this.params_top_p    = true
       this.params_bottom_p = true
@@ -238,22 +226,36 @@ export default {
       this.params_right_p  = true
     },
 
-    mode6_bottom_right() {
-      this.mode2_absolute()
-      this.mode4_0p()
+    mode_center1() {
+      this.mode_absolute()
+      this.mode_0p()
+
+      this.div1_w = "50%"
+      this.div1_h = "50%"
+      this.div1_margin = "auto"
+
+      this.params_top_p    = true
+      this.params_bottom_p = true
+      this.params_left_p   = true
+      this.params_right_p  = true
+    },
+
+    mode_bottom_right() {
+      this.mode_absolute()
+      this.mode_0p()
       this.params_top_p    = false
       this.params_bottom_p = true
       this.params_left_p   = false
       this.params_right_p  = true
     },
 
-    mode7_func() {
-      this.mode5_center()
+    fixed_mode_center() {
+      this.mode_center2()
       this.div1_position = "fixed"
     },
 
-    mode8_func() {
-      this.mode4_0p()
+    fixed_mode_top() {
+      this.mode_0p()
       this.div1_position = "fixed"
       this.div1_w = ""
       this.div1_h = "25%"
@@ -263,14 +265,14 @@ export default {
       this.params_right_p  = true
     },
 
-    mode9_func() {
-      this.mode8_func()
+    fixed_mode_bottom() {
+      this.fixed_mode_top()
       this.params_top_p    = false
       this.params_bottom_p = true
     },
 
-    mode10_func() {
-      this.mode4_0p()
+    fixed_mode_right() {
+      this.mode_0p()
       this.div1_position = "fixed"
       this.div1_w = "25%"
       this.div1_h = ""
@@ -280,8 +282,8 @@ export default {
       this.params_right_p  = false
     },
 
-    mode11_func() {
-      this.mode10_func()
+    fixed_mode_left() {
+      this.fixed_mode_right()
       this.params_left_p   = false
       this.params_right_p  = true
     },
@@ -290,7 +292,7 @@ export default {
   computed: {
     div0_style() {
       let hash = {}
-      if (this.div0_position) {
+      if (this.div0_position !== 'static') {
         hash["position"] = this.div0_position
       }
       if (this.div0_w !== "") {
@@ -305,7 +307,7 @@ export default {
     div1_style() {
       let hash = {}
 
-      if (this.div1_position) {
+      if (this.div1_position !== 'static') {
         hash["position"] = this.div1_position
         if (this.params_top_p) {
           hash["top"] = `${this.params_top}%`
@@ -326,13 +328,16 @@ export default {
       if (this.div1_h !== "") {
         hash["height"] = `${this.div1_h}`
       }
+      if (this.div1_margin !== "") {
+        hash["margin"] = `${this.div1_margin}`
+      }
       return hash
     },
 
     flex_css() {
       let str = ""
       str += `.container\n`
-      if (this.div0_position) {
+      if (this.div0_position !== 'static') {
         str += `  position: ${this.div0_position}\n`
       }
       if (this.div0_w !== "") {
@@ -343,7 +348,7 @@ export default {
       }
 
       str += `  .div1\n`
-      if (this.div1_position) {
+      if (this.div1_position !== 'static') {
         str += `      position: ${this.div1_position}\n`
         if (this.params_top_p) {
           str += `      top: ${this.params_top}%\n`
@@ -364,6 +369,9 @@ export default {
       if (this.div1_h !== "") {
         str += `      height: ${this.div1_h}\n`
       }
+      if (this.div1_margin !== "") {
+        str += `      margin: ${this.div1_margin}\n`
+      }
       str += `  .div2\n`
       return str
     },
@@ -372,9 +380,7 @@ export default {
 </script>
 
 <style scoped lang="sass">
-// アナロガス
-$preset_color1: hsl(309.18,45.79%,41.96%)
-$preset_color2: hsl(9.18,45.79%,41.96%)
+@import "../assets/scss/variables"
 
 .css_position
   min-height: 200vh
@@ -384,9 +390,9 @@ $preset_color2: hsl(9.18,45.79%,41.96%)
   background: linear-gradient(to bottom, rgba(#888888, 0.2), transparent)
   transition: all 0.5s 0s ease-in-out
   .div1
-    border: 1px dotted $preset_color1
-    background: linear-gradient(to bottom, rgba($preset_color1, 0.2), transparent)
+    border: 1px dotted $primary
+    background: linear-gradient(to bottom, rgba($primary, 0.2), transparent)
   .div2
-    border: 1px dotted $preset_color2
-    background: linear-gradient(to bottom, rgba($preset_color2, 0.2), transparent)
+    border: 1px dotted $info
+    background: linear-gradient(to bottom, rgba($info, 0.2), transparent)
 </style>
