@@ -93,7 +93,7 @@
               p.menu-label
                 | JavaScript
               ul.menu-list
-                li: router-link(:to="{name: 'geo_location'}") 位置情報
+                li: router-link(:to="{name: 'geo_location_api'}") Geolocation API
           .column
             router-view
   template(v-if="false")
