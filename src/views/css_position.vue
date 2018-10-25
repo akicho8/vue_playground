@@ -109,6 +109,7 @@
         button.button.is-small(@click="mode4_0p") 位置0%
         button.button.is-small(@click="mode5_center") 中央配置
         button.button.is-small(@click="mode6_bottom_right") 右下配置
+      .buttons
         button.button.is-small(@click="mode7_func") 画面中央
         button.button.is-small(@click="mode8_func") 画面上
         button.button.is-small(@click="mode9_func") 画面下

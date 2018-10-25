@@ -1,5 +1,5 @@
 <template lang="pug">
-.geo_location
+.geo_location_api
   h2.title {{$options.title}}
   hr
 
@@ -90,7 +90,7 @@
 
   small
     ul
-      li 位置情報: {{navigator_info()}}
+      li Geolocation API: {{navigator_info()}}
       li 追跡ID: {{watch_id}}
       li オプション: {{position_options}}
       li ブラウザ: {{user_agent}}
@@ -104,8 +104,8 @@
 
 <script>
 export default {
-  name: 'geo_location',
-  title: "位置情報",
+  name: 'geo_location_api',
+  title: "Geolocation API",
   data() {
     return {
       counter: 0,

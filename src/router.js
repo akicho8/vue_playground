@@ -23,9 +23,9 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
     {
-      path: '/geo_location',
-      name: 'geo_location',
-      component: () => import(/* webpackChunkName: "geo_location" */ './views/geo_location.vue')
+      path: '/geo_location_api',
+      name: 'geo_location_api',
+      component: () => import(/* webpackChunkName: "geo_location_api" */ './views/geo_location_api.vue')
     },
     {
       path: '/css_transform',

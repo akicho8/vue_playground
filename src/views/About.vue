@@ -88,7 +88,7 @@ export default {
         // { name: "navigator.registerProtocolHandler",                                                                                                        value: () => Web サイトを指定した MIME タイプに関連付ける},
         // { name: "navigator.taintEnabled 非推奨 Gecko 1.7.8 Gecko 9.0 で廃止 ",                                                                              value: () => Web サイト を指定したプロトコルに関連付ける},
         { name: "振動機能",                                                                                                                                    value: () => !!navigator.vibrate },
-        { name: "位置情報",                                                                                                                                    value: () => !!navigator.geolocation },
+        { name: "Geolocation API",                                                                                                                                    value: () => !!navigator.geolocation },
       ]
     },
   },
