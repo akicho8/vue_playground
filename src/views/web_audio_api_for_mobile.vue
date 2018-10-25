@@ -45,7 +45,7 @@ import pekowave1_wav from "@/assets/pekowave1.wav"
 
 export default {
   name: 'web_audio_api_for_mobile',
-  title: "Chrome(PC), Safari(PC, Mobile) で確実に鳴る Web Audio API",
+  title: "Web Audio API for Mobile",
   data() {
     return {
       context: null,
