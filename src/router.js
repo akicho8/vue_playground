@@ -68,6 +68,11 @@ export default new Router({
       component: () => import(/* webpackChunkName: "css_filter" */ './views/css_filter.vue')
     },
     {
+      path: '/css_object_fit',
+      name: 'css_object_fit',
+      component: () => import(/* webpackChunkName: "css_object_fit" */ './views/css_object_fit.vue')
+    },
+    {
       path: '/html_audio_checker',
       name: 'html_audio_checker',
       component: () => import(/* webpackChunkName: "html_audio_checker" */ './views/html_audio_checker.vue')

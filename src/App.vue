@@ -29,6 +29,7 @@
               router-link.navbar-item(:to="{name: 'css_flexbox'}") CSS Flexbox
               router-link.navbar-item(:to="{name: 'css_position'}") CSS Position
               router-link.navbar-item(:to="{name: 'css_filter'}") CSS Filter
+              router-link.navbar-item(:to="{name: 'css_object_fit'}") CSS object-fit
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'geo_location_api'}") Geolocation API
               router-link.navbar-item(:to="{name: 'navigator_vibrate'}") 振動機能
