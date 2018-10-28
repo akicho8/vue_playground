@@ -9,8 +9,17 @@ export default new Router({
   base: process.env.BASE_URL,
   linkActiveClass: "is-active", // router-link-exact-active
   routes: [
+    // {
+    //   path: '/',
+    //   name: 'home',
+    //   component: Home
+    // },
     {
       path: '/',
+      component: () => import(/* webpackChunkName: "css_filter" */ './views/css_filter.vue')
+    },
+    {
+      path: '/home',
       name: 'home',
       component: Home
     },
