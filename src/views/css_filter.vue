@@ -70,15 +70,33 @@ div
           div smooth_p: {{smooth_p}}
 
     .column
-      img(:style="img_style" :class="{smooth_p: smooth_p}" src="@/assets/ISG106132539_TP_V.jpg")
+      img(:style="img_style" :class="{smooth_p: smooth_p}" :src="img_files_current" @click="img_files_next")
 </template>
 
 <script>
+import I9A5312ISUMI_TP_V from "@/assets/I9A5312ISUMI_TP_V.jpg"
+import IS107112702_TP_V from "@/assets/IS107112702_TP_V.jpg"
+import IMARI20160806355715_TP_V from "@/assets/IMARI20160806355715_TP_V.jpg"
+import IMGL5303_TP_V from "@/assets/IMGL5303_TP_V.jpg"
+import ISG106132539_TP_V from "@/assets/ISG106132539_TP_V.jpg"
+import logo from "@/assets/logo.png"
+import rails from "@/assets/rails.png"
+
 export default {
   name: "css_filter",
   title: "CSS Filter",
   data() {
     return {
+      img_files_index: 0,
+      img_files: [
+        ISG106132539_TP_V,
+        IS107112702_TP_V,
+        I9A5312ISUMI_TP_V,
+        IMARI20160806355715_TP_V,
+        logo,
+        rails,
+      ],
+
       real_value_p: false,
       smooth_p: false,
 
@@ -196,9 +214,17 @@ export default {
     //   this.params_grayscale_p   = false
     //   this.params_saturate_p  = true
     // },
+
+    img_files_next() {
+      this.img_files_index += 1
+    },
   },
 
   computed: {
+    img_files_current() {
+      return this.img_files[this.img_files_index % this.img_files.length]
+    },
+
     img_style() {
       let hash = {}
       const filters = this.input_elements.reduce((a, e, i) => {
