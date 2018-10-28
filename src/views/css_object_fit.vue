@@ -25,10 +25,12 @@
                   template(v-for="e in record.list")
                     label.radio.is-size-7
                       input(type="radio" v-model="$data[record.key]" :value="e.value")
-                      template(v-if="real_value_p")
-                        span(v-text="e.value" :title="e.name || e.value")
-                      template(v-else)
-                        span(v-text="e.name || e.value" :title="e.value")
+                      b-tooltip(:label="e.tooltip" multilined)
+                        template(v-if="real_value_p")
+                          span(v-text="e.value" :title="e.name || e.value")
+                        template(v-else)
+                          span(v-text="e.name || e.value" :title="e.value")
+
                 template(v-if="record.range")
                   input(type="range" v-model.number="$data[record.key]" :min="record.range.min" :max="record.range.max" :step="record.range.step" :disabled="!(!record.display_key || $data[record.display_key])")
                   span.range_number
@@ -61,8 +63,8 @@
 
       .buttons
         button.button.is-small(@click="mode_fill") 初期値
-        button.button.is-small(@click="mode_cover") トリミング
-        button.button.is-small(@click="mode_contain") 比率維持
+        button.button.is-small(@click="mode_cover") トリミング(欠け)
+        button.button.is-small(@click="mode_contain") 比率維持(含む)
 
       pre.is-size-7(v-text="css_body")
 
@@ -72,10 +74,18 @@
             div {{div1_style}}
 
     .column
-      img.div1(:style="div1_style" src="@/assets/ISG106132539_TP_V.jpg")
+      img.div1(:style="div1_style" :src="img_files_current" @click="img_files_next")
 </template>
 
 <script>
+import I9A5312ISUMI_TP_V from "@/assets/I9A5312ISUMI_TP_V.jpg"
+import IS107112702_TP_V from "@/assets/IS107112702_TP_V.jpg"
+import IMARI20160806355715_TP_V from "@/assets/IMARI20160806355715_TP_V.jpg"
+import IMGL5303_TP_V from "@/assets/IMGL5303_TP_V.jpg"
+import ISG106132539_TP_V from "@/assets/ISG106132539_TP_V.jpg"
+import logo from "@/assets/logo.png"
+import rails from "@/assets/rails.png"
+
 export default {
   name: "css_object_fit",
   title: "CSS object-fit",
@@ -86,23 +96,35 @@ export default {
       object_fit: "cover",
       div1_w_p: true,
       div1_h_p: true,
-      div1_w: 320,
-      div1_h: 480,
+      div1_w: 3 * 32 * 5,
+      div1_h: 4 * 32 * 5,
       div1_ws: "",
       div1_hs: "",
+
+      img_files_index: 0,
+      img_files: [
+        // ISG106132539_TP_V,
+        IS107112702_TP_V,
+        // I9A5312ISUMI_TP_V,
+        // IMARI20160806355715_TP_V,
+        // logo,
+        rails,
+      ],
 
       input_elements: [
         { key: "div1_w", name: "横幅", real_name: "img width",   range: { min: 0, max: 800, step: 1, }, display_key: "div1_w_p", },
         { key: "div1_h", name: "縦幅", real_name: "img height",  range: { min: 0, max: 800, step: 1, }, display_key: "div1_h_p",  },
+        { key: "foo_x",  name: "横幅", real_name: "img width",   range: { min: 0, max: 100, step: 1, }, },
+        { key: "foo_y",  name: "縦幅", real_name: "img height",  range: { min: 0, max: 100, step: 1, },  },
         {
           key: "object_fit",
           name: "object-fit",
           list: [
-            { name: "伸縮",           value: "fill",   },
-            { name: "トリミング",     value: "cover",    },
-            { name: "比率維持",       value: "contain", },
-            { name: "なし",           value: "none", },
-            { name: "スケールダウン", value: "scale-down", },
+            { name: "伸縮",           value: "fill",       tooltip: "比率無視で変形してしまうので写真には使えない", },
+            { name: "トリミング",     value: "cover",      tooltip: "エリア重要。写真の全体は必要でないとき。エリアを覆える。部分欠けする。ある部分に焦点して表示するには object-position で調整できる", },
+            { name: "比率維持",       value: "contain",    tooltip: "写真が重要。全体を綺麗に表示したいとき", },
+            { name: "なし",           value: "none",       tooltip: "なにもしない", },
+            { name: "スケールダウン", value: "scale-down", tooltip: "比率維持(contain) と なし(none) の小さい方。比率維持して表示したいがもともとの画像が小さいと巨大化して困る場合に使う", },
           ],
         },
       ],
@@ -121,8 +143,8 @@ export default {
 
       this.div1_w_p = true
       this.div1_h_p = true
-      this.div1_w = 300
-      this.div1_h = 500
+      this.div1_w = 480
+      this.div1_h = 640
       this.div1_ws = ""
       this.div1_hs = ""
     },
@@ -140,9 +162,17 @@ export default {
     mode_absolute() {
       this.object_fit = "absolute"
     },
+
+    img_files_next() {
+      this.img_files_index += 1
+    },
   },
 
   computed: {
+    img_files_current() {
+      return this.img_files[this.img_files_index % this.img_files.length]
+    },
+
     div1_style() {
       let hash = {}
 
@@ -194,5 +224,7 @@ export default {
 @import "../assets/scss/variables"
 
 .div1
-  border: 1px dotted $dark
+  border: 1px dotted $primary
+  background: hsla(0, 0, 0, 0.02)
+  // object-position: right bottom
 </style>
