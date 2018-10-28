@@ -39,6 +39,7 @@
               router-link.navbar-item(:to="{name: 'web_audio_api_for_mobile'}") Web Audio API for Mobile
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'google_maps_test1'}") Google Maps API
+              router-link.navbar-item(:to="{name: 'form_example'}") Form Example
               //- hr.navbar-divider
               //- router-link.navbar-item(to="/about") About
         .navbar-end

@@ -92,5 +92,10 @@ export default new Router({
       name: 'google_maps_test1',
       component: () => import(/* webpackChunkName: "google_maps_test1" */ './views/google_maps_test1.vue')
     },
+    {
+      path: '/form_example',
+      name: 'form_example',
+      component: () => import(/* webpackChunkName: "form_example" */ './views/form_example.vue')
+    },
   ]
 })
