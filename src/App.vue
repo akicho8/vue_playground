@@ -12,7 +12,10 @@
           span
       #main_navar.navbar-menu
         .navbar-start
+          router-link.navbar-item(:to="{name: 'css_object_fit'}") CSS object-fit
+          router-link.navbar-item(:to="{name: 'color_scheme'}") 配色エディター
           router-link.navbar-item(:to="{name: 'stopwatch'}") ストップウォッチ
+          router-link.navbar-item(:to="{name: 'css_flexbox'}") CSS Flexbox
 
           template(v-if="false")
             router-link.navbar-item(to="/about") About
@@ -21,15 +24,11 @@
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他の機能
             .navbar-dropdown.is-boxed
-              router-link.navbar-item(:to="{name: 'color_scheme'}") 配色エディター
-              router-link.navbar-item(:to="{name: 'stopwatch'}") ストップウォッチ
               router-link.navbar-item(:to="{name: 'strange_attractor'}") ストレンジアトラクターエディター
               hr.navbar-divider
-              router-link.navbar-item(:to="{name: 'css_transform'}") CSS Transform
-              router-link.navbar-item(:to="{name: 'css_flexbox'}") CSS Flexbox
-              router-link.navbar-item(:to="{name: 'css_position'}") CSS Position
               router-link.navbar-item(:to="{name: 'css_filter'}") CSS Filter
-              router-link.navbar-item(:to="{name: 'css_object_fit'}") CSS object-fit
+              router-link.navbar-item(:to="{name: 'css_transform'}") CSS Transform
+              router-link.navbar-item(:to="{name: 'css_position'}") CSS Position
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'geo_location_api'}") Geolocation API
               router-link.navbar-item(:to="{name: 'navigator_vibrate'}") 振動機能
