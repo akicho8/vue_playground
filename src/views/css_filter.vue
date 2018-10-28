@@ -70,7 +70,7 @@ div
           div smooth_p: {{smooth_p}}
 
     .column
-      img(:style="img_style" :class="{smooth_p: smooth_p}" :src="img_files_current" @click="img_files_next")
+      img(:style="img_style" :class="{smooth_p: smooth_p}" :src="image_files_current" @click="image_files_next")
 </template>
 
 <script>
@@ -87,8 +87,8 @@ export default {
   title: "CSS Filter",
   data() {
     return {
-      img_files_index: 0,
-      img_files: [
+      current_image_index: 0,
+      image_files: [
         ISG106132539_TP_V,
         IS107112702_TP_V,
         I9A5312ISUMI_TP_V,
@@ -215,14 +215,14 @@ export default {
     //   this.params_saturate_p  = true
     // },
 
-    img_files_next() {
-      this.img_files_index += 1
+    image_files_next() {
+      this.current_image_index += 1
     },
   },
 
   computed: {
-    img_files_current() {
-      return this.img_files[this.img_files_index % this.img_files.length]
+    image_files_current() {
+      return this.image_files[this.current_image_index % this.image_files.length]
     },
 
     img_style() {
