@@ -46,6 +46,12 @@
                 input(type="checkbox" v-model="real_value_p")
                 span.is-size-7
                   | 詳細
+          .field.is-narrow
+            .control
+              label.checkbox
+                input(type="checkbox" v-model="object_position_p")
+                span.is-size-7
+                  | object-position
 
       .field.is-horizontal
         .field-label.is-small
@@ -92,6 +98,7 @@ export default {
   data() {
     return {
       real_value_p: false,
+      object_position_p: true,
 
       object_fit: "cover",
       div1_w_p: true,
@@ -100,6 +107,9 @@ export default {
       div1_h: 4 * 32 * 5,
       div1_ws: "",
       div1_hs: "",
+
+      object_position_x: 36,
+      object_position_y: 50,
 
       img_files_index: 0,
       img_files: [
@@ -112,10 +122,10 @@ export default {
       ],
 
       input_elements: [
-        { key: "div1_w", name: "横幅", real_name: "img width",   range: { min: 0, max: 800, step: 1, }, display_key: "div1_w_p", },
-        { key: "div1_h", name: "縦幅", real_name: "img height",  range: { min: 0, max: 800, step: 1, }, display_key: "div1_h_p",  },
-        { key: "foo_x",  name: "横幅", real_name: "img width",   range: { min: 0, max: 100, step: 1, }, },
-        { key: "foo_y",  name: "縦幅", real_name: "img height",  range: { min: 0, max: 100, step: 1, },  },
+        { key: "div1_w",            name: "横幅", real_name: "img width",         range: { min: 0,    max: 800, step: 1, }, display_key: "div1_w_p", },
+        { key: "div1_h",            name: "縦幅", real_name: "img height",        range: { min: 0,    max: 800, step: 1, }, display_key: "div1_h_p",  },
+        { key: "object_position_x", name: "基点x", real_name: "object-position x", range: { min: -100, max: 200, step: 1, }, },
+        { key: "object_position_y", name: "基点y", real_name: "object-position y", range: { min: -100, max: 200, step: 1, }, },
         {
           key: "object_fit",
           name: "object-fit",
@@ -191,6 +201,9 @@ export default {
       if (this.div1_hs !== "") {
         hash["height"] = `${this.div1_hs}`
       }
+      if (this.object_position_p) {
+        hash["object-position"] = `${this.object_position_x}% ${this.object_position_y}%`
+      }
       return hash
     },
 
@@ -213,6 +226,9 @@ export default {
       }
       if (this.object_fit !== 'fill') {
         str += `    object-fit: ${this.object_fit}\n`
+      }
+      if (this.object_position_p) {
+        str += `    object-position: ${this.object_position_x}% ${this.object_position_y}%\n`
       }
       return str
     },
