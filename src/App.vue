@@ -19,7 +19,7 @@
             router-link.navbar-item(to="/geo_location_api") Geolocation API
 
           .navbar-item.has-dropdown.is-hoverable
-            span.navbar-link 機能
+            span.navbar-link その他の機能
             .navbar-dropdown.is-boxed
               router-link.navbar-item(:to="{name: 'color_scheme'}") 配色エディター
               router-link.navbar-item(:to="{name: 'stopwatch'}") ストップウォッチ
