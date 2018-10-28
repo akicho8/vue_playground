@@ -68,13 +68,19 @@
               input.input.is-small(type="text" v-model.trim="img1_hs" placeholder="height")
 
       .buttons
-        button.button.is-small(@click="preset_default") 初期値
-        button.button.is-small(@click="preset_trimming") 切り抜き
-        button.button.is-small(@click="preset_contain") 絶対比率維持
-        button.button.is-small(@click="preset_none") 伸縮なし
-        button.button.is-small(@click="preset_scale_down") 元サイズ絶対維持
+        button.button.is-small(@click="preset_fill") 伸縮させたい
+        button.button.is-small(@click="preset_trimming") 切り抜きたい
+        button.button.is-small(@click="preset_contain") 比率を変えたくない
+        button.button.is-small(@click="preset_none") 伸縮したくない
+        button.button.is-small(@click="preset_scale_down") ドットを拡大したくない
 
       pre.is-size-7(v-text="css_body")
+
+      .content
+        ul.is-size-7.has-text-grey-light
+          li object-fit: fill が初期値
+          li object-position: 50% 50% が初期値
+          li 余白色は background: で指定できる
 
       template(v-if="NODE_ENV !== 'production'")
         .section
@@ -123,19 +129,19 @@ export default {
       ],
 
       input_elements: [
-        { key: "img1_w",            name: "横幅", real_name: "img width",         range: { min: 0,    max: 800, step: 1, }, display_key: "img1_w_p", },
-        { key: "img1_h",            name: "縦幅", real_name: "img height",        range: { min: 0,    max: 800, step: 1, }, display_key: "img1_h_p",  },
+        { key: "img1_w",            name: "横幅", real_name: "img width",          range: { min: 0,    max: 800, step: 1, }, display_key: "img1_w_p", },
+        { key: "img1_h",            name: "縦幅", real_name: "img height",         range: { min: 0,    max: 800, step: 1, }, display_key: "img1_h_p",  },
         { key: "object_position_x", name: "基点x", real_name: "object-position x", range: { min: -100, max: 200, step: 1, }, },
         { key: "object_position_y", name: "基点y", real_name: "object-position y", range: { min: -100, max: 200, step: 1, }, },
         {
           key: "object_fit",
           name: "object-fit",
           list: [
-            { name: "伸縮",           value: "fill",       tooltip: "比率無視で変形してしまうので写真には使えない", },
-            { name: "トリミング",     value: "cover",      tooltip: "エリア重要。写真の全体は必要でないとき。エリアを覆える。部分欠けする。ある部分に焦点して表示するには object-position で調整できる", },
-            { name: "比率維持",       value: "contain",    tooltip: "写真が重要。全体を綺麗に表示したいとき", },
-            { name: "なし",           value: "none",       tooltip: "なにもしない", },
-            { name: "スケールダウン", value: "scale-down", tooltip: "比率維持(contain) と なし(none) の小さい方。比率維持して表示したいがもともとの画像が小さいと巨大化して困る場合に使う", },
+            { name: "伸縮",           value: "fill",       tooltip: "用途不明。比率無視で変形してしまう。人物写真には向かない",                                                                          },
+            { name: "トリミング",     value: "cover",      tooltip: "写真立て用。写真の全体は必要でないとき。エリアを覆える。部分欠けする。ある部分に焦点して表示するには object-position で調整できる", },
+            { name: "比率維持",       value: "contain",    tooltip: "写真が重要。全体を綺麗に表示したいとき",                                                                                            },
+            { name: "なし",           value: "none",       tooltip: "元画像をいっさい変形させない。伸縮しない",                                                                                          },
+            { name: "スケールダウン", value: "scale-down", tooltip: "比率維持(contain) と なし(none) の小さい方。比率維持して表示したいがもともとの画像が小さいと巨大化して困る場合に使う",              },
           ],
         },
       ],
@@ -143,7 +149,7 @@ export default {
   },
 
   created() {
-    this.preset_default()
+    this.preset_trimming()
   },
 
   watch: {
@@ -162,6 +168,13 @@ export default {
       this.object_position_p = true
       this.object_position_x = 50
       this.object_position_y = 50
+    },
+
+    preset_fill() {
+      this.preset_default()
+
+      this.object_fit = "fill"
+      this.object_position_p = false
     },
 
     preset_trimming() {
@@ -187,7 +200,6 @@ export default {
     preset_scale_down() {
       this.preset_default()
       this.object_fit = "scale-down"
-
       this.current_image_index = 1
     },
 
@@ -203,7 +215,6 @@ export default {
 
     img1_style() {
       let hash = {}
-
       if (this.object_fit !== 'fill') {
         hash["object-fit"] = this.object_fit
       }
@@ -242,7 +253,7 @@ export default {
           str += `    height: ${this.img1_h}px\n`
         }
       }
-      if (this.object_fit !== 'fill') {
+      if (this.object_fit !== 'fill' || true) {
         str += `    object-fit: ${this.object_fit}\n`
       }
       if (this.object_position_p) {
@@ -260,5 +271,4 @@ export default {
 .img1
   border: 1px dotted $primary
   background: hsla(0, 0, 0, 0.02)
-  // object-position: right bottom
 </style>
