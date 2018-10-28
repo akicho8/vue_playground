@@ -72,6 +72,7 @@
         button.button.is-small(@click="preset_trimming") 切り抜き
         button.button.is-small(@click="preset_contain") 絶対比率維持
         button.button.is-small(@click="preset_none") 伸縮なし
+        button.button.is-small(@click="preset_scale_down") 元サイズ絶対維持
 
       pre.is-size-7(v-text="css_body")
 
@@ -181,6 +182,13 @@ export default {
       this.object_fit = "none"
       this.object_position_x = 32
       this.object_position_y = 16
+    },
+
+    preset_scale_down() {
+      this.preset_default()
+      this.object_fit = "scale-down"
+
+      this.current_image_index = 1
     },
 
     image_files_next() {
