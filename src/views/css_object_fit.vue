@@ -70,7 +70,7 @@
       .buttons
         button.button.is-small(@click="preset_fill") 伸縮させたい
         button.button.is-small(@click="preset_trimming") 切り抜きたい
-        button.button.is-small(@click="preset_contain") 比率を変えたくない
+        button.button.is-small(@click="preset_contain") 写真全体を表示したい
         button.button.is-small(@click="preset_none") 伸縮したくない
         button.button.is-small(@click="preset_scale_down") ドットを拡大したくない
 
