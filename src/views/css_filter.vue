@@ -5,7 +5,7 @@ div
 
   .columns
     .column
-      template(v-for="record in input_elements")
+      template(v-for="record in form_parts")
         .field.is-horizontal
           .field-label.is-small
             label.label
@@ -130,7 +130,7 @@ export default {
       params_shadow: null,
       params_shadow_p: false,
 
-      input_elements: [
+      form_parts: [
         { key: "params_brightness", name: "明るさ",         real_name: "brightness",  default: 100, range: { min: 0,    max: 500,  step: 1,    }, display_key: "params_brightness_p", func: (v) => `brightness(${v}%)`,    },
         { key: "params_contrast",   name: "コントラスト",   real_name: "contrast",    default: 100, range: { min: 0,    max: 500,  step: 1,    }, display_key: "params_contrast_p",   func: (v) => `contrast(${v}%)`,      },
         { key: "params_saturate",   name: "彩度",           real_name: "saturate",    default: 100, range: { min: 0,    max: 300,  step: 1,    }, display_key: "params_saturate_p",   func: (v) => `saturate(${v}%)`,      },
@@ -155,7 +155,7 @@ export default {
     mode1_reset() {
       this.smooth_p = true
 
-      this.input_elements.forEach(e => {
+      this.form_parts.forEach(e => {
         this.$data[e.display_key] = true
 
         const v = e.default
@@ -227,7 +227,7 @@ export default {
 
     img_style() {
       let hash = {}
-      const filters = this.input_elements.reduce((a, e, i) => {
+      const filters = this.form_parts.reduce((a, e, i) => {
         if (this.$data[e.display_key]) {
           a.push(e.func(this.$data[e.key]))
         }

@@ -1,71 +1,169 @@
 <template lang="pug">
-.css_text_var1
+.css_string_var1
   .h2.title {{$options.title}}
   hr
 
   .columns
     .column
-      template(v-for="record in input_elements")
+      template(v-for="form_part in form_parts")
         .field.is-horizontal
           .field-label.is-small
             label.label
               template(v-if="real_value_p")
-                span(v-text="record.real_name || record.name" :title="record.name")
+                span(v-text="form_part.real_name || form_part.name" :title="form_part.name")
               template(v-else)
-                span(v-text="record.name")
+                span(v-text="form_part.name")
           .field-body
-            template(v-if="record.display_key")
+            template(v-if="form_part.display_key")
               .field.is-narrow
                 .control
-                  input(type="checkbox" v-model="$data[record.display_key]")
+                  input(type="checkbox" v-model="$data[form_part.display_key]")
 
-            .field.is-narrow
+            .field
               .controll
-                template(v-if="record.list")
-                  template(v-for="e in record.list")
+                template(v-if="form_part.type === 'radio'")
+                  template(v-for="e in form_part.elems")
                     label.radio.is-size-7
-                      input(type="radio" v-model="$data[record.key]" :value="e.value")
+                      input(type="radio" v-model="$data[form_part.key]" :value="e.value")
                       b-tooltip(:label="e.tooltip" multilined)
                         template(v-if="real_value_p")
                           span(v-text="e.value" :title="e.name || e.value")
                         template(v-else)
                           span(v-text="e.name || e.value" :title="e.value")
 
-                template(v-if="record.range")
-                  input(type="range" v-model.number="$data[record.key]" :min="record.range.min" :max="record.range.max" :step="record.range.step" :disabled="!(!record.display_key || $data[record.display_key])")
+                template(v-if="form_part.type === 'checkbox'")
+                  template(v-for="e in form_part.elems")
+                    label.checkbox.is-size-7
+                      input(type="checkbox" v-model="$data[form_part.key]" :value="e.value" :disabled="disabled(form_part)")
+                      b-tooltip(:label="e.tooltip" multilined)
+                        template(v-if="real_value_p")
+                          | {{e.value}}
+                        template(v-else)
+                          | {{e.name || e.value}}
+
+                template(v-if="form_part.type === 'select'")
+                  .select.is-small
+                    select(v-model="$data[form_part.key]" :disabled="disabled(form_part)")
+                      template(v-for="e in form_part.elems")
+                        option(:value="e.value")
+                          template(v-if="real_value_p")
+                            | {{e.value}}
+                          template(v-else)
+                            | {{e.name || e.value}}
+
+                template(v-if="form_part.type === 'range'")
+                  input(type="range" v-model.number="$data[form_part.key]" :min="form_part.params.min" :max="form_part.params.max" :step="form_part.params.step" :disabled="disabled(form_part)")
                   span.range_number
-                    | {{$data[record.key]}}
+                    | {{$data[form_part.key]}}
 
-                template(v-if="record.text_field")
-                  input.input.is-small(type="text" v-model.number="$data[record.key]" :disabled="!(!record.display_key || $data[record.display_key])")
+                template(v-if="form_part.type === 'string'")
+                  input.input.is-small(type="text" v-model.number="$data[form_part.key]" :disabled="disabled(form_part)")
 
-      .buttons
-        button.button.is-small(@click="preset_fill") 実行
+                template(v-if="form_part.type === 'text'")
+                  textarea.textarea.is-small(v-model.number="$data[form_part.key]" :disabled="disabled(form_part)")
+
+      .field.is-horizontal
+        .field-label.is-small
+          label.label
+        .field-body
+
+          .field.is-narrow
+            .control
+              label.checkbox
+                input(type="checkbox" v-model="real_value_p")
+                span.is-size-7
+                  | 詳細
+
+      .field.is-horizontal
+        .field-label
+        .field-body
+          .field
+            .control
+              .buttons
+                button.button.is-small(@click="all_reset") リセット
+                button.button.is-small(@click="run_user_case1") 送信1
+                button.button.is-small(@click="run_user_case2") 送信2
+
+      template(v-if="NODE_ENV !== 'production'")
+        .box
+          div {{api_params}}
+
+    .column
+      .box
+        | 右ペイン
+      .box
+        b-table(:data="result_rows" :hoverable="true" :columns="table_columns" narrowed)
+
 </template>
 
 <script>
+import dayjs from "dayjs"
+
 export default {
-  name: "css_text_var1",
+  name: "css_string_var1",
   title: "Form example",
   data() {
     return {
+      result_rows: [],
+
       real_value_p: false,
 
-      text_var1: null,
-      text_var1_p: null,
-      radio_var1: null,
-      range_var1: null,
-      range_var1_p: false,
+      string_var1_p: true,
+      string_var1: null,
 
-      input_elements: [
-        { key: "text_var1",  name: "テキスト1", real_name: "text_var1",   text_field: {},                           display_key: "text_var1_p", },
-        { key: "range_var1", name: "範囲1",     real_name: "range_var1",  range: { min: 0,    max: 800, step: 1, }, display_key: "range_var1_p", },
+      text_var1_p: true,
+      text_var1: null,
+
+      radio_var1_p: true,
+      radio_var1: null,
+
+      checkbox_var1_p: true,
+      checkbox_var1: [],
+
+      range_var1_p: true,
+      range_var1: 0,
+
+      select_var1_p: true,
+      select_var1: 0,
+
+      form_parts: [
+        { key: "string_var1",  name: "文字列1",    default_value: "(string_var1)", real_name: "string_var1", display_key: "string_var1_p",   type: "string", params: {                             }, },
+        { key: "text_var1",    name: "テキスト1",  default_value: "(text_var1)",   real_name: "text_var1",   display_key: "text_var1_p",     type: "text",   params: {                             }, },
+        { key: "range_var1",   name: "範囲1",      default_value:  50,             real_name: "range_var1",  display_key: "range_var1_p",    type: "range",  params: { min: 0,  max: 100, step: 1, }, },
         {
           key: "radio_var1",
-          name: "選択項目",
-          list: [
+          name: "ラジオボタン1",
+          real_name: "radio_var1",
+          display_key: "radio_var1_p",
+          default_value: "value1",
+          type: "radio",
+          elems: [
             { name: "選択肢1",  value: "value1", tooltip: "ツールチップ1", },
-            { name: "選択肢2",  value: "vlaue2", tooltip: "ツールチップ2", },
+            { name: "選択肢2",  value: "value2", tooltip: "ツールチップ2", },
+          ],
+        },
+        {
+          name: "チェックボックス1",
+          key: "checkbox_var1",
+          real_name: "checkbox_var1",
+          display_key: "checkbox_var1_p",
+          default_value: ["value1"],
+          type: "checkbox",
+          elems: [
+            { name: "選択肢1",  value: "value1", tooltip: "ツールチップ1", },
+            { name: "選択肢2",  value: "value2", tooltip: "ツールチップ2", },
+          ],
+        },
+        {
+          key: "select_var1",
+          name: "プルダウン1",
+          real_name: "select_var1",
+          display_key: "select_var1_p",
+          default_value: "value1",
+          type: "select",
+          elems: [
+            { name: "選択肢1",  value: "value1", },
+            { name: "選択肢2",  value: "value2", },
           ],
         },
       ],
@@ -73,30 +171,79 @@ export default {
   },
 
   created() {
-    this.preset_trimming()
+    this.all_reset()
   },
 
   watch: {
   },
 
   methods: {
-    preset_default() {
+    run_user_case1() {
+      this.result_rows.push({
+        time: dayjs().format("YYYY-MM-DD hh:mm:ss.SSS"),
+        params: this.api_params,
+      })
     },
 
-    preset_fill() {
-      // fetch("")
-      //   .then(response => response.arrayBuffer())
-      //   .then(bin => context.decodeAudioData(bin))
-      //   .then(buffer => {
-      //     const source = context.createBufferSource()
-      //     source.buffer = buffer
-      //     source.connect(context.destination)
-      //     source.start(0)
-      //   })
+    run_user_case2() {
+      fetch("https://yesno.wtf/api")
+        .then(r => r.json())
+        .then(v => {
+          this.result_rows.push({
+            time: dayjs().format("YYYY-MM-DD hh:mm:ss.SSS"),
+            params: v,
+          })
+        })
+    },
+
+    form_parts_reset() {
+      this.form_parts.forEach(e => this[e.key] = e.default_value)
+    },
+
+    result_rows_reset() {
+      this.result_rows = []
+    },
+
+    all_reset() {
+      this.result_rows_reset()
+      this.form_parts_reset()
+    },
+
+    disabled(record) {
+      return !(!record.display_key || this.$data[record.display_key])
     },
   },
 
   computed: {
+    table_columns() {
+      return [
+        { field: 'time',   label: '時間',         sortable: true, numeric: true, },
+        { field: 'params', label: 'パラメーター', sortable: true,                },
+      ]
+    },
+
+    api_params() {
+      const hash = {}
+      if (this.string_var1_p) {
+        hash["string_var1"] = this.string_var1
+      }
+      if (this.text_var1_p) {
+        hash["text_var1"] = this.text_var1
+      }
+      if (this.radio_var1_p) {
+        hash["radio_var1"] = this.radio_var1
+      }
+      if (this.range_var1_p) {
+        hash["range_var1"] = this.range_var1
+      }
+      if (this.checkbox_var1_p) {
+        hash["checkbox_var1"] = this.checkbox_var1
+      }
+      if (this.select_var1_p) {
+        hash["select_var1"] = this.select_var1
+      }
+      return hash
+    },
   },
 }
 </script>

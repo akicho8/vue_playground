@@ -4,7 +4,7 @@ div
   hr
   .columns
     .column
-      .field.is-horizontal(v-for="record in input_elements")
+      .field.is-horizontal(v-for="record in form_parts")
         .field-label.is-small
           label.label
             a(:href="`https://developer.mozilla.org/ja/docs/Web/CSS/${_.kebabCase(record.key)}`" target="_blank")
@@ -136,7 +136,7 @@ export default {
       transformStyle: "preserve-3d",
       transformOrigin: "50% 100% 0",
 
-      input_elements: [
+      form_parts: [
         { key: "translateX",  name: "位置X",  range: { min: -999, max: 999, step: 1,    }, },
         { key: "translateY",  name: "位置Y",  range: { min: -999, max: 999, step: 1,    }, },
         { key: "translateZ",  name: "位置Z",  range: { min: -999, max: 999, step: 1,    }, },

@@ -64,7 +64,7 @@
         button.button.is-small(@click="run_pause") pause
         button.button.is-small(@click="run_mute_toggle") muted
         button.button.is-small(@click="run_reset") リセット
-        button.button.is-small(@click="reslt_rows = []") ログクリア
+        button.button.is-small(@click="result_rows = []") ログクリア
     .column
       .content.is-size-7
         ul
@@ -75,7 +75,7 @@
   //-   ul
   //-     li Safari では fetch を使うと動かない。XMLHttpRequest では動く
 
-  b-table(:data="reslt_rows" :hoverable="true" :columns="table_columns" narrowed)
+  b-table(:data="result_rows" :hoverable="true" :columns="table_columns" narrowed)
 </template>
 
 <script>
@@ -91,7 +91,7 @@ export default {
       singleton_p: true,
       play_call_p: true,
       load_outside_set_timeout_p: false,
-      reslt_rows: [],
+      result_rows: [],
       instance: null,
       currentTime: null,
     }
@@ -160,7 +160,7 @@ export default {
       Object.values(this.EventInfo).forEach(info => {
         audio.addEventListener(info.key, event => {
           console.log(event)
-          this.reslt_rows.push({
+          this.result_rows.push({
             time: dayjs(event.timeStamp).format("mm:ss.SSS"),
             type: event.type,
             name: this.EventInfo[event.type].name,

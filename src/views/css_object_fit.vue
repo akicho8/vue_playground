@@ -5,7 +5,7 @@
 
   .columns
     .column
-      template(v-for="record in input_elements")
+      template(v-for="record in form_parts")
         .field.is-horizontal
           .field-label.is-small
             label.label
@@ -128,7 +128,7 @@ export default {
         rails,
       ],
 
-      input_elements: [
+      form_parts: [
         { key: "img1_w",            name: "横幅", real_name: "img width",          range: { min: 0,    max: 800, step: 1, }, display_key: "img1_w_p", },
         { key: "img1_h",            name: "縦幅", real_name: "img height",         range: { min: 0,    max: 800, step: 1, }, display_key: "img1_h_p",  },
         { key: "object_position_x", name: "基点x", real_name: "object-position x", range: { min: -100, max: 200, step: 1, }, },

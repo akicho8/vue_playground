@@ -5,7 +5,7 @@
 
   .columns
     .column
-      template(v-for="record in input_elements")
+      template(v-for="record in form_parts")
         .field.is-horizontal
           .field-label.is-small
             label.label
@@ -152,7 +152,7 @@ export default {
       div1_h: "",
       div1_margin: "",
 
-      input_elements: [
+      form_parts: [
         { key: "params_top",     name: "上", real_name: "top",    range: { min: -0, max: 100, step: 1,  }, display_key: "params_top_p",    },
         { key: "params_left",    name: "左", real_name: "left",   range: { min: -0, max: 100, step: 1,  }, display_key: "params_left_p",   },
         { key: "params_bottom",  name: "下", real_name: "bottom", range: { min: -0, max: 100, step: 1,  }, display_key: "params_bottom_p", },

@@ -53,7 +53,7 @@
         button.button.is-small(@click="run_resume") resume
         button.button.is-small(@click="run_close") close
         button.button.is-small(@click="run_disconnect") disconnect
-        button.button.is-small(@click="reslt_rows = []") 結果クリア
+        button.button.is-small(@click="result_rows = []") 結果クリア
         button.button.is-small(@click="run_reset") リセット
     .column
       .content.is-size-7
@@ -71,7 +71,7 @@
       li Safari では AudioContext をシングルトンにしなかったら数回目でエラー
       //- li Safari では source = context.createBufferSource() を decodeAudioData のブロック内で行うと鳴らない
 
-  b-table(:data="reslt_rows" :hoverable="true" :columns="table_columns" narrowed)
+  b-table(:data="result_rows" :hoverable="true" :columns="table_columns" narrowed)
 </template>
 
 <script>
@@ -86,7 +86,7 @@ export default {
       timer_delay: "",
       singleton_p: true,
       source_singleton_p: false,
-      reslt_rows: [],
+      result_rows: [],
       web_audio_context: null,
       source: null,
       state: null,
@@ -154,7 +154,7 @@ export default {
         web_audio_context.addEventListener(info.key, event => {
           console.log(event)
           const info = this.EventInfo3[event.type]
-          this.reslt_rows.push({
+          this.result_rows.push({
             target: event.target.constructor.name,
             time: dayjs(event.timeStamp).format("mm:ss.SSS"),
             type: event.type,
@@ -173,7 +173,7 @@ export default {
       Object.values(this.EventInfo2).forEach(info => {
         source.addEventListener(info.key, event => {
           console.log(event)
-          this.reslt_rows.push({
+          this.result_rows.push({
             target: event.target.constructor.name,
             time: dayjs(event.timeStamp).format("mm:ss.SSS"),
             type: event.type,
