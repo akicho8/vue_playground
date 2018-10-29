@@ -101,7 +101,7 @@ import dayjs from "dayjs"
 
 export default {
   name: "css_string_var1",
-  title: "Form example",
+  title: "Form Template",
   data() {
     return {
       result_rows: [],

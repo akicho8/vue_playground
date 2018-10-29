@@ -102,9 +102,9 @@ export default new Router({
       component: () => import(/* webpackChunkName: "google_maps_test1" */ './views/google_maps_test1.vue')
     },
     {
-      path: '/form_example',
-      name: 'form_example',
-      component: () => import(/* webpackChunkName: "form_example" */ './views/form_example.vue')
+      path: '/form_template',
+      name: 'form_template',
+      component: () => import(/* webpackChunkName: "form_template" */ './views/form_template.vue')
     },
   ]
 })
