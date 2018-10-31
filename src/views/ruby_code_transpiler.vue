@@ -34,6 +34,7 @@ export default {
   data() {
     return {
       rb_body: "",
+      js_body: null,
       error: null,
 
       form_parts: [
@@ -55,9 +56,9 @@ export default {
   watch: {
     rb_body(v) {
       this.error = null
-      this.js_body = ""
+      this.js_body = null
       try {
-        this.js_body = this.Opal.compile(v)
+        this.js_body = Opal.compile(v)
       } catch (error) {
         this.error = error
       }

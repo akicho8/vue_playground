@@ -15,6 +15,7 @@ module.exports = {
   globals: {
     "inspect": true,
     "_": true,
+    "Opal": true,
   },
   parserOptions: {
     parser: 'babel-eslint'
