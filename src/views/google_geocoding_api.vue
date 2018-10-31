@@ -26,7 +26,7 @@
           .field
             .control
               .buttons
-                button.button.is-small(@click="run_user_case1") 文字列で検索
+                button.button.is-small(@click="run_user_case1") 住所で検索
                 button.button.is-small(@click="run_user_case2") 位置で検索
                 button.button.is-small(@click="all_reset") リセット
 
@@ -34,7 +34,7 @@
         .is-size-7
           | ブラウザで開く
         .buttons
-          a.button.is-small(:href="search_from_address_url" target="_blank") 文字列で検索
+          a.button.is-small(:href="search_from_address_url" target="_blank") 住所で検索
           a.button.is-small(:href="search_from_latlng_url" target="_blank") 位置で検索
 
       template(v-if="NODE_ENV !== 'production'")
@@ -68,9 +68,9 @@ export default {
       value_lng: null,
 
       form_parts: [
-        { key: "value_address", name: "文字列1", default_value: "キャロットタワー", real_name: "address", display_key: null,   type: "string", params: {}, },
-        { key: "value_lat",     name: "経度",    default_value: 35.6436763,         real_name: "lat",     display_key: null,   type: "string", params: {}, },
-        { key: "value_lng",     name: "緯度",    default_value: 139.6690974,        real_name: "lng",     display_key: null,   type: "string", params: {}, },
+        { key: "value_address", name: "住所",  default_value: "キャロットタワー", real_name: "address", display_key: null,   type: "string", params: {}, },
+        { key: "value_lat",     name: "経度",  default_value: 35.6436763,         real_name: "lat",     display_key: null,   type: "string", params: {}, },
+        { key: "value_lng",     name: "緯度",  default_value: 139.6690974,        real_name: "lng",     display_key: null,   type: "string", params: {}, },
       ],
     }
   },
