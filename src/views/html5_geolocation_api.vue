@@ -1,5 +1,5 @@
 <template lang="pug">
-.geo_location_api
+.html5_geolocation_api
   h2.title {{$options.title}}
   hr
 
@@ -104,7 +104,7 @@
 
 <script>
 export default {
-  name: 'geo_location_api',
+  name: 'html5_geolocation_api',
   title: "Geolocation API",
   data() {
     return {

@@ -1,5 +1,5 @@
 <template lang="pug">
-.google_maps_test1
+.google_maps_javascript_api
   h2.title {{$options.title}}
   hr
 
@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'google_maps_test1',
+  name: 'google_maps_javascript_api',
   title: "Google Maps API",
   data() {
     return {

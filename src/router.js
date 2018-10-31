@@ -32,9 +32,9 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
     {
-      path: '/geo_location_api',
-      name: 'geo_location_api',
-      component: () => import(/* webpackChunkName: "geo_location_api" */ './views/geo_location_api.vue')
+      path: '/html5_geolocation_api',
+      name: 'html5_geolocation_api',
+      component: () => import(/* webpackChunkName: "html5_geolocation_api" */ './views/html5_geolocation_api.vue')
     },
     {
       path: '/css_transform',
@@ -97,14 +97,19 @@ export default new Router({
       component: () => import(/* webpackChunkName: "web_audio_api_for_mobile" */ './views/web_audio_api_for_mobile.vue')
     },
     {
-      path: '/google_maps_test1',
-      name: 'google_maps_test1',
-      component: () => import(/* webpackChunkName: "google_maps_test1" */ './views/google_maps_test1.vue')
+      path: '/google_maps_javascript_api',
+      name: 'google_maps_javascript_api',
+      component: () => import(/* webpackChunkName: "google_maps_javascript_api" */ './views/google_maps_javascript_api.vue')
     },
     {
       path: '/form_template',
       name: 'form_template',
       component: () => import(/* webpackChunkName: "form_template" */ './views/form_template.vue')
+    },
+    {
+      path: '/google_geocoding_api',
+      name: 'google_geocoding_api',
+      component: () => import(/* webpackChunkName: "google_geocoding_api" */ './views/google_geocoding_api.vue')
     },
   ]
 })

@@ -19,7 +19,7 @@
 
           template(v-if="false")
             router-link.navbar-item(to="/about") About
-            router-link.navbar-item(to="/geo_location_api") Geolocation API
+            router-link.navbar-item(to="/html5_geolocation_api") Geolocation API
 
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他の機能
@@ -30,14 +30,15 @@
               router-link.navbar-item(:to="{name: 'css_transform'}") CSS Transform
               router-link.navbar-item(:to="{name: 'css_position'}") CSS Position
               hr.navbar-divider
-              router-link.navbar-item(:to="{name: 'geo_location_api'}") Geolocation API
+              router-link.navbar-item(:to="{name: 'html5_geolocation_api'}") Geolocation API
               router-link.navbar-item(:to="{name: 'navigator_vibrate'}") 振動機能
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'html_audio_checker'}") HTML Audio
               router-link.navbar-item(:to="{name: 'web_audio_api_checker'}") Web Audio API
               router-link.navbar-item(:to="{name: 'web_audio_api_for_mobile'}") Web Audio API for Mobile
               hr.navbar-divider
-              router-link.navbar-item(:to="{name: 'google_maps_test1'}") Google Maps API
+              router-link.navbar-item(:to="{name: 'google_maps_javascript_api'}") Google Maps JavaScript API
+              router-link.navbar-item(:to="{name: 'google_geocoding_api'}") Google Geocoding API
               router-link.navbar-item(:to="{name: 'form_template'}") Form Template
               //- hr.navbar-divider
               //- router-link.navbar-item(to="/about") About
@@ -96,7 +97,7 @@
               p.menu-label
                 | JavaScript
               ul.menu-list
-                li: router-link(:to="{name: 'geo_location_api'}") Geolocation API
+                li: router-link(:to="{name: 'html5_geolocation_api'}") HTML5 Geolocation API
           .column
             router-view
   template(v-if="false")

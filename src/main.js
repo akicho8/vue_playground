@@ -28,6 +28,9 @@ Object.defineProperty(Vue.prototype, 'window', {value: window})
 // NODE_ENV
 Object.defineProperty(Vue.prototype, 'NODE_ENV', {value: process.env.NODE_ENV})
 
+// Google API_KEY
+Object.defineProperty(Vue.prototype, 'API_KEY', {value: "AIzaSyC7zlJqafBfX426jk42IkZfHZo8b0_sXmA"})
+
 Vue.config.productionTip = false
 
 Vue.config.errorHandler = (error, vm, info) => {
@@ -47,6 +50,8 @@ Vue.mixin({
         document.title = `${title} - Vue Playground`
       }
     }
+  },
+  methods: {
   },
 })
 
