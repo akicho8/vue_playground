@@ -24,13 +24,14 @@
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他の機能
             .navbar-dropdown.is-boxed
+              router-link.navbar-item(:to="{name: 'ruby_code_transpiler'}") Ruby Code Transpiler
               router-link.navbar-item(:to="{name: 'strange_attractor'}") ストレンジアトラクターエディター
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'css_filter'}") CSS Filter
               router-link.navbar-item(:to="{name: 'css_transform'}") CSS Transform
               router-link.navbar-item(:to="{name: 'css_position'}") CSS Position
               hr.navbar-divider
-              router-link.navbar-item(:to="{name: 'html5_geolocation_api'}") Geolocation API
+              router-link.navbar-item(:to="{name: 'html5_geolocation_api'}") HTML5 Geolocation API
               router-link.navbar-item(:to="{name: 'navigator_vibrate'}") 振動機能
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'html_audio_checker'}") HTML Audio

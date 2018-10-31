@@ -111,5 +111,10 @@ export default new Router({
       name: 'google_geocoding_api',
       component: () => import(/* webpackChunkName: "google_geocoding_api" */ './views/google_geocoding_api.vue')
     },
+    {
+      path: '/ruby_code_transpiler',
+      name: 'ruby_code_transpiler',
+      component: () => import(/* webpackChunkName: "ruby_code_transpiler" */ './views/ruby_code_transpiler.vue')
+    },
   ]
 })
