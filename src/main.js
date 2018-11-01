@@ -33,9 +33,9 @@ Object.defineProperty(Vue.prototype, 'API_KEY', {value: "AIzaSyC7zlJqafBfX426jk4
 
 Vue.config.productionTip = false
 
-Vue.config.errorHandler = (error, vm, info) => {
-  console.log(`Captured in Vue.config.errororHandler: ${info}`, error)
-}
+// Vue.config.errorHandler = (error, vm, info) => {
+//   console.log(`Captured in Vue.config.errororHandler: ${info}`, error)
+// }
 
 Vue.mixin({
   mounted() {

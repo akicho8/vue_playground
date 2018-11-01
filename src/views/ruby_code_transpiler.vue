@@ -7,19 +7,19 @@
     .column
       template(v-for="form_part in form_parts")
         form_part(:form_part="form_part" :value.sync="$data[form_part.key]")
-      template(v-if="error")
-        b-notification.is-danger
-          | {{error}}
-      .is-size-7.has-text-grey-light
-        | 実行結果
-      .box
-        | {{eval_retval}}
+      template(v-if="rb_retval !== null")
+        b-message(title="実行結果" type="is-success" :closable="false")
+          | {{rb_retval}}
+      template(v-if="rb_error !== null")
+        b-message(title="実行結果(エラー)" type="is-danger" :closable="false")
+          | {{rb_error}}
     .column
-      .is-size-7.has-text-grey-light
-        | JavaScript
-      pre.box.word_break_all
-        | {{js_body}}
-
+      template(v-if="js_error !== null")
+        b-message(title="トランスパイル時エラー" type="is-danger" :closable="false")
+          | {{js_error}}
+      template(v-if="js_body !== null")
+        b-message(title="トランスパイル後のJavaScript" :closable="false")
+          | {{js_body}}
 </template>
 
 <script>
@@ -34,8 +34,9 @@ export default {
   data() {
     return {
       rb_body: "",
+      rb_error: null,
       js_body: null,
-      error: null,
+      js_error: null,
 
       form_parts: [
         { key: "rb_body", name: "Ruby",  default_value: "[:c, :b, :c, :c, :a, :b].group_by(&:itself).transform_values(&:size).to_a", type: "text",   params: { }, },
@@ -54,20 +55,23 @@ export default {
   },
 
   watch: {
-    rb_body(v) {
-      this.error = null
+    rb_body() {
       this.js_body = null
+      this.js_error = null
       try {
-        this.js_body = Opal.compile(v)
+        this.js_body = Opal.compile(this.rb_body)
       } catch (error) {
-        this.error = error
+        this.js_error = error
       }
     },
-  },
-
-  computed: {
-    eval_retval() {
-      return eval(this.js_body)
+    js_body() {
+      this.rb_retval = null
+      this.rb_error = null
+      try {
+        this.rb_retval = eval(this.js_body)
+      } catch (error) {
+        this.rb_error = error
+      }
     },
   },
 }
