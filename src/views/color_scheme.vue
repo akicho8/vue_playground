@@ -56,7 +56,7 @@
           | {{preset_info.description}}
       .color_bar
         template(v-for="color_info in preset_info.color_infos")
-          .color_box.is-size-7(:class="color_info.css_class" :style="{background: color_info.color.css(), color: text_color(color_info.color)}" @click.meta="set_this_color(color_info)")
+          .color_box.is-size-7(:class="color_info.css_class" :style="{background: color_info.color.css(), color: text_color(color_info.color).css()}" @click.meta="set_this_color(color_info)")
             b-tooltip(:label="[color_info.color.hex(), color_info.color.css(), color_info.color.css('hsl')].join(' ')" multilined type="is-black")
               | {{format_infos[format_key].func(color_info.color)}}
 
@@ -127,7 +127,7 @@ export default {
       if (gap >= 0) {
         return color.darken(strong + gap * step)
       } else {
-        return color.brighten(strong + -gap * step)
+        return color.brighten(strong - gap * step)
       }
     },
     direct_hex_color_set(v) {
@@ -146,7 +146,7 @@ export default {
           }
         }
       },
-      get(v) {
+      get() {
         return this.base_color.hex()
       },
     },
