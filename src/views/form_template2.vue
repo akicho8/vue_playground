@@ -51,13 +51,13 @@
           p.help Do not enter the first zero
 
   .field.is-horizontal
-    .field-label.is-large.is-normal
-      label.label Department
+    .field-label.is-large
+      label.label 選択肢
 
     .field-body
       .field.is-narrow
         .control
-          .select.is-fullwidth
+          .select.is-fullwidth.is-large
             select
               option Business development
               option Marketing
@@ -65,18 +65,18 @@
 
   .field.is-horizontal
     .field-label.is-large
-      label.label Already a member?
-
+      label.label ラジオボタン
     .field-body
       .field.is-narrow
         .control
-          label.radio
-            input(type="radio" name="member")
-            | Yes
+          .field-label.is-large
+            label.radio
+              input(type="radio" name="member")
+              | Yes
 
-          label.radio
-            input(type="radio" name="member")
-            | No
+            label.radio
+              input(type="radio" name="member")
+              | No
 
   .field.is-horizontal
     .field-label.is-large
