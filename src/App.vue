@@ -12,6 +12,7 @@
           span
       #main_navar.navbar-menu
         .navbar-start
+          router-link.navbar-item(:to="{name: 'ruby_code_transpiler'}") Ruby Code Transpiler
           router-link.navbar-item(:to="{name: 'css_object_fit'}") CSS object-fit
           router-link.navbar-item(:to="{name: 'color_scheme'}") 配色エディター
           router-link.navbar-item(:to="{name: 'stopwatch'}") ストップウォッチ
@@ -25,7 +26,6 @@
             span.navbar-link その他の機能
             .navbar-dropdown.is-boxed
               router-link.navbar-item(:to="{name: 'general_form_template'}") 一般向けフォームテンプレート
-              router-link.navbar-item(:to="{name: 'ruby_code_transpiler'}") Ruby Code Transpiler
               router-link.navbar-item(:to="{name: 'strange_attractor'}") ストレンジアトラクターエディター
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'css_filter'}") CSS Filter
@@ -45,6 +45,8 @@
               //- hr.navbar-divider
               //- router-link.navbar-item(to="/about") About
         .navbar-end
+          template(v-if="NODE_ENV !== 'production'")
+            a.navbar-item(href="http://tk2-221-20341.vs.sakura.ne.jp/vp/") production
           router-link.navbar-item(:to="{name: 'about'}") About
 
           // - if current_user
