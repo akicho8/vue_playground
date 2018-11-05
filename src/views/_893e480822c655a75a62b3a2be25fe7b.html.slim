@@ -1,0 +1,30 @@
+#app
+  .form-horizontal
+    .form-group
+      label.col-md-2.control-label 入力
+      .col-md-10
+        / @keyup.enter にすると改行するまで待つので長い数字も入力できる
+        input.form-control v-model="v" @keyup="run"
+        ul.list-group
+          template v-for="e in s.slice().reverse()"
+            li.list-group-item= "{{e}}"
+
+javascript:
+  new Vue({
+    el: "#app",
+    data: {v: "", s: []},
+    methods: {
+      run: function() {
+        if (this.v != "") {
+          if (/\d+/.test(this.v)) {
+            this.s.push(this.v)
+          } else {
+            const l = this.s.pop()
+            const r = this.s.pop()
+            this.s.push(eval(`${l}${this.v}${r}`))
+          }
+          this.v = ""
+        }
+      },
+    },
+  })

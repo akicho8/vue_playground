@@ -117,9 +117,9 @@ export default new Router({
       component: () => import(/* webpackChunkName: "ruby_code_transpiler" */ './views/ruby_code_transpiler.vue')
     },
     {
-      path: '/form_template2',
-      name: 'form_template2',
-      component: () => import(/* webpackChunkName: "form_template2" */ './views/form_template2.vue')
+      path: '/general_form_template',
+      name: 'general_form_template',
+      component: () => import(/* webpackChunkName: "general_form_template" */ './views/general_form_template.vue')
     },
   ]
 })

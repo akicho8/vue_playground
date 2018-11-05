@@ -24,7 +24,7 @@
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他の機能
             .navbar-dropdown.is-boxed
-              router-link.navbar-item(:to="{name: 'form_template2'}") form_template2
+              router-link.navbar-item(:to="{name: 'general_form_template'}") 一般向けフォームテンプレート
               router-link.navbar-item(:to="{name: 'ruby_code_transpiler'}") Ruby Code Transpiler
               router-link.navbar-item(:to="{name: 'strange_attractor'}") ストレンジアトラクターエディター
               hr.navbar-divider

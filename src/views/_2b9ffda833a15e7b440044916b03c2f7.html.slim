@@ -1,0 +1,45 @@
+/ Vue.js でドラッグアンドドロップ
+/ http://www.htmq.com/dnd/
+
+#app
+  // 移動できる物
+  span#id_a.label.label-default draggable="true" @dragstart="f_start" = "A"
+  span#id_b.label.label-default draggable="true" @dragstart="f_start" = "B"
+
+  // 移動の箱。いくらでも増やせる
+  .panel.panel-default
+    .panel-body @dragover="f_dragover" @drop="f_drop"
+  .panel.panel-default
+    .panel-body @dragover="f_dragover" @drop="f_drop"
+
+javascript:
+  new Vue({
+    el: "#app",
+    data: {
+    },
+    methods: {
+      // ドラッグ開始時の処理
+      f_start: function (e) {
+        // ドラッグするデータのid名(なんでもいい)をDataTransferオブジェクトにセット
+        e.dataTransfer.setData("target_id", e.target.id)
+      },
+      // ドラッグ要素がドロップ要素に重なっている間の処理
+      f_dragover: function(e) {
+        // dragoverイベントをキャンセルしてドロップ先の要素がドロップを受け付けるようにする
+        e.preventDefault()
+      },
+      /***** ドロップ時の処理 *****/
+      f_drop: function(e) {
+        var target_id = e.dataTransfer.getData("target_id")   // ドラッグされたデータのid名をDataTransferオブジェクトから取得
+        var drag_elem = document.getElementById(target_id)  // id名からドラッグされた要素を取得
+        e.currentTarget.appendChild(drag_elem)        // ドロップ先にドラッグされた要素を追加(ここらへんは自力でやるっぽい)
+        e.preventDefault()                            // エラー回避のため、ドロップ処理の最後にdropイベントをキャンセルしておく
+      },
+    },
+  })
+
+sass:
+  .obj
+    margin: 0.5em
+    display: inline-block
+    border: 1px solid #aaa
