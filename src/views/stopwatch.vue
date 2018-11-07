@@ -3,43 +3,45 @@
   h2.title {{$options.title}}
   hr
 
-  .field.is-horizontal
-    .field-label.is-small
-      label.label
-        | ラップ番号
-    .field-body
-      .field
-        input.input.is-small(type="number" v-model.number="current_code")
+  .columns
+    .column
+      .field.is-horizontal
+        .field-label.is-large
+          label.label
+            | 番号
+        .field-body
+          .field
+            input.input.is-large(type="number" v-model.number="current_code")
 
-  .content
-    .is-size-1
-      | {{time_format(total_counter)}}
+      .content
+        .is-size-1
+          | {{time_format(total_counter)}}
 
-  .buttons
-    template(v-if="mode == 'playing'")
-      button.button.is-rounded(@click="lap" ref="lap") ラップ
-    template(v-else)
-      template(v-if="total_counter >= 1")
-        button.button.is-rounded(@click="reset") リセット
-      template(v-else)
-        button.button.is-rounded(disabled) ラップ
-    template(v-if="mode == 'standby'")
-      button.button.is-rounded.is-primary(@click="start_run") 開始
-    template(v-else)
-      button.button.is-rounded.is-danger(@click="stop_run") 停止
-    template(v-if="rows.length >= 1 || true")
-      a.button.is-rounded.is-info(:href="twitter_url" target="_blank") Tweet
-
-  .box.is-size-7
-    template(v-for="row in rows")
-      div
-        | {{row.current_code}}
-        | -
-        | {{time_format(row.lap_counter)}}
-    span.has-text-grey-light
-      | {{current_code}}
-      | -
-      | {{time_format(lap_counter)}}
+      .buttons
+        template(v-if="mode == 'playing'")
+          button.button.is-rounded(@click="lap" ref="lap") ラップ
+        template(v-else)
+          template(v-if="total_counter >= 1")
+            button.button.is-rounded(@click="reset") リセット
+          template(v-else)
+            button.button.is-rounded(disabled) ラップ
+        template(v-if="mode == 'standby'")
+          button.button.is-rounded.is-primary(@click="start_run") 開始
+        template(v-else)
+          button.button.is-rounded.is-danger(@click="stop_run") 停止
+        template(v-if="rows.length >= 1 || true")
+          a.button.is-rounded.is-info(:href="twitter_url" target="_blank") Tweet
+    .column
+      .box.is-size-7
+        template(v-for="row in rows")
+          div
+            | {{row.current_code}}
+            |
+            | {{time_format(row.lap_counter)}}
+        span.has-text-grey-light
+          | {{current_code}}
+          |
+          | {{time_format(lap_counter)}}
 </template>
 
 <script>
@@ -82,7 +84,7 @@ export default {
     },
 
     time_format(seconds) {
-      return dayjs().startOf("year").set("seconds", seconds).format("mm:ss")
+      return dayjs().startOf("year").set("seconds", seconds).format("m:ss")
     },
 
     lap() {
