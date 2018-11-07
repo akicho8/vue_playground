@@ -32,16 +32,17 @@
         template(v-if="rows.length >= 1 || true")
           a.button.is-rounded.is-info(:href="twitter_url" target="_blank") Tweet
     .column
-      .box.is-size-6
-        template(v-for="row in rows")
-          div
-            | {{row.current_code}}
-            |
-            | {{time_format(row.lap_counter)}}
-        span.has-text-grey-light
-          | {{current_code}}
-          |
-          | {{time_format(lap_counter)}}
+      .message.is-primary.is-size-6
+        .message-body
+          template(v-for="row in rows")
+            div
+              | {{row.current_code}}
+              | -
+              | {{time_format(row.lap_counter)}}
+          span.has-text-grey-light.is-size-1
+            | {{current_code}}
+            | -
+            | {{time_format(lap_counter)}}
 </template>
 
 <script>
@@ -132,7 +133,7 @@ export default {
     },
 
     tweet_body() {
-      return _.concat(this.rows, this.row_record).map(e => `${e.current_code} ${this.time_format(e.lap_counter)}`).join("\n")
+      return _.concat(this.rows, this.row_record).map(e => `${e.current_code} - ${this.time_format(e.lap_counter)}`).join("\n")
     },
   },
 }
