@@ -94,6 +94,30 @@ export default {
       result_rows: [],
       instance: null,
       currentTime: null,
+      EventInfo: [
+        { key: "loadstart",      name: "読込開始",               description: "メディアデータの読込を開始した時", },
+        { key: "progress",       name: "読込中",                 description: "メディアデータの読込中の時", },
+        { key: "suspend",        name: "読込一時休止",           description: "メディアリソース全体は読み込めていないが、読込を一時休止している時", },
+        { key: "abort",          name: "読込中断",               description: "メディアリソースの読込が完了する前に、エラーが原因ではなく読込を中断した時", },
+        { key: "error",          name: "読込中にエラー",         description: "メディアデータの読込中にエラーが発生した時", },
+        { key: "emptied",        name: "読み込んだがデータが空", description: "読込エラーなどの理由で、読込データが空となった時", },
+        { key: "stalled",        name: "予期せぬ理由で読込失敗", description: "メディアデータを読み込もうとしているが、予期しない理由で読み込めない時", },
+        { key: "loadedmetadata", name: "メタ情報読込完了",       description: "メタデータの読込が完了して、メディアリソースの長さと大きさが決まってテキストトラックの準備が出来た時", },
+        { key: "loadeddata",     name: "再生可能",               description: "メディアデータを現在の再生位置で描画できる状態になった初回の時", },
+        { key: "canplay",        name: "再生できるが不安定",     description: "メディアデータの再生を再開することができるが、 いま再生を再開すれば、現在の再生レートで最後まで再生できず、途中でバッファリングのために停止すると推定される時", },
+        { key: "canplaythrough", name: "安定して再生できる",     description: "いま再生を再開すれば、現在の再生レートで最後まで再生できて、途中でバッファリングのために停止することはないと推定される時", },
+        { key: "playing",        name: "再生再開可",             description: "一時停止した後、または、メディアデータの不足で遅延した後で、再生を再開する準備ができた時", },
+        { key: "waiting",        name: "次のデータ待ち",         description: "次のフレームが利用できないため再生停止しているが、やがてそのフレームが利用できるようになるのを待っている時", },
+        { key: "seeking",        name: "シーク中",               description: "シーク（再生位置への移動）中の時", },
+        { key: "seeked",         name: "シーク完了",             description: "シーク（再生位置への移動）が完了した時", },
+        { key: "ended",          name: "完了",                   description: "メディアリソースの末尾に達して、再生が停止した時", },
+        { key: "durationchange", name: "長さ更新",               description: "duration属性（メディアリソースの長さ、再生継続時間）が更新された時", },
+        { key: "timeupdate",     name: "再生位置更新",           description: "現在の再生位置が変更された時", func: e => { this.currentTime = e.target.currentTime } },
+        { key: "play",           name: "再生中",                 description: "再生中の時", },
+        { key: "pause",          name: "一時停止",               description: "一時停止中の時", },
+        { key: "ratechange",     name: "レート変更",             description: "再生レートが変更された時", },
+        { key: "volumechange",   name: "ボリューム変更",         description: "ボリューム、または、ミュートが変更された時", },
+      ].reduce((a, e, i) => ({...a, [e.key]: {code: i, ...e}}), {})
     }
   },
 
@@ -178,33 +202,6 @@ export default {
   },
 
   computed: {
-    EventInfo() {
-      return [
-        { key: "loadstart",      name: "読込開始",               description: "メディアデータの読込を開始した時", },
-        { key: "progress",       name: "読込中",                 description: "メディアデータの読込中の時", },
-        { key: "suspend",        name: "読込一時休止",           description: "メディアリソース全体は読み込めていないが、読込を一時休止している時", },
-        { key: "abort",          name: "読込中断",               description: "メディアリソースの読込が完了する前に、エラーが原因ではなく読込を中断した時", },
-        { key: "error",          name: "読込中にエラー",         description: "メディアデータの読込中にエラーが発生した時", },
-        { key: "emptied",        name: "読み込んだがデータが空", description: "読込エラーなどの理由で、読込データが空となった時", },
-        { key: "stalled",        name: "予期せぬ理由で読込失敗", description: "メディアデータを読み込もうとしているが、予期しない理由で読み込めない時", },
-        { key: "loadedmetadata", name: "メタ情報読込完了",       description: "メタデータの読込が完了して、メディアリソースの長さと大きさが決まってテキストトラックの準備が出来た時", },
-        { key: "loadeddata",     name: "再生可能",               description: "メディアデータを現在の再生位置で描画できる状態になった初回の時", },
-        { key: "canplay",        name: "再生できるが不安定",     description: "メディアデータの再生を再開することができるが、 いま再生を再開すれば、現在の再生レートで最後まで再生できず、途中でバッファリングのために停止すると推定される時", },
-        { key: "canplaythrough", name: "安定して再生できる",     description: "いま再生を再開すれば、現在の再生レートで最後まで再生できて、途中でバッファリングのために停止することはないと推定される時", },
-        { key: "playing",        name: "再生再開可",             description: "一時停止した後、または、メディアデータの不足で遅延した後で、再生を再開する準備ができた時", },
-        { key: "waiting",        name: "次のデータ待ち",         description: "次のフレームが利用できないため再生停止しているが、やがてそのフレームが利用できるようになるのを待っている時", },
-        { key: "seeking",        name: "シーク中",               description: "シーク（再生位置への移動）中の時", },
-        { key: "seeked",         name: "シーク完了",             description: "シーク（再生位置への移動）が完了した時", },
-        { key: "ended",          name: "完了",                   description: "メディアリソースの末尾に達して、再生が停止した時", },
-        { key: "durationchange", name: "長さ更新",               description: "duration属性（メディアリソースの長さ、再生継続時間）が更新された時", },
-        { key: "timeupdate",     name: "再生位置更新",           description: "現在の再生位置が変更された時", func: e => { this.currentTime = e.target.currentTime } },
-        { key: "play",           name: "再生中",                 description: "再生中の時", },
-        { key: "pause",          name: "一時停止",               description: "一時停止中の時", },
-        { key: "ratechange",     name: "レート変更",             description: "再生レートが変更された時", },
-        { key: "volumechange",   name: "ボリューム変更",         description: "ボリューム、または、ミュートが変更された時", },
-      ].reduce((a, e, i) => ({...a, [e.key]: {code: i, ...e}}), {})
-    },
-
     table_columns() {
       return [
         { field: 'time', label: '時間',   sortable: true, numeric: true, },
@@ -215,10 +212,6 @@ export default {
 
     timer_use_p() {
       return typeof this.timer_delay === "number"
-    },
-
-    AudioContextClass() {
-      return window.AudioContext || window.webkitAudioContext
     },
   },
 }

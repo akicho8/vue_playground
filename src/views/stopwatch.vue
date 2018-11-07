@@ -44,6 +44,7 @@
 
 <script>
 import dayjs from "dayjs"
+import button46_mp3 from "@/assets/button46.mp3"
 
 export default {
   name: "stopwatch",
@@ -65,8 +66,8 @@ export default {
       this.clear_interval_safe()
       this.interval_id = setInterval(this.step_next, 1000)
 
-      //- LAP にフォーカスさせる
-      //- this.$nextTick(() => this.$refs.lap.focus())
+      // LAP にフォーカスさせる
+      this.$nextTick(() => this.$refs.lap.focus())
     },
 
     stop_run() {
@@ -89,6 +90,9 @@ export default {
         this.rows.push(this.row_record)
         this.current_code += 1
         this.lap_counter = 0
+
+        const audio = new Audio(button46_mp3)
+        audio.play()
       }
     },
 
