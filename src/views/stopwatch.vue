@@ -32,7 +32,7 @@
         template(v-if="rows.length >= 1 || true")
           a.button.is-rounded.is-info(:href="twitter_url" target="_blank") Tweet
     .column
-      .box.is-size-7
+      .box.is-size-6
         template(v-for="row in rows")
           div
             | {{row.current_code}}

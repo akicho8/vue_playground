@@ -46,7 +46,9 @@
               //- router-link.navbar-item(to="/about") About
         .navbar-end
           template(v-if="NODE_ENV !== 'production'")
-            a.navbar-item(href="http://tk2-221-20341.vs.sakura.ne.jp/vp/") production
+            a.navbar-item(href="http://tk2-221-20341.vs.sakura.ne.jp/vp/" target="_blank") production
+            a.navbar-item(href="https://bulma.io/documentation/form/general/" target="_blank") Bulma
+            a.navbar-item(href="https://buefy.github.io/#/documentation/start" target="_blank") Buefy
           router-link.navbar-item(:to="{name: 'about'}") About
 
           // - if current_user
