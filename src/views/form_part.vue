@@ -21,37 +21,21 @@
           template(v-for="e in form_part.elems")
             template(v-if="buefy_p")
               b-radio(size="is-small" v-model="inside_value" :native-value="e.value")
-                b-tooltip(:label="e.tooltip" multilined)
-                  template(v-if="real_value_p")
-                    span(v-text="e.value" :title="e.name || e.value")
-                  template(v-else)
-                    span(v-text="e.name || e.value" :title="e.value")
+                form_part_child(:info="e")
             template(v-else)
               label.radio.is-size-7
                 input(type="radio" v-model="inside_value" :value="e.value")
-                b-tooltip(:label="e.tooltip" multilined)
-                  template(v-if="real_value_p")
-                    span(v-text="e.value" :title="e.name || e.value")
-                  template(v-else)
-                    span(v-text="e.name || e.value" :title="e.value")
+                form_part_child(:info="e")
 
         template(v-if="form_part.type === 'checkbox'")
           template(v-for="e in form_part.elems")
             template(v-if="buefy_p")
               b-checkbox(size="is-small" v-model="inside_value" :native-value="e.value" :disabled="disabled(form_part)")
-                b-tooltip(:label="e.tooltip" multilined)
-                  template(v-if="real_value_p")
-                    | {{e.value}}
-                  template(v-else)
-                    | {{e.name || e.value}}
+                form_part_child(:info="e")
             template(v-else)
               label.checkbox.is-size-7
                 input(type="checkbox" v-model="inside_value" :value="e.value" :disabled="disabled(form_part)")
-                b-tooltip(:label="e.tooltip" multilined)
-                  template(v-if="real_value_p")
-                    | {{e.value}}
-                  template(v-else)
-                    | {{e.name || e.value}}
+                form_part_child(:info="e")
 
         template(v-if="form_part.type === 'select'")
           template(v-if="buefy_p")
@@ -89,8 +73,13 @@
 </template>
 
 <script>
+import form_part_child from "./form_part_child.vue"
+
 export default {
   name: "form_part",
+  components: {
+    form_part_child,
+  },
   props: {
     form_part:    { required: true,                  },
     real_value_p: { required: false, default: false, },

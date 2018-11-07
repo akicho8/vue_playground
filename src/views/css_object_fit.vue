@@ -81,6 +81,7 @@
           li object-fit: fill が初期値
           li object-position: 50% 50% が初期値
           li 余白色は background: で指定できる
+          li 小さな画像を拡大したくないだけなら scale-down よりも max-height などを使った方が良い
 
       template(v-if="NODE_ENV !== 'production'")
         .section
@@ -92,12 +93,12 @@
 </template>
 
 <script>
-import I9A5312ISUMI_TP_V from "@/assets/I9A5312ISUMI_TP_V.jpg"
+// import I9A5312ISUMI_TP_V from "@/assets/I9A5312ISUMI_TP_V.jpg"
 import IS107112702_TP_V from "@/assets/IS107112702_TP_V.jpg"
-import IMARI20160806355715_TP_V from "@/assets/IMARI20160806355715_TP_V.jpg"
-import IMGL5303_TP_V from "@/assets/IMGL5303_TP_V.jpg"
-import ISG106132539_TP_V from "@/assets/ISG106132539_TP_V.jpg"
-import logo from "@/assets/logo.png"
+// import IMARI20160806355715_TP_V from "@/assets/IMARI20160806355715_TP_V.jpg"
+// import IMGL5303_TP_V from "@/assets/IMGL5303_TP_V.jpg"
+// import ISG106132539_TP_V from "@/assets/ISG106132539_TP_V.jpg"
+// import logo from "@/assets/logo.png"
 import rails from "@/assets/rails.png"
 
 export default {

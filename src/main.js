@@ -22,6 +22,10 @@ import inspect from 'object-inspect'
 window.inspect = inspect
 Object.defineProperty(Vue.prototype, 'inspect', {value: inspect})
 
+// https://github.com/SSENSE/vue-carousel
+import VueCarousel from 'vue-carousel'
+Vue.use(VueCarousel)
+
 // window
 Object.defineProperty(Vue.prototype, 'window', {value: window})
 

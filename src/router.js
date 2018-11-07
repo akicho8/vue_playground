@@ -121,5 +121,10 @@ export default new Router({
       name: 'general_form_template',
       component: () => import(/* webpackChunkName: "general_form_template" */ './views/general_form_template.vue')
     },
+    {
+      path: '/vue_carousel_test',
+      name: 'vue_carousel_test',
+      component: () => import(/* webpackChunkName: "vue_carousel_test" */ './views/vue_carousel_test.vue')
+    },
   ]
 })
