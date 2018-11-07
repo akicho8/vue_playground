@@ -132,7 +132,7 @@ export default {
     },
 
     tweet_body() {
-      return _.concat(this.rows, this.row_record).map(e => `${e.current_code} - ${this.time_format(e.lap_counter)}`).join("\n")
+      return _.concat(this.rows, this.row_record).map(e => `${e.current_code} ${this.time_format(e.lap_counter)}`).join("\n")
     },
   },
 }
