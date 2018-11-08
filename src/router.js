@@ -126,5 +126,10 @@ export default new Router({
       name: 'vue_carousel_test',
       component: () => import(/* webpackChunkName: "vue_carousel_test" */ './views/vue_carousel_test.vue')
     },
+    {
+      path: '/mavon_editor_test',
+      name: 'mavon_editor_test',
+      component: () => import(/* webpackChunkName: "mavon_editor_test" */ './views/mavon_editor_test.vue')
+    },
   ]
 })

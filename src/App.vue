@@ -25,6 +25,7 @@
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他の機能
             .navbar-dropdown.is-boxed
+              router-link.navbar-item(:to="{name: 'mavon_editor_test'}") mavonEditor Test
               router-link.navbar-item(:to="{name: 'vue_carousel_test'}") Vue Carousel Test
               router-link.navbar-item(:to="{name: 'general_form_template'}") 一般向けフォームテンプレート
               router-link.navbar-item(:to="{name: 'strange_attractor'}") ストレンジアトラクターエディター
