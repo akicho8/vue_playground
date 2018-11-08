@@ -21,21 +21,21 @@
           template(v-for="e in form_part.elems")
             template(v-if="buefy_p")
               b-radio(size="is-small" v-model="inside_value" :native-value="e.value")
-                form_part_child(:info="e")
+                form_part_child(:info="e" :real_value_p="real_value_p")
             template(v-else)
               label.radio.is-size-7
                 input(type="radio" v-model="inside_value" :value="e.value")
-                form_part_child(:info="e")
+                form_part_child(:info="e" :real_value_p="real_value_p")
 
         template(v-if="form_part.type === 'checkbox'")
           template(v-for="e in form_part.elems")
             template(v-if="buefy_p")
               b-checkbox(size="is-small" v-model="inside_value" :native-value="e.value" :disabled="disabled(form_part)")
-                form_part_child(:info="e")
+                form_part_child(:info="e" :real_value_p="real_value_p")
             template(v-else)
               label.checkbox.is-size-7
                 input(type="checkbox" v-model="inside_value" :value="e.value" :disabled="disabled(form_part)")
-                form_part_child(:info="e")
+                form_part_child(:info="e" :real_value_p="real_value_p")
 
         template(v-if="form_part.type === 'select'")
           template(v-if="buefy_p")

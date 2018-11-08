@@ -27,15 +27,11 @@
             .control
               .buttons
                 button.button.is-small(@click="all_reset") リセット
-                button.button.is-small(@click="run_user_case1") 送信1
-                button.button.is-small(@click="run_user_case2") 送信2
 
       .content.is-small
         ul
           li
             a(href="https://github.com/SSENSE/vue-carousel" target="_blank") Github
-          li
-            a(href="https://keycox.hatenablog.com/entry/2018/09/20/175909" target="_blank") 【Vue Carousel】Vueで カルーセルを作る
 
       template(v-if="NODE_ENV !== 'production'")
         .box
@@ -46,25 +42,16 @@
         carousel(
           :autoplay="slider_flags.includes('autoplay')"
           :loop="slider_flags.includes('loop')"
-          :navigation-enabled="slider_flags.includes('navigation-enabled')"
-          :pagination-enabled="slider_flags.includes('pagination-enabled')"
+          :navigationEnabled="slider_flags.includes('navigationEnabled')"
+          :paginationEnabled="slider_flags.includes('paginationEnabled')"
+          :scrollPerPage="slider_flags.includes('scrollPerPage')"
           :speed="speed * 1000"
+          :navigateTo="speed * 1000"
           :perPage="perPage"
+          :easing="easing"
           )
-          slide
-            img(src="@/assets/I9A5312ISUMI_TP_V.jpg")
-          slide
-            img(src="@/assets/IS107112702_TP_V.jpg")
-          slide
-            img(src="@/assets/IMARI20160806355715_TP_V.jpg")
-          slide
-            img(src="@/assets/IMGL5303_TP_V.jpg")
-          slide
-            img(src="@/assets/ISG106132539_TP_V.jpg")
-          slide
-            img(src="@/assets/logo.png")
-          slide
-            img(src="@/assets/rails.png")
+          slide(v-for="(image_file, key, i) in any_image_files" @slideClick="slide_click_handle" :data-value1="i" :data-value2="key")
+            img(:src="image_file")
 
       .box
         b-table(:data="result_rows" :hoverable="true" :columns="table_columns" narrowed)
@@ -73,6 +60,7 @@
 
 <script>
 import form_part from "./form_part.vue"
+import any_image_files from "./any_image_files.js"
 
 // import I9A5312ISUMI_TP_V from "@/assets/I9A5312ISUMI_TP_V.jpg"
 // import IS107112702_TP_V from "@/assets/IS107112702_TP_V.jpg"
@@ -90,71 +78,53 @@ export default {
   },
   data() {
     return {
-      result_rows: [],
+      slider_flags: [],
+      speed: null,
+      perPage: null,
+      scrollPerPage: null,
+      easing: null,
+
+      any_image_files,
 
       real_value_p: false,
 
-      // string_var1_p: true,
-      // string_var1: null,
-
-      // text_var1_p: true,
-      // text_var1: null,
-
-      radio_var1_p: true,
-      radio_var1: null,
-
-      slider_flags: [],
-
-      speed: null,
-      perPage: null,
-
-      select_var1_p: true,
-      select_var1: 0,
+      result_rows: [],
 
       form_parts: [
-        // { key: "string_var1",  name: "文字列1",    default_value: "(string_var1)", real_name: "string_var1", display_key: "string_var1_p",   type: "string", params: {                             }, },
-        { key: "speed",        name: "スピード",   default_value:  1,              real_name: "speed",                                       type: "range",  params: { min: 0,  max: 3, step: 0.1, }, },
-        { key: "perPage",     name: "要素数/page",     default_value:  1,         real_name: "perPage",                                    type: "range",  params: { min: 0,  max: 4, step: 1, }, },
+        { key: "speed",   name: "スピード",       default_value:  1, real_name: "speed",   type: "range",  params: { min: 0, max: 3, step: 0.1, }, },
+        { key: "perPage", name: "表示数/1ページ", default_value:  1, real_name: "perPage", type: "range",  params: { min: 0, max: 4, step: 1,   }, },
         {
-          key: "radio_var1",
-          name: "ラジオボタン1",
-          real_name: "radio_var1",
-          display_key: "radio_var1_p",
-          default_value: "value1",
-          type: "radio",
-          elems: [
-            { name: "選択肢1",  value: "value1", tooltip: "ツールチップ1", },
-            { name: "選択肢2",  value: "value2", tooltip: "ツールチップ2", },
-          ],
-        },
-        {
-          name: "チェックボックス1",
+          name: "フラグ的な設定",
           key: "slider_flags",
-          real_name: "slider_flags",
           default_value: [
             "autoplay",
             "loop",
-            "navigation-enabled",
-            "pagination-enabled",
+            "navigationEnabled",
+            "paginationEnabled",
+            "scrollPerPage",
           ],
           type: "checkbox",
           elems: [
-            { name: "自動再生",         value: "autoplay",           tooltip: null, },
-            { name: "ループ",           value: "loop",               tooltip: null, },
-            { name: "ナビ",             value: "navigation-enabled", tooltip: null, },
-            { name: "ページネーション", value: "pagination-enabled", tooltip: null, },
+            { name: "自動再生",             value: "autoplay",          },
+            { name: "ループ",               value: "loop",              },
+            { name: "ナビ",                 value: "navigationEnabled", },
+            { name: "ページネーション",     value: "paginationEnabled", },
+            { name: "ページ単位スクロール", value: "scrollPerPage",     },
           ],
         },
         {
-          key: "select_var1",
-          name: "プルダウン1",
-          real_name: "select_var1",
-          display_key: "select_var1_p",
-          default_value: "value1",
-          type: "select",
+          name: "動き方",
+          key: "easing",
+          default_value: "ease-in-out",
+          type: "radio",
           elems: [
-            { name: "選択肢1",  value: "value1", },
-            { name: "選択肢2",  value: "value2", },
+            { value: "ease",        },
+            { value: "ease-in",     },
+            { value: "ease-out",    },
+            { value: "ease-in-out", },
+            { value: "linear",      },
+            { value: "step-start",  },
+            { value: "step-end",    },
           ],
         },
       ],
@@ -169,22 +139,11 @@ export default {
   },
 
   methods: {
-    run_user_case1() {
+    slide_click_handle(e) {
       this.result_rows.push({
-        // time: dayjs().format("YYYY-MM-DD hh:mm:ss.SSS"),
-        params: this.api_params,
+        type: "@slideClick",
+        params: inspect(e),
       })
-    },
-
-    run_user_case2() {
-      fetch("https://yesno.wtf/api")
-        .then(r => r.json())
-        .then(v => {
-          this.result_rows.push({
-            // time: dayjs().format("YYYY-MM-DD hh:mm:ss.SSS"),
-            params: v,
-          })
-        })
     },
 
     form_parts_reset() {
@@ -199,45 +158,18 @@ export default {
       this.result_rows_reset()
       this.form_parts_reset()
     },
-
-    disabled(record) {
-      return !(!record.display_key || this.$data[record.display_key])
-    },
   },
 
   computed: {
     table_columns() {
       return [
-        // { field: 'time',   label: '時間',         sortable: true, numeric: true, },
-        { field: 'params', label: 'パラメーター', sortable: true,                },
+        { field: 'type',   label: 'type',  sortable: true, },
+        { field: 'params', label: 'event', sortable: true, },
       ]
     },
 
     api_params() {
-      const hash = {}
-      // if (this.string_var1_p) {
-      //   hash["string_var1"] = this.string_var1
-      // }
-      // if (this.text_var1_p) {
-      //   hash["text_var1"] = this.text_var1
-      // }
-
-      // if (this.radio_var1_p) {
-      //   hash["radio_var1"] = this.radio_var1
-      // }
-      // if (this.speed_p) {
-      //   hash["speed"] = this.speed
-      // }
-      // if (this.slider_flags_p) {
-      //   hash["slider_flags"] = this.slider_flags
-      // }
-      // if (this.select_var1_p) {
-      //   hash["select_var1"] = this.select_var1
-      // }
-
-      hash["v-bind:perPage"] = this.perPage
-
-      return hash
+      return this.form_parts.reduce((a, e) => ({...a, [e.key]: this.$data[e.key]}))
     },
   },
 }
@@ -247,15 +179,8 @@ export default {
 @import "../assets/scss/variables"
 
 .VueCarousel-slide
-  height: 256px
-  // color: #FFF
-  // background: #59ecff
   display: flex
   align-items: center
   justify-content: center
-  // border-right: 1px solid #FFF
-  box-sizing: border-box
-  // font-size: 12px
-  // img
-  //   object-fit: contain
+  max-height: 256px
 </style>
