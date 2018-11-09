@@ -1,5 +1,5 @@
 <template lang="pug">
-.css_string_var1
+.form_template
   .h2.title {{$options.title}}
   hr
 
@@ -47,7 +47,7 @@ import dayjs from "dayjs"
 import form_part from "./form_part.vue"
 
 export default {
-  name: "css_string_var1",
+  name: "form_template",
   title: "Form Template",
   components: {
     form_part,
@@ -201,7 +201,5 @@ export default {
 <style scoped lang="sass">
 @import "../assets/scss/variables"
 
-.img1
-  border: 1px dotted $primary
-  background: hsla(0, 0, 0, 0.02)
+.form_template
 </style>

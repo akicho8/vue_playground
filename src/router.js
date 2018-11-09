@@ -131,5 +131,10 @@ export default new Router({
       name: 'mavon_editor_test',
       component: () => import(/* webpackChunkName: "mavon_editor_test" */ './views/mavon_editor_test.vue')
     },
+    {
+      path: '/light_rpn',
+      name: 'light_rpn',
+      component: () => import(/* webpackChunkName: "light_rpn" */ './views/light_rpn.vue')
+    },
   ]
 })

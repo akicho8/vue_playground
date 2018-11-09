@@ -25,6 +25,7 @@
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他の機能
             .navbar-dropdown.is-boxed
+              router-link.navbar-item(:to="{name: 'light_rpn'}") 逆ポーランド電卓
               router-link.navbar-item(:to="{name: 'mavon_editor_test'}") mavonEditor Test
               router-link.navbar-item(:to="{name: 'vue_carousel_test'}") Vue Carousel Test
               router-link.navbar-item(:to="{name: 'general_form_template'}") 一般向けフォームテンプレート
@@ -52,66 +53,15 @@
             a.navbar-item(href="https://bulma.io/documentation/form/general/" target="_blank") Bulma
             a.navbar-item(href="https://buefy.github.io/#/documentation/start" target="_blank") Buefy
           router-link.navbar-item(:to="{name: 'about'}") About
-
-          // - if current_user
-          //   .navbar-item.has-dropdown.is-hoverable
-          //     = link_to([current_user], class: "navbar-link", slot: "trigger") do
-          //       = image_tag(current_user.avatar_url, class: "header_avatar_image")
-          //       span.my_name
-          //         = current_user.name
-          //     .navbar-dropdown.is-boxed
-          //       = link_to("プロフィール", [current_user], class: "navbar-item")
-          //       = link_to("設定", [:edit, current_user], class: "navbar-item")
-          //       .navbar-divider
-          //       = link_to("ログアウト", [:colosseum, :session], method: :delete, class: "navbar-item")
-          //       / = link_to "ログアウト", destroy_xuser_session_path, method: :delete
-
-          // - if !current_user
-          //   = link_to("ログイン", :new_xuser_session, class: "navbar-item")
-          //   = link_to("アカウント登録", :new_xuser_registration, class: "navbar-item")
-          //   / .navbar-item.has-dropdown.is-hoverable
-          //   /   span.navbar-link ログイン
-          //   /   .navbar-dropdown.is-boxed
-          //   /     = link_to("Googleアカウントでログイン", :new_xuser_registration, class: "navbar-item")
-          //   /     = link_to("Googleアカウントでログイン", :xuser_google_oauth2_callback_function_omniauth_authorize, class: "navbar-item")
-          //
-          // .navbar-item
-          //   | オンライン{{online_only_count}}人
-          // .navbar-item
-          //   | 対局中{{fighter_only_count}}人
-
   .section
     .container.is-fluid
       router-view
 
   template(v-if="false")
-    .section
-      .container.is-fluid
-        .columns
-          .column.is-2
-            aside.menu
-              p.menu-label
-                | General
-              ul.menu-list
-                li: router-link(to="/") Home
-                li: router-link(to="/about") About
-                li: router-link(:to="{name: 'color_scheme'}") 配色エディター
-                li: router-link(:to="{name: 'stopwatch'}") ストップウォッチ
-              p.menu-label
-                | CSS
-              ul.menu-list
-                li: router-link(:to="{name: 'css_transform'}") CSS Transform
-                li: router-link(:to="{name: 'css_flexbox'}") CSS Flexbox
-              p.menu-label
-                | JavaScript
-              ul.menu-list
-                li: router-link(:to="{name: 'html5_geolocation_api'}") HTML5 Geolocation API
-          .column
-            router-view
-  template(v-if="false")
-    footer.footer
-      .content.has-text-centered
-        a(href="https://github.com/akicho8/vue_playground") GitHub
+    template(v-if="$route.query.layout !== 'simple'")      
+      footer.footer
+        .content.has-text-centered
+          a(href="https://github.com/akicho8/vue_playground") GitHub
 </template>
 
 <style lang="sass">
