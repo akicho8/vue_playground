@@ -42,8 +42,10 @@
               router-link.navbar-item(:to="{name: 'web_audio_api_checker'}") Web Audio API
               router-link.navbar-item(:to="{name: 'web_audio_api_for_mobile'}") Web Audio API for Mobile
               hr.navbar-divider
+              router-link.navbar-item(:to="{name: 'google_maps_test'}") Google Maps Test
               router-link.navbar-item(:to="{name: 'google_maps_javascript_api'}") Google Maps JavaScript API
               router-link.navbar-item(:to="{name: 'google_geocoding_api'}") Google Geocoding API
+              hr.navbar-divider
               router-link.navbar-item(:to="{name: 'form_template'}") Form Template
               //- hr.navbar-divider
               //- router-link.navbar-item(to="/about") About

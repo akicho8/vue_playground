@@ -136,5 +136,10 @@ export default new Router({
       name: 'light_rpn',
       component: () => import(/* webpackChunkName: "light_rpn" */ './views/light_rpn.vue')
     },
+    {
+      path: '/google_maps_test',
+      name: 'google_maps_test',
+      component: () => import(/* webpackChunkName: "google_maps_test" */ './views/google_maps_test.vue')
+    },
   ]
 })

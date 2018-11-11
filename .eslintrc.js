@@ -17,6 +17,7 @@ module.exports = {
     "inspect": true,
     "_": true,
     "Opal": true,
+    "google": true,
   },
   parserOptions: {
     parser: 'babel-eslint'
