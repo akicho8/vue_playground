@@ -97,9 +97,9 @@ export default new Router({
       component: () => import(/* webpackChunkName: "web_audio_api_for_mobile" */ './views/web_audio_api_for_mobile.vue')
     },
     {
-      path: '/google_maps_javascript_api',
-      name: 'google_maps_javascript_api',
-      component: () => import(/* webpackChunkName: "google_maps_javascript_api" */ './views/google_maps_javascript_api.vue')
+      path: '/google_maps_basic',
+      name: 'google_maps_basic',
+      component: () => import(/* webpackChunkName: "google_maps_basic" */ './views/google_maps_basic.vue')
     },
     {
       path: '/form_template',
@@ -137,9 +137,14 @@ export default new Router({
       component: () => import(/* webpackChunkName: "light_rpn" */ './views/light_rpn.vue')
     },
     {
-      path: '/google_maps_test',
-      name: 'google_maps_test',
-      component: () => import(/* webpackChunkName: "google_maps_test" */ './views/google_maps_test.vue')
+      path: '/google_maps_playground',
+      name: 'google_maps_playground',
+      component: () => import(/* webpackChunkName: "google_maps_playground" */ './views/google_maps_playground.vue')
+    },
+    {
+      path: '/form_zenhan',
+      name: 'form_zenhan',
+      component: () => import(/* webpackChunkName: "form_zenhan" */ './views/form_zenhan.vue')
     },
   ]
 })

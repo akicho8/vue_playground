@@ -1,5 +1,5 @@
 <template lang="pug">
-.css_string_var1
+.general_form_template
   .h2.title {{$options.title}}
   hr
 
@@ -258,4 +258,5 @@ export default {
 </script>
 
 <style scoped lang="sass">
+.general_form_template
 </style>

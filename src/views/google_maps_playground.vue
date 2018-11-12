@@ -46,8 +46,8 @@ import dayjs from "dayjs"
 import form_part from "./form_part.vue"
 
 export default {
-  name: 'google_maps_test',
-  title: "Google Maps Test",
+  name: 'google_maps_playground',
+  title: "Google Maps Playground",
   components: {
     form_part,
   },

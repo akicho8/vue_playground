@@ -23,13 +23,16 @@
             router-link.navbar-item(to="/html5_geolocation_api") Geolocation API
 
           .navbar-item.has-dropdown.is-hoverable
-            span.navbar-link その他の機能
+            span.navbar-link その他
             .navbar-dropdown.is-boxed
               router-link.navbar-item(:to="{name: 'light_rpn'}") 逆ポーランド電卓
               router-link.navbar-item(:to="{name: 'mavon_editor_test'}") mavonEditor Test
               router-link.navbar-item(:to="{name: 'vue_carousel_test'}") Vue Carousel Test
-              router-link.navbar-item(:to="{name: 'general_form_template'}") 一般向けフォームテンプレート
               router-link.navbar-item(:to="{name: 'strange_attractor'}") ストレンジアトラクターエディター
+              hr.navbar-divider
+              router-link.navbar-item(:to="{name: 'form_template'}") Form Template
+              router-link.navbar-item(:to="{name: 'general_form_template'}") 一般向けフォームテンプレート
+              router-link.navbar-item(:to="{name: 'form_zenhan'}") 全角半角変換
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'css_filter'}") CSS Filter
               router-link.navbar-item(:to="{name: 'css_transform'}") CSS Transform
@@ -42,11 +45,10 @@
               router-link.navbar-item(:to="{name: 'web_audio_api_checker'}") Web Audio API
               router-link.navbar-item(:to="{name: 'web_audio_api_for_mobile'}") Web Audio API for Mobile
               hr.navbar-divider
-              router-link.navbar-item(:to="{name: 'google_maps_test'}") Google Maps Test
-              router-link.navbar-item(:to="{name: 'google_maps_javascript_api'}") Google Maps JavaScript API
+              router-link.navbar-item(:to="{name: 'google_maps_playground'}") Google Maps Playground
+              router-link.navbar-item(:to="{name: 'google_maps_basic'}") Google Maps Basic API
               router-link.navbar-item(:to="{name: 'google_geocoding_api'}") Google Geocoding API
               hr.navbar-divider
-              router-link.navbar-item(:to="{name: 'form_template'}") Form Template
               //- hr.navbar-divider
               //- router-link.navbar-item(to="/about") About
         .navbar-end
