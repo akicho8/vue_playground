@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+.css_flexbox_inputs
   .field.is-horizontal(v-for="record in all")
     template(v-if="!record.disabled($parent)")
       .field-label.is-small

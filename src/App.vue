@@ -48,7 +48,7 @@
               router-link.navbar-item(:to="{name: 'google_maps_playground'}") Google Maps Playground
               router-link.navbar-item(:to="{name: 'google_maps_basic'}") Google Maps Basic API
               router-link.navbar-item(:to="{name: 'google_geocoding_api'}") Google Geocoding API
-              hr.navbar-divider
+              //- hr.navbar-divider
               //- hr.navbar-divider
               //- router-link.navbar-item(to="/about") About
         .navbar-end
