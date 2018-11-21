@@ -146,5 +146,10 @@ export default new Router({
       name: 'form_zenhan',
       component: () => import(/* webpackChunkName: "form_zenhan" */ './views/form_zenhan.vue')
     },
+    {
+      path: '/vue_draggable_test',
+      name: 'vue_draggable_test',
+      component: () => import(/* webpackChunkName: "vue_draggable_test" */ './views/vue_draggable_test.vue')
+    },
   ]
 })

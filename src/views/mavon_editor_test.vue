@@ -8,7 +8,7 @@
   .content.is-small
     ul
       li
-        a(href="https://github.com/hinesboy/mavonEditor/blob/master/README-EN.md" target="_blank") Github
+        a(href="https://github.com/hinesboy/mavonEditor/blob/master/README-EN.md" target="_blank") hinesboy/mavonEditor
 
   .box
     | {{markdown_text}}

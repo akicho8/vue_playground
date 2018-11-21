@@ -31,7 +31,7 @@
       .content.is-small
         ul
           li
-            a(href="https://github.com/SSENSE/vue-carousel" target="_blank") Github
+            a(href="https://github.com/SSENSE/vue-carousel" target="_blank") SSENSE/vue-carousel
 
       template(v-if="NODE_ENV !== 'production'")
         .box
@@ -46,11 +46,11 @@
           :paginationEnabled="slider_flags.includes('paginationEnabled')"
           :scrollPerPage="slider_flags.includes('scrollPerPage')"
           :speed="speed * 1000"
-          :navigateTo="speed * 1000"
+          :navigateTo="navigateTo"
           :perPage="perPage"
           :easing="easing"
           )
-          slide(v-for="(image_file, key, i) in any_image_files" @slideClick="slide_click_handle" :data-value1="i" :data-value2="key")
+          slide(v-for="(image_file, key, i) in any_image_files" @slideClick="slide_callback" @pageChange="slide_callback" @transitionEnd="slide_callback" :data-value1="i" :data-value2="key")
             img(:src="image_file")
 
       .box
@@ -83,6 +83,7 @@ export default {
       perPage: null,
       scrollPerPage: null,
       easing: null,
+      navigateTo: null,
 
       any_image_files,
 
@@ -91,8 +92,9 @@ export default {
       result_rows: [],
 
       form_parts: [
-        { key: "speed",   name: "スピード",       default_value:  1, real_name: "speed",   type: "range",  params: { min: 0, max: 3, step: 0.1, }, },
-        { key: "perPage", name: "表示数/1ページ", default_value:  1, real_name: "perPage", type: "range",  params: { min: 0, max: 4, step: 1,   }, },
+        { key: "speed",      name: "スピード",       default_value:  1, real_name: "speed",      type: "range",  params: { min: 0, max: 3, step: 0.1, }, },
+        { key: "perPage",    name: "表示数/1ページ", default_value:  1, real_name: "perPage",    type: "range",  params: { min: 0, max: 4, step: 1,   }, },
+        { key: "navigateTo", name: "指定位置移動",   default_value:  0, real_name: "navigateTo", type: "number",  params: {  }, },
         {
           name: "フラグ的な設定",
           key: "slider_flags",
@@ -139,9 +141,10 @@ export default {
   },
 
   methods: {
-    slide_click_handle(e) {
+    slide_callback(e) {
+      console.log(e)
       this.result_rows.push({
-        type: "@slideClick",
+        type: e.type,
         params: inspect(e),
       })
     },

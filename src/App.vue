@@ -27,6 +27,7 @@
             .navbar-dropdown.is-boxed
               router-link.navbar-item(:to="{name: 'light_rpn'}") 逆ポーランド電卓
               router-link.navbar-item(:to="{name: 'mavon_editor_test'}") mavonEditor Test
+              router-link.navbar-item(:to="{name: 'vue_draggable_test'}") ドラッグして並び替え
               router-link.navbar-item(:to="{name: 'vue_carousel_test'}") Vue Carousel Test
               router-link.navbar-item(:to="{name: 'strange_attractor'}") ストレンジアトラクターエディター
               hr.navbar-divider
