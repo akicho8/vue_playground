@@ -151,5 +151,15 @@ export default new Router({
       name: 'vue_draggable_test',
       component: () => import(/* webpackChunkName: "vue_draggable_test" */ './views/vue_draggable_test.vue')
     },
+    {
+      path: '/password_form',
+      name: 'password_form',
+      component: () => import(/* webpackChunkName: "password_form" */ './views/password_form.vue')
+    },
+    {
+      path: '/lissajous',
+      name: 'lissajous',
+      component: () => import(/* webpackChunkName: "lissajous" */ './views/lissajous.vue')
+    },
   ]
 })

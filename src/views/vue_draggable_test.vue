@@ -4,15 +4,6 @@
   hr
 
   .columns
-    .column
-      button.button.is-small(@click="all_reset") リセット
-
-      .content.is-small
-        ul
-          li
-            a(href="https://github.com/SortableJS/Vue.Draggable" target="_blank") SortableJS/Vue.Draggable
-
-  .columns
     .column.is-one-fifth
       //- ドラッグするエリアに少しでもパディングがないとアイテム数が空の場合にドラッグできなくなるので注意
 
@@ -38,14 +29,22 @@
         :move="check_move"
 
         )
-        div(v-for="my_item in group1_my_items" :key="my_item.id" class="my_item")
+        | A
+        .my_item(v-for="my_item in group1_my_items" :key="my_item.id")
           | {{my_item.name}}
         button.button.is-small(slot="footer" @click="add_func") 追加
 
       //- 2つめ
       draggable.box.drag_div(data-foo="B" v-model="group2_my_items" :options="{group: 'shared_group_foo'}")
-        div(v-for="my_item in group2_my_items" :key="my_item.id")
+        | B
+        .my_item(v-for="my_item in group2_my_items" :key="my_item.id")
           | {{my_item.name}}
+
+      button.button.is-small(@click="all_reset") リセット
+      .content.is-small
+        ul
+          li
+            a(href="https://github.com/SortableJS/Vue.Draggable" target="_blank") SortableJS/Vue.Draggable
 
     .column
       .box
@@ -159,4 +158,8 @@ export default {
 
 .vue_draggable_test
   .drag_div
+    .my_item
+      margin: 0.4em 0
+      padding: 0.4em
+      border: 1px dashed #eee
 </style>

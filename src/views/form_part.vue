@@ -65,7 +65,7 @@
           input.input.is-small(type="text" v-model.trim="inside_value" :disabled="disabled(form_part)")
 
         template(v-if="form_part.type === 'number'")
-          input.input.is-small(type="number" v-model.number="inside_value" :disabled="disabled(form_part)")
+          input.input.is-small(type="number" v-model.number="inside_value" :min="form_part.params.min" :max="form_part.params.max" :step="form_part.params.step" :disabled="disabled(form_part)")
 
         template(v-if="form_part.type === 'text'")
           textarea.textarea.is-small(v-model.trim="inside_value" :disabled="disabled(form_part)")
@@ -85,7 +85,7 @@ export default {
     real_value_p: { required: false, default: false, },
     value:        { required: true,                  },
     value_p:      { required: false,                 },
-    buefy_p:      { required: false, default: true,  },
+    buefy_p:      { required: false, default: false, },
   },
   computed: {
     inside_value: {

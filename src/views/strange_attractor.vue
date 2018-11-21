@@ -30,9 +30,12 @@
 </template>
 
 <script>
+import canvas_methods from "./canvas_methods.js"
+
 export default {
   name: 'strange_attractor',
   title: "ストレンジアトラクターエディター",
+  mixins: [canvas_methods],
   data() {
     return {
       param_a: null,
@@ -75,21 +78,6 @@ export default {
       this.param_d = Math.random() - 0.5
     },
 
-    canvas_clear() {
-      this.context.fillStyle = "rgb(0, 0, 0)"
-      this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
-    },
-
-    canvas_resize_hook() {
-      const resize = () => {
-        const canvas = document.querySelector(".canvas_wrap canvas")
-        canvas.width = canvas.offsetWidth
-        canvas.height = canvas.offsetHeight
-      }
-      resize()
-      window.addEventListener("resize", resize, false)
-    },
-
     start_run() {
       this.clear_interval_safe()
       this.interval_id = setInterval(this.step_next, 1000 / 2)
@@ -118,14 +106,6 @@ export default {
   },
 
   computed: {
-    canvas() {
-      return document.querySelector(".canvas_wrap canvas")
-    },
-
-    context() {
-      return this.canvas.getContext("2d")
-    },
-
     param_infos() {
       return [
         { key: "param_a",  name: "a",             min: -3, max: 3,    step: 0.01, },
@@ -135,9 +115,6 @@ export default {
         { key: "arc_size", name: "ドットサイズ",  min: 1,  max: 32,   step: 1,    },
         { key: "speed",    name: "描画数/1fps", min: 1,  max: 2048, step: 1,    },
       ].reduce((a, e, i) => ({...a, [e.key]: {code: i, ...e}}), {})
-    },
-
-    params_default() {
     },
   },
 

@@ -3,24 +3,6 @@
   .h2.title {{$options.title}}
   hr
 
-  .section
-    .buttons
-      a.button.is-info(href="https://bulma.io/documentation/form/general/" target="_blank") Bulma Form General
-      a.button.is-info(href="https://buefy.github.io/#/documentation/start" target="_blank") Buefy Documentation
-
-  .title.is-5 パスワード
-  hr
-  .section
-    .field.is-horizontal
-      .field-label.is-large
-        label.label パスワード
-      .field-body
-        .field
-          p.control.is-large
-            input.input.is-large(type="password" v-model="my_password" placeholder="")
-          p.help
-            button.button.is-small(@click="password_set") パスワード生成
-
   .title.is-5 お名前
   hr
   .section
@@ -232,7 +214,6 @@ export default {
   title: "一般向けフォームテンプレート",
   data() {
     return {
-      my_password: null,
     }
   },
 
@@ -244,12 +225,6 @@ export default {
   },
 
   methods: {
-    password_set() {
-      this.my_password = this.password_generate()
-    },
-    password_generate() {
-      return Math.floor(Math.random() * 100000000000000000).toString(36)
-    },
   },
 
   computed: {
@@ -259,4 +234,6 @@ export default {
 
 <style scoped lang="sass">
 .general_form_template
+  progress
+    width: 50%
 </style>
