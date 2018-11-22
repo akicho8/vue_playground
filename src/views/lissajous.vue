@@ -47,21 +47,32 @@ class Point {
     let x = null
     let y = null
 
-    if (this.base.radio_var1 === "type1") {
+    if (this.base.calc_key === "type1") {
       x = sin(s + a * 3)
       y = cos(s + a * 7)
     }
-    if (this.base.radio_var1 === "type2") {
+    if (this.base.calc_key === "type2") {
       x = sin(s + a * 3) - sin(s + a * 0.95) / 5
       y = cos(s + a * 7) - cos(s + a * 0.95) / 5
     }
-    if (this.base.radio_var1 === "type3") {
+    if (this.base.calc_key === "type3") {
       x = sin(s + a * 3) - sin(s + a * 0.95) / 5 - sin(s + a * 20.5) / 5
       y = cos(s + a * 7) - cos(s + a * 0.95) / 5 - cos(s + a * 20.5) / 5
+    }
+    if (this.base.calc_key === "type4") {
+      const rc = 0.5
+      const rm = 0.3
+      const rd = 0.5
+      const t = (rc - rm) / rm * a
+      x = (rc - rm) * cos(s + a) + rd * cos(s + t)
+      y = (rc - rm) * sin(s + a) - rd * sin(s + t)
     }
 
     x *= this.base.canvas.width  * 0.40
     y *= this.base.canvas.height * 0.40
+
+    console.log(x)
+    console.log(y)
 
     this.base.context.arc(cx + x, cy + y, 32, 0, one)
     this.base.context.stroke()
@@ -70,7 +81,7 @@ class Point {
 
 export default {
   name: "lissajous",
-  title: "リサージュ",
+  title: "いろいろな曲線",
   components: {
     form_part,
   },
@@ -78,7 +89,7 @@ export default {
   data() {
     return {
       counter: 0,
-      radio_var1: "type1",
+      calc_key: "type1",
       points: null,
       speed: null,
       blur_value: null,
@@ -103,19 +114,20 @@ export default {
       select_var1: 0,
 
       form_parts: [
-        { key: "point_count",  name: "個数",       default_value: 3,    type: "number",  params: { min: 0,  max: 100, step: 1, }, },
-        { key: "speed",        name: "スピード",   default_value: 1.5,  type: "number",  params: { min: 0,  max: 100, step: 0.1, }, },
-        { key: "blur_value",   name: "残像",       default_value: 0.05, type: "number",  params: { min: 0,  max: 1,   step: 0.01, }, },
+        { key: "point_count",  name: "個数",       default_value: 3,    type: "number",  params: { min: 0,  max: 100,  step: 1, }, },
+        { key: "speed",        name: "スピード",   default_value: 1.5,  type: "number",  params: { min: 0,  max: 1000, step: 0.1, }, },
+        { key: "blur_value",   name: "残像",       default_value: 0.05, type: "number",  params: { min: 0,  max: 1,    step: 0.01, }, },
         {
-          key: "radio_var1",
+          key: "calc_key",
           name: "タイプ",
-          real_name: "radio_var1",
+          real_name: "calc_key",
           default_value: "type3",
           type: "radio",
           elems: [
             { name: "タイプA",  value: "type1", },
             { name: "タイプB",  value: "type2", },
             { name: "タイプC",  value: "type3", },
+            { name: "内トロコイド",  value: "type4", },
           ],
         },
         // {
