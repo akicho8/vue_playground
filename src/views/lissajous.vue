@@ -6,7 +6,7 @@
   .columns
     .column.is-one-third
       template(v-for="form_part in form_parts")
-        form_part(:form_part="form_part" :real_value_p="real_value_p" :value.sync="$data[form_part.key]" :value_p.sync="$data[form_part.display_key]")
+        form_part(:form_part="form_part" :value.sync="$data[form_part.key]" :value_p.sync="$data[form_part.display_key]")
 
       .field.is-horizontal
         .field-label
@@ -15,6 +15,8 @@
             .control
               .buttons
                 button.button.is-small(@click="all_reset") リセット
+              .buttons
+                button.button.is-small(@click="case_hosi") ☆
 
     .column
       .canvas_wrap
@@ -59,7 +61,7 @@ class Point {
       x = sin(s + a * 3) - sin(s + a * 0.95) / 5 - sin(s + a * 20.5) / 5
       y = cos(s + a * 7) - cos(s + a * 0.95) / 5 - cos(s + a * 20.5) / 5
     }
-    if (this.base.calc_key === "type4") {
+    if (this.base.calc_key === "soto_torokoido") {
       const rc = 0.5
       const rm = 0.3
       const rd = 0.5
@@ -68,13 +70,13 @@ class Point {
       y = (rc - rm) * sin(s + a) - rd * sin(s + t)
     }
 
-    x *= this.base.canvas.width  * 0.40
-    y *= this.base.canvas.height * 0.40
+    x *= this.base.canvas.width  * 0.45
+    y *= this.base.canvas.height * 0.45
 
     console.log(x)
     console.log(y)
 
-    this.base.context.arc(cx + x, cy + y, 32, 0, one)
+    this.base.context.arc(cx + x, cy + y, this.base.radius_value, 0, one)
     this.base.context.stroke()
   }
 }
@@ -93,30 +95,14 @@ export default {
       points: null,
       speed: null,
       blur_value: null,
-
-      result_rows: [],
-
-      real_value_p: false,
-
-      string_var1_p: true,
-      string_var1: null,
-
-      text_var1_p: true,
-      text_var1: null,
-
-      checkbox_var1_p: true,
-      checkbox_var1: [],
-
-      point_count_p: true,
-      point_count: 0,
-
-      select_var1_p: true,
-      select_var1: 0,
+      point_count: null,
+      radius_value: null,
 
       form_parts: [
-        { key: "point_count",  name: "個数",       default_value: 3,    type: "number",  params: { min: 0,  max: 100,  step: 1, }, },
-        { key: "speed",        name: "スピード",   default_value: 1.5,  type: "number",  params: { min: 0,  max: 1000, step: 0.1, }, },
-        { key: "blur_value",   name: "残像",       default_value: 0.05, type: "number",  params: { min: 0,  max: 1,    step: 0.01, }, },
+        { key: "point_count",  name: "個数",       default_value: 3,    type: "number",  params: { min: 0,  max: 100,  step: 1,     }, },
+        { key: "speed",        name: "スピード",   default_value: 1.5,  type: "range",   params: { min: 0,  max: 256,  step: 0.1,   }, },
+        { key: "blur_value",   name: "残像",       default_value: 0.05, type: "number",  params: { min: 0,  max: 1,    step: 0.001, }, },
+        { key: "radius_value", name: "半径",       default_value: 32,   type: "range",   params: { min: 1,  max: 100,  step: 1,     }, },
         {
           key: "calc_key",
           name: "タイプ",
@@ -127,7 +113,7 @@ export default {
             { name: "タイプA",  value: "type1", },
             { name: "タイプB",  value: "type2", },
             { name: "タイプC",  value: "type3", },
-            { name: "内トロコイド",  value: "type4", },
+            { name: "内トロコイド",  value: "soto_torokoido", },
           ],
         },
         // {
@@ -175,6 +161,14 @@ export default {
   },
 
   methods: {
+    case_hosi() {
+      this.calc_key = "soto_torokoido"
+      this.point_count = 1
+      this.speed = 100
+      this.blur_value = 0.01
+      this.radius_value = 10
+    },
+
     points_create() {
       this.points = []
       for (let i = 0; i < this.point_count; i++) {
