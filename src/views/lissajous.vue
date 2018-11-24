@@ -17,6 +17,7 @@
                 button.button.is-small(@click="all_reset") リセット
               .buttons
                 button.button.is-small(@click="case_hosi") ☆
+                button.button.is-small(@click="case_boss") ボスのまわりオプション
 
     .column
       .canvas_wrap
@@ -61,7 +62,15 @@ class Point {
       x = sin(s + a * 3) - sin(s + a * 0.95) / 5 - sin(s + a * 20.5) / 5
       y = cos(s + a * 7) - cos(s + a * 0.95) / 5 - cos(s + a * 20.5) / 5
     }
-    if (this.base.calc_key === "soto_torokoido") {
+    if (this.base.calc_key === "epitrochoid") {
+      const rc = 0.4
+      const rm = 0.2
+      const rd = 0.3
+      const t = (rc + rm) / rm * a
+      x = (rc + rm) * cos(s + a) - rd * cos(s + t)
+      y = (rc + rm) * sin(s + a) - rd * sin(s + t)
+    }
+    if (this.base.calc_key === "hypotrochoid") {
       const rc = 0.5
       const rm = 0.3
       const rd = 0.5
@@ -72,9 +81,6 @@ class Point {
 
     x *= this.base.canvas.width  * 0.45
     y *= this.base.canvas.height * 0.45
-
-    console.log(x)
-    console.log(y)
 
     this.base.context.arc(cx + x, cy + y, this.base.radius_value, 0, one)
     this.base.context.stroke()
@@ -113,7 +119,8 @@ export default {
             { name: "タイプA",  value: "type1", },
             { name: "タイプB",  value: "type2", },
             { name: "タイプC",  value: "type3", },
-            { name: "内トロコイド",  value: "soto_torokoido", },
+            { name: "外トロコイド",  value: "epitrochoid", },
+            { name: "内トロコイド",  value: "hypotrochoid", },
           ],
         },
         // {
@@ -162,11 +169,18 @@ export default {
 
   methods: {
     case_hosi() {
-      this.calc_key = "soto_torokoido"
+      this.calc_key = "hypotrochoid"
       this.point_count = 1
       this.speed = 100
       this.blur_value = 0.01
       this.radius_value = 10
+    },
+    case_boss() {
+      this.calc_key = "epitrochoid"
+      this.point_count = 16
+      this.speed = 75
+      this.blur_value = 0.05
+      this.radius_value = 20
     },
 
     points_create() {
