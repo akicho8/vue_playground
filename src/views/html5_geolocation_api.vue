@@ -105,7 +105,7 @@
 <script>
 export default {
   name: 'html5_geolocation_api',
-  title: "Geolocation API",
+  title: "位置情報取得 (HTML5 Geolocation API)",
   data() {
     return {
       counter: 0,

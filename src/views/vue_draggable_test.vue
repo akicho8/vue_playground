@@ -59,7 +59,7 @@ import form_part from "./form_part.vue"
 
 export default {
   name: "vue_draggable_test",
-  title: "ドラッグして並び替え",
+  title: "ドラッグアンドドロップ (Vue.draggable)",
   components: {
     draggable,
     form_part,
@@ -161,5 +161,5 @@ export default {
     .my_item
       margin: 0.4em 0
       padding: 0.4em
-      border: 1px dashed #eee
+      border: 1px dashed $primary
 </style>

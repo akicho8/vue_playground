@@ -11,8 +11,7 @@
             | 番号
         .field-body
           .field
-            input.input.is-large(type="number" v-model.number="current_code")
-
+            input.input.is-large(type="number" v-model.number="current_track")
       .content
         .is-size-1
           | {{time_format(total_counter)}}
@@ -31,16 +30,25 @@
           button.button.is-rounded.is-danger(@click="stop_run") 停止
         template(v-if="rows.length >= 1 || true")
           a.button.is-rounded.is-info(:href="twitter_url" target="_blank") Tweet
+
+      .field.is-horizontal
+        .field-label.is-large
+          label.label
+            | 番号置換
+        .field-body
+          .field
+            textarea.textarea(v-model.trim="track_numbers_str" rows="2" placeholder="スペース区切り")
+
     .column
       article.message.is-primary.is-size-6
         .message-body
-          template(v-for="row in rows")
+          template(v-for="(row, i) in rows")
             div
-              | {{row.current_code}}
+              | {{track_num(i, row.current_track)}}
               | -
               | {{time_format(row.lap_counter)}}
           span.has-text-grey-light.is-size-1
-            | {{current_code}}
+            | {{track_num(rows.length, current_track)}}
             | -
             | {{time_format(lap_counter)}}
 </template>
@@ -54,10 +62,11 @@ export default {
   title: "ストップウォッチ",
   data() {
     return {
-      current_code: parseInt(localStorage.getItem("stopwatch:current_code") || 1),
+      current_track: parseInt(localStorage.getItem("stopwatch:current_track") || 1),
       total_counter: parseInt(localStorage.getItem("stopwatch:total_counter") || 0),
       lap_counter: parseInt(localStorage.getItem("stopwatch:lap_counter") || 0),
       rows: JSON.parse(localStorage.getItem("stopwatch:rows") || "[]"),
+      track_numbers_str: localStorage.getItem("stopwatch:track_numbers_str") || "",
       mode: "standby",
       interval_id: null,
     }
@@ -82,6 +91,7 @@ export default {
       this.rows = []
       this.total_counter = 0
       this.lap_counter = 0
+      this.track_numbers_str = ""
     },
 
     time_format(seconds) {
@@ -91,7 +101,7 @@ export default {
     lap() {
       if (this.mode === "playing") {
         this.rows.push(this.row_record)
-        this.current_code += 1
+        this.current_track += 1
         this.lap_counter = 0
 
         const audio = new Audio(button46_mp3)
@@ -110,12 +120,21 @@ export default {
       this.total_counter += 1
       this.lap_counter += 1
     },
+
+    track_num(i, current_track) {
+      if (this.track_numbers.length >= 1) {
+        return this.track_numbers[i]
+      } else {
+        return current_track
+      }
+    },
   },
 
   watch: {
-    current_code(v)  { localStorage.setItem("stopwatch:current_code", v)         },
+    current_track(v)  { localStorage.setItem("stopwatch:current_track", v)         },
     total_counter(v) { localStorage.setItem("stopwatch:total_counter", v)        },
     lap_counter(v)   { localStorage.setItem("stopwatch:lap_counter", v)          },
+    track_numbers_str(v)       { localStorage.setItem("stopwatch:track_numbers_str", v)              },
     rows(v)          { localStorage.setItem("stopwatch:rows", JSON.stringify(v)) },
   },
 
@@ -126,14 +145,22 @@ export default {
 
     row_record() {
       return {
-        current_code: this.current_code,
+        current_track: this.current_track,
         total_counter: this.total_counter,
         lap_counter: this.lap_counter,
       }
     },
 
     tweet_body() {
-      return _.concat(this.rows, this.row_record).map(e => `${e.current_code} - ${this.time_format(e.lap_counter)}`).join("\n")
+      return _.concat(this.rows, this.row_record).map((e, i) => `${this.track_num(i, e.current_track)} - ${this.time_format(e.lap_counter)}`).join("\n")
+    },
+
+    track_numbers() {
+      if (this.track_numbers_str !== "") {
+        return this.track_numbers_str.split(/\s+/)
+      } else {
+        return []
+      }
     },
   },
 }

@@ -161,5 +161,15 @@ export default new Router({
       name: 'lissajous',
       component: () => import(/* webpackChunkName: "lissajous" */ './views/lissajous.vue')
     },
+    {
+      path: '/html5_drag_and_drop',
+      name: 'html5_drag_and_drop',
+      component: () => import(/* webpackChunkName: "html5_drag_and_drop" */ './views/html5_drag_and_drop.vue')
+    },
+    {
+      path: '/puyosimu',
+      name: 'puyosimu',
+      component: () => import(/* webpackChunkName: "puyosimu" */ './views/puyosimu.vue')
+    },
   ]
 })

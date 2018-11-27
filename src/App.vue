@@ -20,16 +20,16 @@
 
           template(v-if="false")
             router-link.navbar-item(to="/about") About
-            router-link.navbar-item(to="/html5_geolocation_api") Geolocation API
+            router-link.navbar-item(to="/html5_geolocation_api") 位置情報取得 (HTML5 Geolocation API)
 
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
             .navbar-dropdown.is-boxed
+              router-link.navbar-item(:to="{name: 'puyosimu'}") ぷよぷよシミュレーター
               router-link.navbar-item(:to="{name: 'lissajous'}") いろいろな曲線
               router-link.navbar-item(:to="{name: 'strange_attractor'}") ストレンジアトラクター
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'light_rpn'}") 逆ポーランド電卓
-              router-link.navbar-item(:to="{name: 'vue_draggable_test'}") ドラッグして並び替え
               router-link.navbar-item(:to="{name: 'vue_carousel_test'}") スライドショー
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'form_template'}") Form Template
@@ -41,7 +41,9 @@
               router-link.navbar-item(:to="{name: 'css_transform'}") CSS Transform
               router-link.navbar-item(:to="{name: 'css_position'}") CSS Position
               hr.navbar-divider
-              router-link.navbar-item(:to="{name: 'html5_geolocation_api'}") HTML5 Geolocation API
+              router-link.navbar-item(:to="{name: 'html5_drag_and_drop'}") ドラッグアンドドロップ (プリミティブ)
+              router-link.navbar-item(:to="{name: 'vue_draggable_test'}") ドラッグアンドドロップ (Vue.draggable)
+              router-link.navbar-item(:to="{name: 'html5_geolocation_api'}") 位置情報取得 (HTML5 Geolocation API)
               router-link.navbar-item(:to="{name: 'navigator_vibrate'}") 振動機能
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'html_audio_checker'}") HTML Audio
