@@ -171,5 +171,10 @@ export default new Router({
       name: 'puyosimu',
       component: () => import(/* webpackChunkName: "puyosimu" */ './views/puyosimu.vue')
     },
+    {
+      path: '/google_place_api',
+      name: 'google_place_api',
+      component: () => import(/* webpackChunkName: "google_place_api" */ './views/google_place_api.vue')
+    },
   ]
 })

@@ -72,7 +72,7 @@ import any_image_files from "./any_image_files.js"
 
 export default {
   name: "vue_carousel_test",
-  title: "スライドショー",
+  title: "スライドショー (vue-carousel)",
   components: {
     form_part,
   },

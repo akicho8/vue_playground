@@ -25,12 +25,12 @@
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
             .navbar-dropdown.is-boxed
-              router-link.navbar-item(:to="{name: 'puyosimu'}") ぷよぷよシミュレーター
+              router-link.navbar-item(:to="{name: 'google_place_api'}") Google Place Api
               router-link.navbar-item(:to="{name: 'lissajous'}") いろいろな曲線
               router-link.navbar-item(:to="{name: 'strange_attractor'}") ストレンジアトラクター
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'light_rpn'}") 逆ポーランド電卓
-              router-link.navbar-item(:to="{name: 'vue_carousel_test'}") スライドショー
+              router-link.navbar-item(:to="{name: 'vue_carousel_test'}") スライドショー (vue-carousel)
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'form_template'}") Form Template
               router-link.navbar-item(:to="{name: 'general_form_template'}") 一般向けフォームテンプレート
@@ -62,6 +62,7 @@
             .navbar-item.has-dropdown.is-hoverable
               span.navbar-link ゴミ箱
               .navbar-dropdown.is-boxed
+                router-link.navbar-item(:to="{name: 'puyosimu'}") ぷよぷよシミュレーター
                 router-link.navbar-item(:to="{name: 'mavon_editor_test'}") mavonEditor Test
                 //- router-link.navbar-item(to="/about") About
 

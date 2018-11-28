@@ -4,40 +4,37 @@
   hr
 
   .columns
-    .column
-      .field.is-horizontal
-        .field-label.is-large
-          label.label
-            | 番号
-        .field-body
-          .field
-            input.input.is-large(type="number" v-model.number="current_track")
-      .content
+    .column.is-one-third
+      .field
+        label.label 開始番号
+        .control
+          input.input(type="number" v-model.number="current_track")
+
+      .field
+        label.label 項目一覧
+        .control
+          textarea.textarea(v-model.trim="track_numbers_str" rows="1" placeholder="スペース区切りで記述すると番号を置き換える")
+
+      .box
         .is-size-1
           | {{time_format(total_counter)}}
 
-      .buttons
-        template(v-if="mode == 'playing'")
-          button.button.is-rounded(@click="lap" ref="lap") ラップ
-        template(v-else)
-          template(v-if="total_counter >= 1")
-            button.button.is-rounded(@click="reset") リセット
+        .buttons.toggle_button
+          template(v-if="mode == 'standby'")
+            button.button.is-primary.is-large(@click="start_run") 開始
           template(v-else)
-            button.button.is-rounded(disabled) ラップ
-        template(v-if="mode == 'standby'")
-          button.button.is-rounded.is-primary(@click="start_run") 開始
-        template(v-else)
-          button.button.is-rounded.is-danger(@click="stop_run") 停止
-        template(v-if="rows.length >= 1 || true")
-          a.button.is-rounded.is-info(:href="twitter_url" target="_blank") Tweet
+            button.button.is-danger.is-large(@click="stop_run") 記録中
+          template(v-if="mode == 'playing'")
+            button.button.is-large(@click="lap" ref="lap") ラップ
+          template(v-else)
+            template(v-if="total_counter >= 1")
+              button.button.is-large(@click="reset") リセット
+            template(v-else)
+              button.button.is-large(disabled) ラップ
 
-      .field.is-horizontal
-        .field-label.is-large
-          label.label
-            | 番号置換
-        .field-body
-          .field
-            textarea.textarea(v-model.trim="track_numbers_str" rows="2" placeholder="スペース区切り")
+      .buttons
+        template(v-if="rows.length >= 1 || true")
+          a.button.is-info.is-small(:href="twitter_url" target="_blank") ツイート
 
     .column
       article.message.is-primary.is-size-6
@@ -47,7 +44,7 @@
               | {{track_num(i, row.current_track)}}
               | -
               | {{time_format(row.lap_counter)}}
-          span.has-text-grey-light.is-size-1
+          span.has-text-primary.is-size-1
             | {{track_num(rows.length, current_track)}}
             | -
             | {{time_format(lap_counter)}}
@@ -91,7 +88,6 @@ export default {
       this.rows = []
       this.total_counter = 0
       this.lap_counter = 0
-      this.track_numbers_str = ""
     },
 
     time_format(seconds) {
@@ -123,7 +119,7 @@ export default {
 
     track_num(i, current_track) {
       if (this.track_numbers.length >= 1) {
-        return this.track_numbers[i]
+        return this.track_numbers[i] || "?"
       } else {
         return current_track
       }
@@ -131,11 +127,11 @@ export default {
   },
 
   watch: {
-    current_track(v)  { localStorage.setItem("stopwatch:current_track", v)         },
-    total_counter(v) { localStorage.setItem("stopwatch:total_counter", v)        },
-    lap_counter(v)   { localStorage.setItem("stopwatch:lap_counter", v)          },
-    track_numbers_str(v)       { localStorage.setItem("stopwatch:track_numbers_str", v)              },
-    rows(v)          { localStorage.setItem("stopwatch:rows", JSON.stringify(v)) },
+    current_track(v)     { localStorage.setItem("stopwatch:current_track", v)        },
+    total_counter(v)     { localStorage.setItem("stopwatch:total_counter", v)        },
+    lap_counter(v)       { localStorage.setItem("stopwatch:lap_counter", v)          },
+    track_numbers_str(v) { localStorage.setItem("stopwatch:track_numbers_str", v)    },
+    rows(v)              { localStorage.setItem("stopwatch:rows", JSON.stringify(v)) },
   },
 
   computed: {
@@ -167,6 +163,7 @@ export default {
 </script>
 
 <style scoped lang="sass">
-  .button
-    width: 6rem
+  .toggle_button
+    .button
+      width: 7rem
 </style>
