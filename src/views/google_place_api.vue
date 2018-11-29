@@ -14,7 +14,7 @@
           .field
             .control
               .buttons
-                button.button.is-small(@click="search_run") 検索
+                submit.button.is-small(@click.prevent="search_run") 検索
 
       .content.is-small
         a(:href="search_from_address_url" target="_blank") WEB経由のAPI実行でJSON確認
@@ -25,16 +25,16 @@
 
       b-table.box(:data="shop_items" :hoverable="true" narrowed)
         template(slot-scope="props")
-          b-table-column(label="アイコン")
+          b-table-column(label="画")
             img(:src="props.row.icon" width="16")
           b-table-column(label="名前")
             a(@click="shop_info_click(props.row)")
               | {{props.row.name}}
-          b-table-column(label="住所")
-            | {{props.row.formatted_address}}
+          //- b-table-column(label="住所")
+          //-   | {{props.row.formatted_address}}
           b-table-column(label="営業中")
             template(v-if="props.row.opening_hours")
-              | {{props.row.opening_hours.open_now}}
+              | {{props.row.opening_hours.open_now ? "○" : ""}}
 
     .column
       .gmap_div(ref="gmap")
@@ -51,7 +51,7 @@ import qs from "querystring"
 
 export default {
   name: "google_geocoding_api",
-  title: "Google Geocoding API",
+  title: "お店検索 (Google Place API)",
   components: {
     form_part,
   },
@@ -70,9 +70,7 @@ export default {
       gmap: null,
 
       form_parts: [
-        { key: "query_value",   name: "キーワード",  default_value: "キャロットタワー", real_name: "address", display_key: null,   type: "string", params: {}, },
-        // { key: "value_lat",     name: "経度",  default_value: 35.6436763,         real_name: "lat",     display_key: null,   type: "string", params: {}, },
-        // { key: "value_lng",     name: "緯度",  default_value: 139.6690974,        real_name: "lng",     display_key: null,   type: "string", params: {}, },
+        { key: "query_value",   name: "キーワード",  default_value: "卓球", real_name: "address", display_key: null,   type: "string", params: {}, },
       ],
     }
   },
@@ -84,7 +82,8 @@ export default {
   mounted() {
     const ll = new google.maps.LatLng(this.value_lat, this.value_lng)
     this.gmap = new google.maps.Map(this.$refs.gmap, {zoom: 12, center: ll})
-
+    // this.service = new google.maps.places.PlacesService(this.gmap)
+    
     this.search_run()
   },
 
@@ -102,6 +101,11 @@ export default {
       // if (this.currentMarker) {
       //   this.currentMarker.setPosition(location)
       // }
+
+      // const marker = new google.maps.Marker()
+      // marker.setPosition(location)
+      // marker.setMap(this.gmap)
+
     },
 
     // 住所検索時の処理
@@ -144,25 +148,15 @@ export default {
 
           this.shop_items.forEach(e => {
             const marker = new google.maps.Marker()
-            marker.setPosition(e.geolocation.location)
+            marker.setPosition(e.geometry.location)
             marker.setMap(this.gmap)
+            // marker.setAnimation(google.maps.Animation.BOUNCE)
 
             this.markers.push(marker)
           })
         }
       })
     },
-
-    // run_user_case3(url) {
-    //   fetch(url, {mode: 'no-cors'})
-    //     .then(r => r.json())
-    //     .then(v => {
-    //       this.shop_items.push({
-    //         time: dayjs().format("YYYY-MM-DD hh:mm:ss.SSS"),
-    //         params: v,
-    //       })
-    //     })
-    // },
 
     form_parts_reset() {
       this.form_parts.forEach(e => this[e.key] = e.default_value)
@@ -175,10 +169,6 @@ export default {
     all_reset() {
       this.shop_items_reset()
       this.form_parts_reset()
-    },
-
-    disabled(record) {
-      return !(!record.display_key || this.$data[record.display_key])
     },
   },
 
@@ -195,7 +185,6 @@ export default {
     table_columns() {
       return [
         { field: 'name', label: '名前', sortable: true, numeric: false, },
-        // { field: 'icon', label: 'icon', sortable: true, numeric: false, },
         { field: 'formatted_address', label: '住所', },
       ]
     },
@@ -208,9 +197,9 @@ export default {
       const hash = {}
       hash["key"] = this.API_KEY
       hash["query"] = this.query_value
-      // if (this.center) {
-      //   hash["location"] = this.center
-      // }
+      if (this.center) {
+        hash["location"] = [this.center.lat(), this.center.lng()].join(",")
+      }
       return hash
     },
 
@@ -223,8 +212,8 @@ export default {
 
 <style scoped lang="sass">
   .gmap_div
-    width: 100
-    height: 256px
+    width: 100%
+    height: 50vmin
 
   input
     margin-top: 0.5em

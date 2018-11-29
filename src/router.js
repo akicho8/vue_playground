@@ -176,5 +176,10 @@ export default new Router({
       name: 'google_place_api',
       component: () => import(/* webpackChunkName: "google_place_api" */ './views/google_place_api.vue')
     },
+    {
+      path: '/arrow_cursor_navigation',
+      name: 'arrow_cursor_navigation',
+      component: () => import(/* webpackChunkName: "arrow_cursor_navigation" */ './views/arrow_cursor_navigation.vue')
+    },
   ]
 })

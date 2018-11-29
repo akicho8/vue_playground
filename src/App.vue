@@ -23,9 +23,16 @@
             router-link.navbar-item(to="/html5_geolocation_api") 位置情報取得 (HTML5 Geolocation API)
 
           .navbar-item.has-dropdown.is-hoverable
+            span.navbar-link CSS
+            .navbar-dropdown.is-boxed
+              router-link.navbar-item(:to="{name: 'css_filter'}") CSS Filter
+              router-link.navbar-item(:to="{name: 'css_transform'}") CSS Transform
+              router-link.navbar-item(:to="{name: 'css_position'}") CSS Position
+              router-link.navbar-item(:to="{name: 'arrow_cursor_navigation'}") CSS 三角ナビゲーション
+
+          .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
             .navbar-dropdown.is-boxed
-              router-link.navbar-item(:to="{name: 'google_place_api'}") Google Place Api
               router-link.navbar-item(:to="{name: 'lissajous'}") いろいろな曲線
               router-link.navbar-item(:to="{name: 'strange_attractor'}") ストレンジアトラクター
               hr.navbar-divider
@@ -36,10 +43,6 @@
               router-link.navbar-item(:to="{name: 'general_form_template'}") 一般向けフォームテンプレート
               router-link.navbar-item(:to="{name: 'password_form'}") パスワード入力
               router-link.navbar-item(:to="{name: 'form_zenhan'}") 全角半角変換
-              hr.navbar-divider
-              router-link.navbar-item(:to="{name: 'css_filter'}") CSS Filter
-              router-link.navbar-item(:to="{name: 'css_transform'}") CSS Transform
-              router-link.navbar-item(:to="{name: 'css_position'}") CSS Position
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'html5_drag_and_drop'}") ドラッグアンドドロップ (プリミティブ)
               router-link.navbar-item(:to="{name: 'vue_draggable_test'}") ドラッグアンドドロップ (Vue.draggable)
@@ -53,6 +56,7 @@
               router-link.navbar-item(:to="{name: 'google_maps_playground'}") Google Maps Playground
               router-link.navbar-item(:to="{name: 'google_maps_basic'}") GoogleMapsのいちばん簡単な例
               router-link.navbar-item(:to="{name: 'google_geocoding_api'}") Google Geocoding API
+              router-link.navbar-item(:to="{name: 'google_place_api'}") お店検索 (Google Place API)
               //- hr.navbar-divider
               //- hr.navbar-divider
               //- router-link.navbar-item(to="/about") About

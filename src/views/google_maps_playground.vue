@@ -141,8 +141,8 @@ export default {
           const location = results[0].geometry.location
           this.gmap.setCenter(location)
 
-          this.maker.setPosition(location)
-          this.maker.setAnimation(google.maps.Animation.BOUNCE)
+          this.marker.setPosition(location)
+          this.marker.setAnimation(google.maps.Animation.BOUNCE)
         }
       })
     },
@@ -174,7 +174,7 @@ export default {
       return new google.maps.Map(this.$refs.gmap, {zoom: 15})
     },
 
-    maker() {
+    marker() {
       return new google.maps.Marker({map: this.gmap})
     },
 
