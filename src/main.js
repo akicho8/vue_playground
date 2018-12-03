@@ -41,6 +41,10 @@ Vue.config.productionTip = false
 //   console.log(`Captured in Vue.config.errororHandler: ${info}`, error)
 // }
 
+import sample_image_mod from "./sample_image_mod.js"
+
+Vue.mixin(sample_image_mod)
+
 Vue.mixin({
   mounted() {
     let { title } = this.$options
@@ -54,8 +58,6 @@ Vue.mixin({
         document.title = `${title} - Vue Playground`
       }
     }
-  },
-  methods: {
   },
 })
 

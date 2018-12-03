@@ -29,6 +29,7 @@
               router-link.navbar-item(:to="{name: 'css_transform'}") CSS Transform
               router-link.navbar-item(:to="{name: 'css_position'}") CSS Position
               router-link.navbar-item(:to="{name: 'arrow_cursor_navigation'}") CSS 三角ナビゲーション
+              router-link.navbar-item(:to="{name: 'css_close_button_sample'}") CSS 閉じる【×】ボタン
 
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他

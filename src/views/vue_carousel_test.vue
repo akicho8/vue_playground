@@ -50,7 +50,7 @@
           :perPage="perPage"
           :easing="easing"
           )
-          slide(v-for="(image_file, key, i) in any_image_files" @slideClick="slide_callback" @pageChange="slide_callback" @transitionEnd="slide_callback" :data-value1="i" :data-value2="key")
+          slide(v-for="(image_file, key, i) in sample_images_hash" @slideClick="slide_callback" @pageChange="slide_callback" @transitionEnd="slide_callback" :data-value1="i" :data-value2="key")
             img(:src="image_file")
 
       .box
@@ -60,7 +60,6 @@
 
 <script>
 import form_part from "./form_part.vue"
-import any_image_files from "./any_image_files.js"
 
 // import I9A5312ISUMI_TP_V from "@/assets/I9A5312ISUMI_TP_V.jpg"
 // import IS107112702_TP_V from "@/assets/IS107112702_TP_V.jpg"
@@ -84,8 +83,6 @@ export default {
       scrollPerPage: null,
       easing: null,
       navigateTo: null,
-
-      any_image_files,
 
       real_value_p: false,
 

@@ -11,13 +11,18 @@
           input.input(type="number" v-model.number="current_track")
 
       .field
-        label.label 項目一覧
+        label.label 番号置換
         .control
           textarea.textarea(v-model.trim="track_numbers_str" rows="1" placeholder="スペース区切りで記述すると番号を置き換える")
 
       .box
-        .is-size-1
-          | {{time_format(total_counter)}}
+        span.is-size-1
+          | {{track_num(rows.length, current_track)}}
+          | -
+          | {{time_format(lap_counter)}}
+          |
+          span.is-size-4.has-text-grey-light
+            | {{time_format(total_counter)}}
 
         .buttons.toggle_button
           template(v-if="mode == 'standby'")
@@ -44,10 +49,30 @@
               | {{track_num(i, row.current_track)}}
               | -
               | {{time_format(row.lap_counter)}}
-          span.has-text-primary.is-size-1
-            | {{track_num(rows.length, current_track)}}
-            | -
-            | {{time_format(lap_counter)}}
+    .column
+      article.message.is-primary.is-size-6
+        .message-body
+          template(v-for="(rows, key) in track_group")
+            div.has-text-weight-bold
+              | {{human_minute(key, rows)}}
+            div
+              template(v-for="(row, i) in rows")
+                div
+                  | {{track_num(i, row.current_track)}}
+                  | -
+                  | {{time_format(row.lap_counter)}}
+            br
+    .column
+      article.message.is-primary.is-size-6
+        .message-body
+          template(v-for="(rows, key) in track_group")
+            div.has-text-weight-bold
+              | {{human_minute(key, rows)}}
+            div
+              template(v-for="(row, i) in rows")
+                | {{track_num(i, row.current_track)}}
+                |
+            br
 </template>
 
 <script>
@@ -124,6 +149,16 @@ export default {
         return current_track
       }
     },
+
+    human_minute(key, rows) {
+      let s = null
+      if (key === '0') {
+        s = `1分未満`
+      } else {
+        s = `${key}分以上`
+      }
+      return `${s} - ${rows.length}`
+    },
   },
 
   watch: {
@@ -153,10 +188,14 @@ export default {
 
     track_numbers() {
       if (this.track_numbers_str !== "") {
-        return this.track_numbers_str.split(/\s+/)
+        return this.track_numbers_str.split(/[\s+,]/)
       } else {
         return []
       }
+    },
+
+    track_group() {
+      return _.groupBy(this.rows, e => Math.floor(e.lap_counter / 60))
     },
   },
 }

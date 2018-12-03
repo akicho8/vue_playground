@@ -181,5 +181,10 @@ export default new Router({
       name: 'arrow_cursor_navigation',
       component: () => import(/* webpackChunkName: "arrow_cursor_navigation" */ './views/arrow_cursor_navigation.vue')
     },
+    {
+      path: '/css_close_button_sample',
+      name: 'css_close_button_sample',
+      component: () => import(/* webpackChunkName: "css_close_button_sample" */ './views/css_close_button_sample.vue')
+    },
   ]
 })

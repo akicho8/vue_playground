@@ -7,7 +7,7 @@
     form_part(:form_part="form_part" :value.sync="$data[form_part.key]" :value_p.sync="$data[form_part.display_key]")
 
   .album_box
-    img(:src="current_image")
+    img(:src="sample_image")
 
     .arrow_cursor_navigation_wrap
       .arrow_cursor.arrow_up(@click="relative_move_to(+1)" :class="relative_move_to_p(+1) ? 'active' : 'inactive'")
@@ -17,9 +17,8 @@
 
 <script>
 import form_part from "./form_part.vue"
-import any_image_files from "./any_image_files.js"
 
-const LENGTH = 5
+import sample_images_hash from "./sample_images_hash.js"
 
 export default {
   name: "arrow_cursor_navigation",
@@ -29,11 +28,8 @@ export default {
   },
   data() {
     return {
-      current_index: null,
-      any_image_files,
-
       form_parts: [
-        { key: "current_index",  name: "インデックス", default_value: 3, type: "range",  params: { min: 0, max: LENGTH - 1, step: 1, }, },
+        { key: "sample_image_index",  name: "インデックス", default_value: 3, type: "range", params: { min: 0, max: Object.values(sample_images_hash).length - 1, step: 1, }, },
       ],
     }
   },
@@ -43,27 +39,12 @@ export default {
   },
 
   methods: {
-    relative_move_to_p(sign) {
-      const v = this.current_index + sign
-      return 0 <= v && v < LENGTH
-    },
-
-    relative_move_to(sign) {
-      if (this.relative_move_to_p(sign)) {
-        this.current_index += sign
-      }
-    },
-
     all_reset() {
       this.form_parts.forEach(e => this[e.key] = e.default_value)
     },
   },
 
   computed: {
-    current_image() {
-      const values = Object.values(this.any_image_files)
-      return values[this.current_index % values.length]
-    },
   },
 }
 </script>
