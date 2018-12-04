@@ -24,11 +24,11 @@ import nissinIMGL0988_TP_V from "@/assets/nissinIMGL0988_TP_V.jpg"
 import nissinIMGL1044_TP_V from "@/assets/nissinIMGL1044_TP_V.jpg"
 
 export default {
-  I9A5312ISUMI_TP_V,
   IS107112702_TP_V,
+  ISG106132539_TP_V,
+  I9A5312ISUMI_TP_V,
   IMARI20160806355715_TP_V,
   IMGL5303_TP_V,
-  ISG106132539_TP_V,
   logo,
   rails,
   ELFAhimawariIMG_7129_TP_V,

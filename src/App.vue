@@ -30,6 +30,7 @@
               router-link.navbar-item(:to="{name: 'css_position'}") CSS Position
               router-link.navbar-item(:to="{name: 'arrow_cursor_navigation'}") CSS 三角ナビゲーション
               router-link.navbar-item(:to="{name: 'css_close_button_sample'}") CSS 閉じる【×】ボタン
+              router-link.navbar-item(:to="{name: 'css_balloon_sample'}") CSS 吹き出し
 
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他

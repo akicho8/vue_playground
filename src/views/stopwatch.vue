@@ -157,7 +157,8 @@ export default {
       } else {
         s = `${key}分以上`
       }
-      return `${s} - ${rows.length}`
+      return `${s}`
+      // return `${s} - ${rows.length}`
     },
   },
 

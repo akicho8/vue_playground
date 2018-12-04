@@ -186,5 +186,10 @@ export default new Router({
       name: 'css_close_button_sample',
       component: () => import(/* webpackChunkName: "css_close_button_sample" */ './views/css_close_button_sample.vue')
     },
+    {
+      path: '/css_balloon_sample',
+      name: 'css_balloon_sample',
+      component: () => import(/* webpackChunkName: "css_balloon_sample" */ './views/css_balloon_sample.vue')
+    },
   ]
 })
