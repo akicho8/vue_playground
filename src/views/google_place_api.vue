@@ -14,7 +14,9 @@
           .field
             .control
               .buttons
-                submit.button.is-small(@click.prevent="search_run") 検索
+                .button.is-small(@click.prevent="search_run") 検索
+                .button.is-small(@click.prevent="command1") 吹き出し表示
+                .button.is-small(@click.prevent="command2") 吹き出し消去
 
       .content.is-small
         a(:href="search_from_address_url" target="_blank") WEB経由のAPI実行でJSON確認
@@ -58,7 +60,7 @@ export default {
   data() {
     return {
       shop_items: [],
-      markers: [],
+      points: [],
       query_value: null,
 
       value_lat: 35.6436763,
@@ -69,8 +71,21 @@ export default {
 
       gmap: null,
 
+      checkbox_var1_p: true,
+      checkbox_var1: [],
+
       form_parts: [
-        { key: "query_value",   name: "キーワード",  default_value: "卓球", real_name: "address", display_key: null,   type: "string", params: {}, },
+        { key: "query_value",  name: "キーワード",  default_value: "卓球", real_name: "address", display_key: null,   type: "string", params: {}, },
+        {
+          name: "チェックボックス1",
+          key: "checkbox_var1",
+          default_value: ["value1"],
+          type: "checkbox",
+          elems: [
+            { name: "InfoWindow", value: "info_window", },
+          ],
+        },
+
       ],
     }
   },
@@ -83,14 +98,23 @@ export default {
     const ll = new google.maps.LatLng(this.value_lat, this.value_lng)
     this.gmap = new google.maps.Map(this.$refs.gmap, {zoom: 12, center: ll})
     // this.service = new google.maps.places.PlacesService(this.gmap)
-    
+
     this.search_run()
   },
 
-  // watch: {
-  //   query_value() { this.search_run() },
-  //   center()    { this.search_run() },
-  // },
+  watch: {
+    // checkbox_var1(v) {
+    //   // if (v.includes("info_window")) {
+    //   //   this.points.forEach(e => {
+    //   //     e.info_window.open(e.marker.getMap(), e.marker)
+    //   //   })
+    //   // } else {
+    //   //   this.points.forEach(e => {
+    //   //     e.info_window.close()
+    //   //   })
+    //   // }
+    // },
+  },
 
   methods: {
     shop_info_click(shop_info) {
@@ -142,19 +166,54 @@ export default {
           this.shop_items = []
         } else {
           this.shop_items = results
-
-          this.markers.forEach(e => e.setMap(null))
-          this.markers = []
-
-          this.shop_items.forEach(e => {
-            const marker = new google.maps.Marker()
-            marker.setPosition(e.geometry.location)
-            marker.setMap(this.gmap)
-            // marker.setAnimation(google.maps.Animation.BOUNCE)
-
-            this.markers.push(marker)
-          })
+          this.makers_mouse_over_out()
         }
+      })
+    },
+
+    points_reset() {
+      this.points.forEach(e => e.marker.setMap(null))
+      this.points = []
+    },
+
+    points_setup() {
+      this.points_reset()
+
+      this.shop_items.forEach(e => {
+        const point = {}
+
+        // {label: {text: e.name}}
+        point.marker = new google.maps.Marker()
+        point.marker.setPosition(e.geometry.location)
+        point.marker.setMap(this.gmap)
+
+        // marker.setAnimation(google.maps.Animation.BOUNCE)
+
+        point.info_window = new google.maps.InfoWindow({content: e.name})
+        // point.marker.addListener("mouseover", () => { point.info_window.open(point.marker.getMap(), point.marker) })
+        // point.marker.addListener("mouseout", () => { point.info_window.close() })
+
+        this.points.push(point)
+      })
+    },
+
+    makers_mouse_over_out() {
+      this.points_setup()
+      this.points.forEach(e => {
+        e.marker.addListener("mouseover", () => { e.info_window.open(e.marker.getMap(), e.marker) })
+        e.marker.addListener("mouseout", () => { e.info_window.close() })
+      })
+    },
+
+    command1() {
+      this.points.forEach(e => {
+        e.info_window.open(e.marker.getMap(), e.marker)
+      })
+    },
+
+    command2() {
+      this.points.forEach(e => {
+        e.info_window.close()
       })
     },
 
@@ -214,25 +273,4 @@ export default {
   .gmap_div
     width: 100%
     height: 50vmin
-
-  input
-    margin-top: 0.5em
-    border-radius: 1em
-  ul
-    margin: 1em 0.5em
-    li
-      margin: 0.25em
-      img
-        height: 16px
-      .shop_info_name
-        margin-left: 0.5em
-      a
-        cursor: pointer
-        text-decoration: none
-        &:hover
-          text-decoration: underline
-  .error_message
-    color: gray
-    font-size: 0.5em
-    margin-top: 1.2em
 </style>
