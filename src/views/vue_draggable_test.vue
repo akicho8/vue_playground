@@ -55,14 +55,14 @@
 <script>
 import draggable from 'vuedraggable'
 import dayjs from "dayjs"
-import form_part from "./form_part.vue"
+import form_parts from "./form_parts.vue"
 
 export default {
   name: "vue_draggable_test",
   title: "ドラッグアンドドロップ (Vue.draggable)",
   components: {
     draggable,
-    form_part,
+    form_parts,
   },
   data() {
     return {

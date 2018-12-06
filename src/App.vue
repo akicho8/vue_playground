@@ -33,6 +33,14 @@
               router-link.navbar-item(:to="{name: 'css_balloon_sample'}") CSS 吹き出し
 
           .navbar-item.has-dropdown.is-hoverable
+            span.navbar-link Google API
+            .navbar-dropdown.is-boxed
+              router-link.navbar-item(:to="{name: 'google_maps_playground'}") Google Maps Playground
+              router-link.navbar-item(:to="{name: 'google_maps_basic'}") GoogleMapsのいちばん簡単な例
+              router-link.navbar-item(:to="{name: 'google_geocoding_api'}") Google Geocoding API
+              router-link.navbar-item(:to="{name: 'google_place_api'}") お店検索 (Google Place API)
+
+          .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
             .navbar-dropdown.is-boxed
               router-link.navbar-item(:to="{name: 'lissajous'}") いろいろな曲線
@@ -54,11 +62,6 @@
               router-link.navbar-item(:to="{name: 'html_audio_checker'}") HTML Audio
               router-link.navbar-item(:to="{name: 'web_audio_api_checker'}") Web Audio API
               router-link.navbar-item(:to="{name: 'web_audio_api_for_mobile'}") Web Audio API for Mobile
-              hr.navbar-divider
-              router-link.navbar-item(:to="{name: 'google_maps_playground'}") Google Maps Playground
-              router-link.navbar-item(:to="{name: 'google_maps_basic'}") GoogleMapsのいちばん簡単な例
-              router-link.navbar-item(:to="{name: 'google_geocoding_api'}") Google Geocoding API
-              router-link.navbar-item(:to="{name: 'google_place_api'}") お店検索 (Google Place API)
               //- hr.navbar-divider
               //- hr.navbar-divider
               //- router-link.navbar-item(to="/about") About

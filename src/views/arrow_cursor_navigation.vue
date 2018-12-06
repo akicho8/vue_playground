@@ -3,8 +3,7 @@
   .h2.title {{$options.title}}
   hr
 
-  template(v-for="form_part in form_parts")
-    form_part(:form_part="form_part" :value.sync="$data[form_part.key]" :value_p.sync="$data[form_part.display_key]")
+  form_parts
 
   .album_box
     img(:src="sample_image")
@@ -16,7 +15,7 @@
 </template>
 
 <script>
-import form_part from "./form_part.vue"
+import form_parts from "./form_parts.vue"
 
 import sample_images_hash from "./sample_images_hash.js"
 
@@ -24,7 +23,7 @@ export default {
   name: "arrow_cursor_navigation",
   title: "三角ナビゲーション",
   components: {
-    form_part,
+    form_parts,
   },
   data() {
     return {

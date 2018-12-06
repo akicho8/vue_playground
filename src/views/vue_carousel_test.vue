@@ -5,8 +5,7 @@
 
   .columns
     .column
-      template(v-for="form_part in form_parts")
-        form_part(:form_part="form_part" :real_value_p="real_value_p" :value.sync="$data[form_part.key]" :value_p.sync="$data[form_part.display_key]")
+      form_parts
 
       .field.is-horizontal
         .field-label.is-small
@@ -59,7 +58,7 @@
 </template>
 
 <script>
-import form_part from "./form_part.vue"
+import form_parts from "./form_parts.vue"
 
 // import I9A5312ISUMI_TP_V from "@/assets/I9A5312ISUMI_TP_V.jpg"
 // import IS107112702_TP_V from "@/assets/IS107112702_TP_V.jpg"
@@ -73,7 +72,7 @@ export default {
   name: "vue_carousel_test",
   title: "スライドショー (vue-carousel)",
   components: {
-    form_part,
+    form_parts,
   },
   data() {
     return {

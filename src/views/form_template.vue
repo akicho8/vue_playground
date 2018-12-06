@@ -5,8 +5,7 @@
 
   .columns
     .column
-      template(v-for="form_part in form_parts")
-        form_part(:form_part="form_part" :real_value_p="real_value_p" :value.sync="$data[form_part.key]" :value_p.sync="$data[form_part.display_key]")
+      form_parts
 
       .field.is-horizontal
         .field-label.is-small
@@ -44,13 +43,13 @@
 
 <script>
 import dayjs from "dayjs"
-import form_part from "./form_part.vue"
+import form_parts from "./form_parts.vue"
 
 export default {
   name: "form_template",
   title: "Form Template",
   components: {
-    form_part,
+    form_parts,
   },
   data() {
     return {

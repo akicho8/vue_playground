@@ -5,8 +5,7 @@
 
   .columns
     .column.is-one-third
-      template(v-for="form_part in form_parts")
-        form_part(:form_part="form_part" :value.sync="$data[form_part.key]" :value_p.sync="$data[form_part.display_key]")
+      form_parts
 
       .field.is-horizontal
         .field-label
@@ -26,7 +25,7 @@
 </template>
 
 <script>
-import form_part from "./form_part.vue"
+import form_parts from "./form_parts.vue"
 import canvas_methods from "./canvas_methods"
 
 class Point {
@@ -91,7 +90,7 @@ export default {
   name: "lissajous",
   title: "いろいろな曲線",
   components: {
-    form_part,
+    form_parts,
   },
   mixins: [canvas_methods],
   data() {

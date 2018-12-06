@@ -23,13 +23,13 @@
 </template>
 
 <script>
-import form_part from "./form_part.vue"
+import form_parts from "./form_parts.vue"
 
 export default {
   name: "ruby_code_transpiler",
   title: "Ruby Code Transpiler",
   components: {
-    form_part,
+    form_parts,
   },
   data() {
     return {

@@ -17,13 +17,13 @@
 
 <script>
 // import dayjs from "dayjs"
-// import form_part from "./form_part.vue"
+// import form_parts from "./form_parts.vue"
 
 export default {
   name: "html5_drag_and_drop",
   title: "ドラッグアンドドロップ (プリミティブ)",
   // components: {
-  //   form_part,
+  //   form_parts,
   // },
   data() {
     return {
