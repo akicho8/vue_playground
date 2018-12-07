@@ -13,10 +13,7 @@
       #main_navar.navbar-menu
         .navbar-start
           router-link.navbar-item(:to="{name: 'stopwatch'}") ストップウォッチ
-          router-link.navbar-item(:to="{name: 'css_object_fit'}") CSS object-fit
-          router-link.navbar-item(:to="{name: 'color_scheme'}") 配色エディター
           router-link.navbar-item(:to="{name: 'ruby_code_transpiler'}") Ruby Code Transpiler
-          router-link.navbar-item(:to="{name: 'css_flexbox'}") CSS Flexbox
 
           template(v-if="false")
             router-link.navbar-item(to="/about") About
@@ -25,12 +22,16 @@
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link CSS
             .navbar-dropdown.is-boxed
+              router-link.navbar-item(:to="{name: 'css_flexbox'}") CSS Flexbox
+              router-link.navbar-item(:to="{name: 'css_position'}") CSS Position
+              router-link.navbar-item(:to="{name: 'css_object_fit'}") CSS object-fit
               router-link.navbar-item(:to="{name: 'css_filter'}") CSS Filter
               router-link.navbar-item(:to="{name: 'css_transform'}") CSS Transform
-              router-link.navbar-item(:to="{name: 'css_position'}") CSS Position
+              hr.navbar-divider
               router-link.navbar-item(:to="{name: 'arrow_cursor_navigation'}") CSS 三角ナビゲーション
-              router-link.navbar-item(:to="{name: 'css_close_button_sample'}") CSS 閉じる【×】ボタン
+              router-link.navbar-item(:to="{name: 'css_close_button_sample'}") CSS 右上配置の閉じる×ボタン
               router-link.navbar-item(:to="{name: 'css_balloon_sample'}") CSS 吹き出し
+              router-link.navbar-item(:to="{name: 'color_scheme'}") 配色エディター
 
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link Google API

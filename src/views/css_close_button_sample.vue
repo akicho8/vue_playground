@@ -12,7 +12,7 @@
 <script>
 export default {
   name: "css_close_button_sample",
-  title: "閉じる【×】ボタン",
+  title: "右上配置の閉じる×ボタン",
 }
 </script>
 

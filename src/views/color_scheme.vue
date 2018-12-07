@@ -12,7 +12,7 @@
         input.input.is-small(type="color" v-model="base_hex_color")
       .field
         //- v-model だと 0000FF を入力したくても 000 の時点で #000000 に展開されてしまうため変更のタイミングを考慮
-        input.input.is-small(type="text" :value="direct_hex_color" @keypress.enter="direct_hex_color_set($event.target.value)" @blur="direct_hex_color_set($event.target.value)" placeholder="曖昧入力可")
+        input.input.is-small(type="text" :value="direct_hex_color" @keypress.enter="direct_hex_color_set($event.target.value)" @blur="direct_hex_color_set($event.target.value)" placeholder="rgb, hsla 形式や色名 blue など曖昧な入力ができます")
 
   .field.is-horizontal
     .field-label.is-small
