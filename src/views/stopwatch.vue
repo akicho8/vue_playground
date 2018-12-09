@@ -53,6 +53,8 @@
       .buttons
         template(v-if="rows.length >= 1 || true")
           a.button.is-info.is-small(:href="twitter_url" target="_blank") ツイート
+        template(v-if="rows.length >= 1")
+          a.button.is-small(@click.prevent="revert") 戻す
 
     .column
       article.message.is-primary.is-size-6
@@ -156,7 +158,10 @@ export default {
       this.mode = "playing"
       this.clear_interval_safe()
       this.interval_id = setInterval(this.step_next, 1000)
+      this.default_focus()
+    },
 
+    default_focus() {
       // LAP にフォーカスさせる
       if (this.book_mode === 'time_only') {
         this.$nextTick(() => this.$refs.lap_ref.focus())
@@ -186,6 +191,19 @@ export default {
 
         this.current_track += 1
         this.lap_counter = 0
+        this.default_focus()
+        this.sound_play()
+      }
+    },
+
+    revert() {
+      if (this.rows.length >= 1) {
+        const record = this.rows.pop()
+
+        this.current_track -= 1
+        this.lap_counter = 0
+        this.total_counter -= record.lap_counter
+        this.default_focus()
         this.sound_play()
       }
     },
