@@ -289,7 +289,7 @@ export default {
 
     quest_range() {
       if (this.rows.length >= 1) {
-        if (this.quest_list.length !== 0) {
+        if (this.quest_list.length === 0) {
           return [this.quest_name(this.rows[0]), this.quest_name(_.last(this.rows))].join("〜")
         }
       }
