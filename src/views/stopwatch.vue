@@ -158,16 +158,17 @@ export default {
       this.mode = "playing"
       this.clear_interval_safe()
       this.interval_id = setInterval(this.step_next, 1000)
-      this.default_focus()
+      this.focus_to_button()
     },
 
-    default_focus() {
-      // LAP にフォーカスさせる
+    focus_to_button() {
+      let key = null
       if (this.book_mode === 'time_only') {
-        this.$nextTick(() => this.$refs.lap_ref.focus())
+        key = "lap_ref"
       } else {
-        this.$nextTick(() => this.$refs.o_button_ref.focus())
+        key = "o_button_ref"
       }
+      this.$nextTick(() => this.$refs[key].focus())
     },
 
     stop_run() {
@@ -191,7 +192,7 @@ export default {
 
         this.current_track += 1
         this.lap_counter = 0
-        this.default_focus()
+        this.focus_to_button()
         this.sound_play()
       }
     },
@@ -203,7 +204,7 @@ export default {
         this.current_track -= 1
         this.lap_counter = 0
         this.total_counter -= record.lap_counter
-        this.default_focus()
+        this.focus_to_button()
         this.sound_play()
       }
     },
