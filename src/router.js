@@ -191,5 +191,15 @@ export default new Router({
       name: 'css_balloon_sample',
       component: () => import(/* webpackChunkName: "css_balloon_sample" */ './views/css_balloon_sample.vue')
     },
+    {
+      path: '/quill_test',
+      name: 'quill_test',
+      component: () => import(/* webpackChunkName: "quill_test" */ './views/quill_test.vue')
+    },
+    {
+      path: '/splatoon_test',
+      name: 'splatoon_test',
+      component: () => import(/* webpackChunkName: "splatoon_test" */ './views/splatoon_test.vue')
+    },
   ]
 })

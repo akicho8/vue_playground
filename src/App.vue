@@ -44,6 +44,7 @@
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
             .navbar-dropdown.is-boxed
+              router-link.navbar-item(:to="{name: 'splatoon_test'}") スプラトゥーン2のブキ名を覚える
               router-link.navbar-item(:to="{name: 'lissajous'}") いろいろな曲線
               router-link.navbar-item(:to="{name: 'strange_attractor'}") ストレンジアトラクター
               hr.navbar-divider
@@ -72,6 +73,7 @@
             .navbar-item.has-dropdown.is-hoverable
               span.navbar-link ゴミ箱
               .navbar-dropdown.is-boxed
+                router-link.navbar-item(:to="{name: 'quill_test'}") quill_test
                 router-link.navbar-item(:to="{name: 'puyosimu'}") ぷよぷよシミュレーター
                 router-link.navbar-item(:to="{name: 'mavon_editor_test'}") mavonEditor Test
                 //- router-link.navbar-item(to="/about") About

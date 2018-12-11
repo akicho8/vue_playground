@@ -1,0 +1,84 @@
+<template lang="pug">
+.splatoon_test
+  .h2.title {{$options.title}}
+  hr
+
+  .columns
+    .column
+      template(v-if="current_data")
+        img.buki(:src="require(`@/assets/splatoon_data/${current_data.key}_xlarge.png`)")
+
+    .column
+      template(v-if="current_data")
+        .buttons
+          button.button.is-large(@click="count_add('o_count')") ○
+          button.button.is-large(@click="count_add('x_count')") ×
+
+      .contnent
+        p 正解: {{o_count}}
+        p 誤答: {{x_count}}
+
+      template(v-if="current_data")
+        br
+        .box
+          .has-text-grey-lighter.is-size-7
+            div {{current_data.name}}
+            div {{current_data.sub_name}}
+            div {{current_data.sp_name}}
+
+    //- .column
+    //-   .box
+    //-     b-table(:data="splatoon_list" :hoverable="true" :columns="table_columns" narrowed)
+
+</template>
+
+<script>
+import splatoon_data from "./splatoon_data.js"
+
+export default {
+  name: "splatoon_test",
+  title: "スプラトゥーン2のブキ名を覚える",
+  data() {
+    return {
+      current_index: 0,
+      o_count: 0,
+      x_count: 0,
+    }
+  },
+
+  methods: {
+    count_add(v) {
+      this.$data[v] = this.$data[v] + 1
+      this.current_index += 1
+    },
+  },
+
+  computed: {
+    table_columns() {
+      return [
+        { field: 'name',     label: '名前',       sortable: true, },
+        { field: 'sub_name', label: 'サブ',       sortable: true, },
+        { field: 'sp_name',  label: 'スペシャル', sortable: true, },
+      ]
+    },
+
+    splatoon_list() {
+      return _.shuffle(splatoon_data)
+    },
+
+    current_data() {
+      return this.splatoon_list[this.current_index]
+    },
+  },
+}
+</script>
+
+<style scoped lang="sass">
+@import "../assets/scss/variables"
+
+.splatoon_test
+  .buki
+    width: 100%
+  .button
+    width: 4em
+</style>
