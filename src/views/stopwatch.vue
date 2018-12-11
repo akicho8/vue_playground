@@ -14,20 +14,21 @@
           span.is-size-4.has-text-grey-light
             | {{time_format(total_counter)}}
 
-        .buttons.toggle_button
+        .buttons
           template(v-if="mode === 'standby'")
             button.button.is-primary.is-large(@click="start_run") 開始
           template(v-else)
-            button.button.is-danger.is-large(@click="stop_run") 記録中
+            button.button.is-danger.is-large(@click="stop_run") REC
+
           template(v-if="mode === 'playing'")
-            template(v-if="book_mode == 'time_only'")
+            template(v-if="book_mode === 'time_only'")
               button.button.is-primary.is-large(@click="lap_handle('o')" ref="lap_ref") ラップ
             template(v-else)
-              button.button.is-info.is-large(@click="lap_handle('o')" ref="o_button_ref") ○
-              button.button.is-info.is-large(@click="lap_handle('x')") ×
+              button.button.is-info.is-large.ox_button(@click="lap_handle('o')" ref="o_button_ref") ○
+              button.button.is-info.is-large.ox_button(@click="lap_handle('x')") ×
           template(v-else)
             template(v-if="total_counter >= 1")
-              button.button.is-large(@click="reset") リセット
+              button.button.is-large(@click="reset" key="reset_key") リセット
 
       .field
         label.label 開始番号
@@ -55,6 +56,12 @@
           a.button.is-info.is-small(:href="twitter_url" target="_blank") ツイート
         template(v-if="rows.length >= 1")
           a.button.is-small(@click.prevent="revert") 戻す
+
+      .box.content.has-text-grey.is-size-7
+        h6 ショートカット
+        ul
+          li p --- 開始/停止
+          li x --- 「×」ボタン
 
     .column
       article.message.is-primary.is-size-6
@@ -127,7 +134,11 @@
 
 <script>
 import dayjs from "dayjs"
+
 import button46_mp3 from "@/assets/button46.mp3"
+import button23_mp3 from "@/assets/button23.mp3"
+import button62_mp3 from "@/assets/button62.mp3"
+import button70_mp3 from "@/assets/button70.mp3"
 
 export default {
   name: "stopwatch",
@@ -150,10 +161,21 @@ export default {
       if (e.key === "x") {
         this.lap_handle('x')
       }
+      if (e.key === "p") {
+        this.pause()
+      }
     }, false)
   },
 
   methods: {
+    pause() {
+      if (this.mode === "standby") {
+        this.start_run()
+      } else {
+        this.stop_run()
+      }
+    },
+
     start_run() {
       this.mode = "playing"
       this.clear_interval_safe()
@@ -193,8 +215,18 @@ export default {
         this.current_track += 1
         this.lap_counter = 0
         this.focus_to_button()
-        this.sound_play()
+        this.sound_play(this.sound_src(o_or_x))
       }
+    },
+
+    sound_src(o_or_x) {
+      let sound_src = null
+      if (o_or_x === "o") {
+        sound_src = button46_mp3
+      } else {
+        sound_src = button23_mp3
+      }
+      return sound_src
     },
 
     revert() {
@@ -205,12 +237,12 @@ export default {
         this.lap_counter = 0
         this.total_counter -= record.lap_counter
         this.focus_to_button()
-        this.sound_play()
+        this.sound_play(button46_mp3)
       }
     },
 
-    sound_play() {
-      const audio = new Audio(button46_mp3)
+    sound_play(src) {
+      const audio = new Audio(src)
       audio.play()
     },
 
@@ -318,7 +350,6 @@ export default {
 </script>
 
 <style scoped lang="sass">
-  .toggle_button
-    .button
-      width: 7rem
+  .ox_button
+    width: 5rem
 </style>
