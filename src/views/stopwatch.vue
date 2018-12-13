@@ -24,8 +24,9 @@
             template(v-if="book_mode === 'time_only'")
               button.button.is-primary.is-large(@click="lap_handle('o')" ref="lap_ref") ラップ
             template(v-else)
-              button.button.is-info.is-large.ox_button(@click="lap_handle('o')" ref="o_button_ref") ○
-              button.button.is-info.is-large.ox_button(@click="lap_handle('x')") ×
+              .ox_buttons
+                button.button.is-success.is-outlined.is-large.ox_button(@click="lap_handle('o')" ref="o_button_ref") ○
+                button.button.is-success.is-outlined.is-large.ox_button(@click="lap_handle('x')") ×
           template(v-else)
             template(v-if="total_counter >= 1")
               button.button.is-large(@click="reset" key="reset_key") リセット
@@ -52,10 +53,8 @@
 
       br
       .buttons
-        template(v-if="rows.length >= 1 || true")
-          a.button.is-info.is-small(:href="twitter_url" target="_blank") ツイート
         template(v-if="rows.length >= 1")
-          a.button.is-small(@click.prevent="revert") 戻す
+          a.button.is-small(@click.prevent="revert") 1つ前に戻す
 
       .box.content.has-text-grey.is-size-7
         h6 ショートカット
@@ -63,14 +62,21 @@
           li p --- 開始/停止
           li x --- 「×」ボタン
 
+      br
+      .buttons
+        template(v-if="rows.length >= 1 || true")
+          a.button.is-info.is-small(:href="twitter_url" target="_blank") ツイート
+
     .column
-      article.message.is-primary.is-size-6
+      article.message.is-primary.is-size-7
         .message-body
           template(v-if="rows.length >= 1")
             div
-              | 計{{rows.length}}問
               | {{quest_range}}
-              | ({{time_format(total_seconds)}})
+              | 計{{rows.length}}問
+              | {{human_rate}}
+              | {{ja_time_format(total_seconds)}}
+              | {{human_avg}}
 
           template(v-for="(rows, key) in o_group_by_min")
             br
@@ -91,7 +97,7 @@
                 |
 
     .column
-      article.message.is-primary.is-size-6
+      article.message.is-primary.is-size-7.compact
         .message-body
           template(v-for="(rows, key) in o_group_by_min")
             div.has-text-weight-bold
@@ -114,7 +120,7 @@
                   | {{time_format(row.lap_counter)}}
 
     .column
-      article.message.is-primary.is-size-6
+      article.message.is-primary.is-size-7.compact
         .message-body
           template(v-for="(row, i) in rows")
             div
@@ -208,6 +214,10 @@ export default {
       return dayjs().startOf("year").set("seconds", seconds).format("m:ss")
     },
 
+    ja_time_format(seconds) {
+      return dayjs().startOf("year").set("seconds", seconds).format("m分s秒")
+    },
+
     lap_handle(o_or_x) {
       if (this.mode === "playing") {
         this.rows.push({...this.new_record, o_or_x: o_or_x})
@@ -288,6 +298,14 @@ export default {
       }
       return s
     },
+
+    count_of(key) {
+      let count = 0
+      if (key in this.ox_group) {
+        count = this.ox_group[key].length
+      }
+      return count
+    },
   },
 
   watch: {
@@ -345,11 +363,48 @@ export default {
         }
       }
     },
+
+    rate() {
+      if (this.rows.length >= 1) {
+        return this.count_of("o") / this.rows.length
+      }
+    },
+
+    human_rate() {
+      if (this.rows.length >= 1) {
+        const v = Math.floor(this.rate * 100.0)
+        return `正解率${v}%`
+      }
+    },
+
+    avg() {
+      if (this.rows.length >= 1) {
+        return this.total_seconds / this.rows.length
+      }
+    },
+
+    human_avg() {
+      if (this.rows.length >= 1) {
+        let v = null
+        if (this.avg >= 60) {
+          v = this.ja_time_format(this.avg)
+        } else {
+          v = dayjs().startOf("year").set("seconds", this.avg).format("s秒")
+        }
+        return `平均${v}`
+      }
+    },
   },
 }
 </script>
 
 <style scoped lang="sass">
   .ox_button
-    width: 5rem
+    width: 6rem
+  .compact
+    line-height: 100%
+  .ox_buttons
+    margin-left: 0.7rem
+  article
+    font-family: Osaka-mono, "Osaka-等幅", "ＭＳ ゴシック", monospace
 </style>
