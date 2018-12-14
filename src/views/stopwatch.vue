@@ -146,23 +146,34 @@ import button23_mp3 from "@/assets/button23.mp3"
 import button62_mp3 from "@/assets/button62.mp3"
 import button70_mp3 from "@/assets/button70.mp3"
 
+// import my_lzma from "lzma-native"
+
 export default {
   name: "stopwatch",
   title: "ストップウォッチ",
   data() {
     return {
-      current_track: parseInt(localStorage.getItem("stopwatch:current_track") || 1),
-      total_counter: parseInt(localStorage.getItem("stopwatch:total_counter") || 0),
-      lap_counter: parseInt(localStorage.getItem("stopwatch:lap_counter") || 0),
-      rows: JSON.parse(localStorage.getItem("stopwatch:rows") || "[]"),
-      quest_list_str: localStorage.getItem("stopwatch:quest_list_str") || "",
-      book_mode: localStorage.getItem("stopwatch:book_mode") || "time_only",
+      current_track: null,
+      total_counter: null,
+      lap_counter: null,
+      rows: null,
+      quest_list_str: null,
+      book_mode: null,
       mode: "standby",
       interval_id: null,
     }
   },
 
   created() {
+    let data = null
+    if (location.hash) {
+      data = decodeURIComponent(location.hash.replace(/^#/, ""))
+    } else {
+      data = localStorage.getItem("stopwatch") || "{}"
+    }
+    data = JSON.parse(data)
+    this.restore_data(data)
+
     document.addEventListener("keypress", e => {
       if (e.key === "x") {
         this.lap_handle('x')
@@ -171,6 +182,10 @@ export default {
         this.pause()
       }
     }, false)
+  },
+
+  beforeDestroy() {
+    this.clear_interval_safe()
   },
 
   methods: {
@@ -306,15 +321,33 @@ export default {
       }
       return count
     },
+
+    restore_data(value) {
+      this.current_track  = value.current_track || 1
+      this.total_counter  = value.total_counter || 0
+      this.lap_counter    = value.lap_counter || 0
+      this.rows           = value.rows || []
+      this.quest_list_str = value.quest_list_str || ""
+      this.book_mode      = value.book_mode || "time_only"
+    },
+
+    hozon() {
+      const json_str = JSON.stringify(this.save_data)
+      // console.log(my_lzma.compress(json_str, 9))
+
+      location.hash = encodeURIComponent(json_str)
+
+      localStorage.setItem("stopwatch", json_str)
+    },
   },
 
   watch: {
-    current_track(v)     { localStorage.setItem("stopwatch:current_track", v)        },
-    total_counter(v)     { localStorage.setItem("stopwatch:total_counter", v)        },
-    lap_counter(v)       { localStorage.setItem("stopwatch:lap_counter", v)          },
-    quest_list_str(v) { localStorage.setItem("stopwatch:quest_list_str", v)    },
-    book_mode(v)         { localStorage.setItem("stopwatch:book_mode", v)    },
-    rows(v)              { localStorage.setItem("stopwatch:rows", JSON.stringify(v)) },
+    current_track()     { this.hozon() },
+    total_counter()     { this.hozon() },
+    lap_counter()       { this.hozon() },
+    quest_list_str()    { this.hozon() },
+    book_mode()         { this.hozon() },
+    rows()              { this.hozon() },
   },
 
   computed: {
@@ -392,6 +425,17 @@ export default {
           v = dayjs().startOf("year").set("seconds", this.avg).format("s秒")
         }
         return `平均${v}`
+      }
+    },
+
+    save_data() {
+      return {
+        current_track:  this.current_track,
+        total_counter:  this.total_counter,
+        lap_counter:    this.lap_counter,
+        rows:           this.rows,
+        quest_list_str: this.quest_list_str,
+        book_mode:      this.book_mode,
       }
     },
   },
