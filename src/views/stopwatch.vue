@@ -167,7 +167,7 @@ export default {
       if (e.key === "x") {
         this.lap_handle('x')
       }
-      if (e.key === "p") {
+      if (e.key === "p" || e.key === "k") {
         this.pause()
       }
     }, false)
