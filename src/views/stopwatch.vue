@@ -59,7 +59,7 @@
       .box.content.has-text-grey.is-size-7
         h6 ショートカット
         ul
-          li p --- 開始/停止
+          li p or k --- 開始/停止
           li x --- 「×」ボタン
 
       br
@@ -331,7 +331,7 @@ export default {
       this.book_mode      = value.book_mode || "time_only"
     },
 
-    hozon() {
+    save_process() {
       const json_str = JSON.stringify(this.save_data)
       // console.log(my_lzma.compress(json_str, 9))
 
@@ -342,12 +342,12 @@ export default {
   },
 
   watch: {
-    current_track()     { this.hozon() },
-    total_counter()     { this.hozon() },
-    lap_counter()       { this.hozon() },
-    quest_list_str()    { this.hozon() },
-    book_mode()         { this.hozon() },
-    rows()              { this.hozon() },
+    current_track()     { this.save_process() },
+    total_counter()     { this.save_process() },
+    lap_counter()       { this.save_process() },
+    quest_list_str()    { this.save_process() },
+    book_mode()         { this.save_process() },
+    rows()              { this.save_process() },
   },
 
   computed: {
