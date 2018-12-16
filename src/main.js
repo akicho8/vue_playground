@@ -41,6 +41,8 @@ Vue.config.productionTip = false
 //   console.log(`Captured in Vue.config.errororHandler: ${info}`, error)
 // }
 
+import './assets/scss/app.scss'
+
 import sample_image_mod from "./sample_image_mod.js"
 
 Vue.mixin(sample_image_mod)

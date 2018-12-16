@@ -201,5 +201,20 @@ export default new Router({
       name: 'splatoon_test',
       component: () => import(/* webpackChunkName: "splatoon_test" */ './views/splatoon_test.vue')
     },
+    {
+      path: '/abcjs_test',
+      name: 'abcjs_test',
+      component: () => import(/* webpackChunkName: "abcjs_test" */ './views/abcjs_test.vue')
+    },
+    {
+      path: '/marked_test',
+      name: 'marked_test',
+      component: () => import(/* webpackChunkName: "marked_test" */ './views/marked_test.vue')
+    },
+    {
+      path: '/lzma_package_test',
+      name: 'lzma_package_test',
+      component: () => import(/* webpackChunkName: "lzma_package_test" */ './views/lzma_package_test.vue')
+    },
   ]
 })

@@ -123,6 +123,9 @@ export default {
     this.all_reset()
   },
 
+  mounted() {
+  },
+
   watch: {
   },
 
@@ -156,10 +159,6 @@ export default {
     all_reset() {
       this.result_rows_reset()
       this.form_parts_reset()
-    },
-
-    disabled(record) {
-      return !(!record.display_key || this.$data[record.display_key])
     },
   },
 
