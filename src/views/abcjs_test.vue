@@ -5,7 +5,7 @@
 
   .columns
     .column
-      b-message(title="ABC記法" type="" :closable="false")
+      b-message(title="ABC記法" type="is-primary" :closable="false")
         textarea.textarea.abc_body(v-model.trim="abc_body")
 
       .content
@@ -14,6 +14,7 @@
 
     .column
       #score_element
+      br
       #midi_element
 
 </template>
@@ -201,5 +202,5 @@ E D E/E/ D|E D E/E/ D|E D E/E/ D|E D E/E/ D|`
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
 .abcjs_test
   .abc_body
-    height: 25vh
+    height: 50vh
 </style>
