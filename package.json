@@ -20,6 +20,7 @@
     "marked": "^0.5.2",
     "mavon-editor": "^2.6.17",
     "object-inspect": "^1.6.0",
+    "prismjs": "^1.15.0",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.17",
     "vue-carousel": "^0.16.0-rc2",

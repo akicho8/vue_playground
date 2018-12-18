@@ -216,5 +216,10 @@ export default new Router({
       name: 'lzma_package_test',
       component: () => import(/* webpackChunkName: "lzma_package_test" */ './views/lzma_package_test.vue')
     },
+    {
+      path: '/prism_test',
+      name: 'prism_test',
+      component: () => import(/* webpackChunkName: "prism_test" */ './views/prism_test.vue')
+    },
   ]
 })

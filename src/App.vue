@@ -44,6 +44,7 @@
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
             .navbar-dropdown.is-boxed
+              router-link.navbar-item(:to="{name: 'prism_test'}") コードフォーマット (prism)
               router-link.navbar-item(:to="{name: 'lzma_package_test'}") 圧縮復元 (lzma)
               router-link.navbar-item(:to="{name: 'marked_test'}") Markdown変換 (marked)
               router-link.navbar-item(:to="{name: 'abcjs_test'}") 楽譜入力 (abcjs)
