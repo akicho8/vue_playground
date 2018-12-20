@@ -197,9 +197,9 @@ export default new Router({
       component: () => import(/* webpackChunkName: "quill_test" */ './views/quill_test.vue')
     },
     {
-      path: '/splatoon_test',
-      name: 'splatoon_test',
-      component: () => import(/* webpackChunkName: "splatoon_test" */ './views/splatoon_test.vue')
+      path: '/splatoon_weapon_test',
+      name: 'splatoon_weapon_test',
+      component: () => import(/* webpackChunkName: "splatoon_weapon_test" */ './views/splatoon_weapon_test.vue')
     },
     {
       path: '/abcjs_test',
@@ -220,6 +220,16 @@ export default new Router({
       path: '/prism_test',
       name: 'prism_test',
       component: () => import(/* webpackChunkName: "prism_test" */ './views/prism_test.vue')
+    },
+    {
+      path: '/uploaed_file_preview_test',
+      name: 'uploaed_file_preview_test',
+      component: () => import(/* webpackChunkName: "uploaed_file_preview_test" */ './views/uploaed_file_preview_test.vue')
+    },
+    {
+      path: '/textarea_test',
+      name: 'textarea_test',
+      component: () => import(/* webpackChunkName: "textarea_test" */ './views/textarea_test.vue')
     },
   ]
 })

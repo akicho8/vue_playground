@@ -6,7 +6,7 @@
   .columns
     .column
       b-message(title="HTML" type="" :closable="false")
-        textarea.textarea.source_body(v-model.trim="source_body")
+        textarea.textarea.source_body(v-model="source_body")
       form_parts
 
     .column
@@ -31,8 +31,11 @@ export default {
   },
   data() {
     return {
-      source_body: `
-class Foo
+      source_body: `class Foo
+  attr_accessor :params
+  def initialize(params)
+    self.params = params
+  end
 end
 `,
       lang_key: null,

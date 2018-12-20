@@ -44,11 +44,13 @@
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
             .navbar-dropdown.is-boxed
+              router-link.navbar-item(:to="{name: 'textarea_test'}") テキストエリア縦幅自動調整
+              router-link.navbar-item(:to="{name: 'uploaed_file_preview_test'}") アップロード画像プレビュー (FileReader)
               router-link.navbar-item(:to="{name: 'prism_test'}") コードフォーマット (prism)
               router-link.navbar-item(:to="{name: 'lzma_package_test'}") 圧縮復元 (lzma)
               router-link.navbar-item(:to="{name: 'marked_test'}") Markdown変換 (marked)
               router-link.navbar-item(:to="{name: 'abcjs_test'}") 楽譜入力 (abcjs)
-              router-link.navbar-item(:to="{name: 'splatoon_test'}") スプラトゥーン2のブキ名を覚える
+              router-link.navbar-item(:to="{name: 'splatoon_weapon_test'}") スプラトゥーン2のブキ名を覚える
               router-link.navbar-item(:to="{name: 'lissajous'}") いろいろな曲線
               router-link.navbar-item(:to="{name: 'strange_attractor'}") ストレンジアトラクター
               hr.navbar-divider
