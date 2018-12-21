@@ -12,8 +12,10 @@
         div 文書の行数: {{lines_max}}
         div エリア高さ: {{rows_size}}
         br
-        div 最小: {{rows_min}}
-        div 最大: {{rows_max}}
+        div 最小:
+          input(type="number" v-model="rows_min")
+        div 最大:
+          input(type="number" v-model="rows_max")
 
 </template>
 
@@ -23,9 +25,9 @@ export default {
   title: "テキストエリア縦幅自動調整",
   data() {
     return {
-      source_body: "1\n2\n3\n4\n5",
+      source_body: "",
       rows_min: 2,
-      rows_max: 8,
+      rows_max: 10,
     }
   },
   computed: {
