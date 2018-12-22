@@ -230,7 +230,16 @@ export default {
     },
 
     ja_time_format(seconds) {
-      return dayjs().startOf("year").set("seconds", seconds).format("m分s秒")
+      let format = null
+      if ((seconds / 60) >= 60) {
+        if (seconds % 60 > 0) {
+          seconds += 60
+        }
+        format = "h時間m分"
+      } else {
+        format = "m分s秒"
+      }
+      return dayjs().startOf("year").set("seconds", seconds).format(format)
     },
 
     lap_handle(o_or_x) {
