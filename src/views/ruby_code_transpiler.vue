@@ -6,7 +6,7 @@
   b-message(title="Rubyのコード" type="" :closable="false")
     textarea.textarea(v-model.trim="rb_body")
     small
-      | `` や %x{} で囲むと JS の世界に入れます。例: `location` `console.log`.call("Hello")
+      | `` や %x{} で囲むと JS の世界に入れる。例: `location` `console.log`.call("Hello")
   template(v-if="rb_retval !== null")
     b-message(title="最後の戻値" type="is-success" :closable="false")
       | {{rb_retval}}

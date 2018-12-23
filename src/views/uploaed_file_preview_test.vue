@@ -5,12 +5,12 @@
 
   .columns
     .column
-      .box
-        .field
-          p 単一ファイルアップロード
-          input(type="file" @change="single_file_uploaded_handle" ref="file_input")
-        .field
-          img(:src="single_img_src")
+      //- .box
+      //-   .field
+      //-     p 単一ファイルアップロード
+      //-     input(type="file" @change="single_file_uploaded_handle" ref="file_input")
+      //-   .field
+      //-     img(:src="single_file_src")
 
       .box
         .field
@@ -20,7 +20,14 @@
           b-table(:data="file_infos" :hoverable="true" narrowed)
             template(slot-scope="props")
               b-table-column(label="読み込み後")
-                img(:src="props.row.img_src")
+                template(v-if="/^image/.test(props.row.file.type)")
+                  img(:src="props.row.file_src")
+                template(v-else-if="/^video/.test(props.row.file.type)")
+                  video(:src="props.row.file_src" controls)
+                template(v-else-if="/^audio/.test(props.row.file.type)")
+                  audio(:src="props.row.file_src" controls)
+                template(v-else)
+                  | プレビュー未対応
               b-table-column(label="size")
                 | {{props.row.file.size}}
               b-table-column(label="name")
@@ -41,18 +48,18 @@ export default {
   title: "アップロード画像プレビュー (FileReader)",
   data() {
     return {
-      single_img_src: null,
+      // single_file_src: null,
       file_infos: [],
     }
   },
   methods: {
-    single_file_uploaded_handle() {
-      const file = this.$refs["file_input"].files[0]
-      console.log(file)
-      const reader = new FileReader()
-      reader.addEventListener("load", () => { this.single_img_src = reader.result }, false)
-      reader.readAsDataURL(file)
-    },
+    // single_file_uploaded_handle() {
+    //   const file = this.$refs["file_input"].files[0]
+    //   console.log(file)
+    //   const reader = new FileReader()
+    //   reader.addEventListener("load", () => { this.single_file_src = reader.result }, false)
+    //   reader.readAsDataURL(file)
+    // },
 
     multiple_file_uploaded_handle() {
       const files = this.$refs["multiple_file_input"].files
@@ -68,7 +75,7 @@ export default {
       for (const file of files) {
         console.log(file)
         const reader = new FileReader()
-        reader.addEventListener("load", e => this.file_infos.push({file: file, img_src: e.target.result}), false) // e.target と reader は同じ
+        reader.addEventListener("load", e => this.file_infos.push({file: file, file_src: e.target.result}), false) // e.target と reader は同じ
         reader.readAsDataURL(file)
       }
     },
