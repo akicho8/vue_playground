@@ -27,6 +27,7 @@
               router-link.navbar-item(:to="{name: 'css_object_fit'}") CSS object-fit
               router-link.navbar-item(:to="{name: 'css_filter'}") CSS Filter
               router-link.navbar-item(:to="{name: 'css_transform'}") CSS Transform
+
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'arrow_cursor_navigation'}") CSS 三角ナビゲーション
               router-link.navbar-item(:to="{name: 'css_close_button_sample'}") CSS 右上配置の閉じる×ボタン
@@ -44,8 +45,10 @@
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
             .navbar-dropdown.is-boxed
+              router-link.navbar-item(:to="{name: 'babel_transform'}") 新表記のJSをES2015形式に変換
               router-link.navbar-item(:to="{name: 'textarea_test'}") テキストエリア縦幅自動調整
-              router-link.navbar-item(:to="{name: 'uploaed_file_preview_test'}") アップロード画像プレビュー (FileReader)
+              router-link.navbar-item(:to="{name: 'uploaed_file_preview'}") 単一アップロードファイルプレビュー (FileReader)
+              router-link.navbar-item(:to="{name: 'uploaed_files_preview'}") 複数アップロードファイルプレビュー (FileReader)
               router-link.navbar-item(:to="{name: 'prism_test'}") コードフォーマット (prism)
               router-link.navbar-item(:to="{name: 'lzma_package_test'}") 圧縮復元 (lzma)
               router-link.navbar-item(:to="{name: 'marked_test'}") Markdown変換 (marked)
@@ -53,23 +56,28 @@
               router-link.navbar-item(:to="{name: 'splatoon_weapon_test'}") スプラトゥーン2のブキ名を覚える
               router-link.navbar-item(:to="{name: 'lissajous'}") いろいろな曲線
               router-link.navbar-item(:to="{name: 'strange_attractor'}") ストレンジアトラクター
+
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'light_rpn'}") 逆ポーランド電卓
               router-link.navbar-item(:to="{name: 'vue_carousel_test'}") スライドショー (vue-carousel)
+
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'form_template'}") Form Template
               router-link.navbar-item(:to="{name: 'general_form_template'}") 一般向けフォームテンプレート
               router-link.navbar-item(:to="{name: 'password_form'}") パスワード入力
               router-link.navbar-item(:to="{name: 'form_zenhan'}") 全角半角変換
+
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'html5_drag_and_drop'}") ドラッグアンドドロップ (プリミティブ)
               router-link.navbar-item(:to="{name: 'vue_draggable_test'}") ドラッグアンドドロップ (Vue.draggable)
               router-link.navbar-item(:to="{name: 'html5_geolocation_api'}") 位置情報取得 (HTML5 Geolocation API)
               router-link.navbar-item(:to="{name: 'navigator_vibrate'}") 振動機能
+
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'html_audio_checker'}") HTML Audio
               router-link.navbar-item(:to="{name: 'web_audio_api_checker'}") Web Audio API
               router-link.navbar-item(:to="{name: 'web_audio_api_for_mobile'}") Web Audio API for Mobile
+
               //- hr.navbar-divider
               //- hr.navbar-divider
               //- router-link.navbar-item(to="/about") About
