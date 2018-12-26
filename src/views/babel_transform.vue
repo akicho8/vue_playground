@@ -8,19 +8,6 @@
       b-message(title="Babelのコード" type="" :closable="false")
         textarea.textarea(v-model.trim="babel_body")
 
-      template(v-if="retval !== null")
-        b-message(title="最後の戻値" type="is-success" :closable="false")
-          | {{retval}}
-
-      template(v-if="stdout !== null")
-        b-message(title="標準出力" type="is-info" :closable="false")
-          span(v-html="stdout")
-
-      template(v-if="reterr !== null")
-        b-message(title="エラー" type="is-danger" :closable="false")
-          | {{reterr}}
-
-    .column
       template(v-if="transformed_error !== null")
         b-message(title="変換失敗" type="is-danger" :closable="false")
           | {{transformed_error}}
@@ -32,20 +19,31 @@
         b-message(title="ES2015" :closable="false")
           | {{transformed_body}}
 
+    .column
+      template(v-if="retval !== null")
+        b-message(title="実行後の最後の戻値" type="is-success" :closable="false")
+          | {{retval}}
+
+      template(v-if="stdout !== null")
+        b-message(title="標準出力" type="is-info" :closable="false")
+          span(v-html="stdout")
+
+      template(v-if="reterr !== null")
+        b-message(title="実行エラー" type="is-danger" :closable="false")
+          | {{reterr}}
+
 </template>
 
 <script>
-import form_parts from "./form_parts.vue"
+import console_log_methods from "./console_log_methods.js"
 
 // https://babeljs.io/docs/en/babel-core/
 const Babel = require("babel-standalone") // import では動かない ← 違うかも
 
 export default {
   name: "babel_transform",
-  title: "新表記のJSをES2015形式に変換",
-  components: {
-    form_parts,
-  },
+  title: "JavaScript コンソール (ES2015変換)",
+  mixins: [console_log_methods],
   data() {
     return {
       babel_body: null,
@@ -53,7 +51,6 @@ export default {
       transformed_body: null,
       transformed_error: null,
       retval: null,
-      stdout: null,
     }
   },
   created() {
@@ -63,13 +60,8 @@ export default {
       s = s.replace(/^#/, "")
       this.babel_body = decodeURIComponent(s)
     } else {
-      this.babel_body = `const foo = () => "bar"`
+      this.babel_body = `const x = () => 1`
     }
-
-    this.console_log_replace()
-  },
-  destroyed() {
-    this.console_log_restore()
   },
   watch: {
     babel_body() {
@@ -80,11 +72,6 @@ export default {
 
       try {
         this.transformed_body = Babel.transform(this.babel_body, { presets: ["es2015"] }).code
-
-        //         babel.transform(code, options, function(err, result) {
-        //   result; // => { code, map, ast }
-        // });
-
       } catch (error) {
         console.log(error)
         this.transformed_error = error
@@ -99,31 +86,7 @@ export default {
       try {
         this.retval = eval(this.transformed_body)
       } catch (error) {
-        this.reterr = error
-      }
-    },
-  },
-  methods: {
-    // console.log を window.old_console_log に退避して
-    // 元の挙動で入ってきた文字列を奪う
-    console_log_replace() {
-      if (typeof window.old_console_log === 'undefined') {
-        window.old_console_log = console.log
-        const vm = this
-        console.log = function() {
-          window.old_console_log.apply(null, arguments)
-
-          let s = Array.prototype.slice.call(arguments).join(" ")
-          s = s.replace(/\n/g, "<br>")
-          vm.stdout = (vm.stdout || "") + s
-        }
-      }
-    },
-    // 書き換えた console.log を元に戻す
-    console_log_restore() {
-      if (typeof window.old_console_log !== 'undefined') {
-        console.log = window.old_console_log
-        delete window.old_console_log
+        this.reterr = inspect(error)
       }
     },
   },
@@ -133,4 +96,6 @@ export default {
 <style scoped lang="sass">
   pre
     font-family: Osaka-mono, "Osaka-等幅", "ＭＳ ゴシック", monospace !important
+    color: inherit
+    background: inherit
 </style>

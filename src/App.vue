@@ -45,7 +45,8 @@
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
             .navbar-dropdown.is-boxed
-              router-link.navbar-item(:to="{name: 'babel_transform'}") 新表記のJSをES2015形式に変換
+              router-link.navbar-item(:to="{name: 'js_console'}") JavaScript コンソール
+              router-link.navbar-item(:to="{name: 'babel_transform'}") JavaScript コンソール (ES2015変換)
               router-link.navbar-item(:to="{name: 'textarea_test'}") テキストエリア縦幅自動調整
               router-link.navbar-item(:to="{name: 'uploaed_file_preview'}") 単一アップロードファイルプレビュー (FileReader)
               router-link.navbar-item(:to="{name: 'uploaed_files_preview'}") 複数アップロードファイルプレビュー (FileReader)

@@ -74,5 +74,6 @@ export default new Router({
     { path: '/uploaed_file_preview', name: 'uploaed_file_preview', component: () => import(/* webpackChunkName: "uploaed_file_preview" */ './views/uploaed_file_preview.vue'), },
     { path: '/textarea_test',             name: 'textarea_test',             component: () => import(/* webpackChunkName: "textarea_test" */ './views/textarea_test.vue'),                         },
     { path: '/babel_transform',           name: 'babel_transform',           component: () => import(/* webpackChunkName: "babel_transform" */ './views/babel_transform.vue'),                     },
+    { path: '/js_console',           name: 'js_console',           component: () => import(/* webpackChunkName: "js_console" */ './views/js_console.vue'),                     },
   ]
 })

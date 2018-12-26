@@ -10,9 +10,9 @@
   template(v-if="rb_retval !== null")
     b-message(title="最後の戻値" type="is-success" :closable="false")
       | {{rb_retval}}
-  template(v-if="rb_stdout !== null")
+  template(v-if="stdout !== null")
     b-message(title="標準出力" type="is-info" :closable="false")
-      span(v-html="rb_stdout")
+      span(v-html="stdout")
   template(v-if="rb_error !== null")
     b-message(title="エラー" type="is-danger" :closable="false")
       | {{rb_error}}
@@ -26,10 +26,12 @@
 
 <script>
 import form_parts from "./form_parts.vue"
+import console_log_methods from "./console_log_methods.js"
 
 export default {
   name: "ruby_code_transpiler",
   title: "Ruby Code Transpiler",
+  mixins: [console_log_methods],
   components: {
     form_parts,
   },
@@ -40,7 +42,6 @@ export default {
       js_body: null,
       js_error: null,
       rb_retval: null,
-      rb_stdout: null,
     }
   },
   created() {
@@ -54,11 +55,6 @@ export default {
 p "Hello"
 [:c, :b, :c, :c, :a, :b].group_by(&:itself).transform_values(&:size).to_a`
     }
-
-    this.console_log_replace()
-  },
-  destroyed() {
-    this.console_log_restore()
   },
   watch: {
     rb_body() {
@@ -75,37 +71,13 @@ p "Hello"
 
     js_body() {
       this.rb_retval = null
-      this.rb_stdout = null
+      this.stdout = null
       this.rb_error = null
 
       try {
         this.rb_retval = eval(this.js_body)
       } catch (error) {
         this.rb_error = error
-      }
-    },
-  },
-  methods: {
-    // console.log を window.old_console_log に退避して
-    // 元の挙動で入ってきた文字列を奪う
-    console_log_replace() {
-      if (typeof window.old_console_log === 'undefined') {
-        window.old_console_log = console.log
-        const vm = this
-        console.log = function() {
-          window.old_console_log.apply(null, arguments)
-
-          let s = Array.prototype.slice.call(arguments).join(" ")
-          s = s.replace(/\n/g, "<br>")
-          vm.rb_stdout = (vm.rb_stdout || "") + s
-        }
-      }
-    },
-    // 書き換えた console.log を元に戻す
-    console_log_restore() {
-      if (typeof window.old_console_log !== 'undefined') {
-        console.log = window.old_console_log
-        delete window.old_console_log
       }
     },
   },
