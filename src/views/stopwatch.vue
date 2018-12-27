@@ -51,6 +51,9 @@
             input(type="radio" v-model="book_mode" value="with_ox")
             | 正誤
 
+      .field
+        canvas(ref="my_canvas")
+
       br
       .buttons
         template(v-if="rows.length >= 1")
@@ -147,6 +150,8 @@ import button62_mp3 from "@/assets/button62.mp3"
 import button70_mp3 from "@/assets/button70.mp3"
 
 // import my_lzma from "lzma-native"
+
+import Chart from "chart.js"
 
 export default {
   name: "stopwatch",
@@ -250,7 +255,35 @@ export default {
         this.lap_counter = 0
         this.focus_to_button()
         this.sound_play(this.sound_src(o_or_x))
+        this.canvas_update()
       }
+    },
+
+    canvas_update() {
+      new Chart(this.$refs.my_canvas, {
+        type: "line",
+        data: {
+          labels: this.quest_lables,
+          datasets: [
+            {
+              label: "秒",
+              data: this.quest_values,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          elements: {
+            line: {
+              tension: 0, // ベジェ曲線無効
+            },
+          },
+          animation: {
+            duration: 0, // 一般的なアニメーションの時間
+          },
+        },
+      })
     },
 
     sound_src(o_or_x) {
@@ -359,6 +392,10 @@ export default {
     rows()              { this.save_process() },
   },
 
+  mounted() {
+    this.canvas_update()
+  },
+
   computed: {
     new_record() {
       return {
@@ -398,6 +435,14 @@ export default {
       return _.sumBy(this.rows, e => e.lap_counter)
     },
 
+    quest_lables() {
+      return this.rows.map(e => this.quest_name(e))
+    },
+
+    quest_values() {
+      return this.rows.map(e => e.lap_counter)
+    },
+
     quest_range() {
       if (this.rows.length >= 1) {
         if (this.quest_list.length === 0) {
@@ -428,10 +473,11 @@ export default {
     human_avg() {
       if (this.rows.length >= 1) {
         let v = null
-        if (this.avg >= 60) {
-          v = this.ja_time_format(this.avg)
+        if (this.avg < 60) {
+          v = Math.floor(this.avg * 100) / 100
+          v = `${v}秒`
         } else {
-          v = dayjs().startOf("year").set("seconds", this.avg).format("s秒")
+          v = dayjs().startOf("year").set("seconds", this.avg).format("m分s秒")
         }
         return `平均${v}`
       }

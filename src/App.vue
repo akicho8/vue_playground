@@ -43,8 +43,19 @@
               router-link.navbar-item(:to="{name: 'google_place_api'}") お店検索 (Google Place API)
 
           .navbar-item.has-dropdown.is-hoverable
+            span.navbar-link メディア再生
+            .navbar-dropdown.is-boxed
+              router-link.navbar-item(:to="{name: 'html_audio_checker'}") HTML Audio
+              router-link.navbar-item(:to="{name: 'web_audio_api_checker'}") Web Audio API
+              router-link.navbar-item(:to="{name: 'web_audio_api_for_mobile'}") Web Audio API for Mobile
+              hr.navbar-divider
+              router-link.navbar-item(:to="{name: 'howler_simple_test'}") Howlerを使ったサウンド再生テスト
+              router-link.navbar-item(:to="{name: 'howler_play_format_test'}") 各種フォーマットのサウンド再生テスト (Howler)
+
+          .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
             .navbar-dropdown.is-boxed
+              router-link.navbar-item(:to="{name: 'chartjs_test'}") グラフ描画 (chart.js)
               router-link.navbar-item(:to="{name: 'js_console'}") JavaScript コンソール
               router-link.navbar-item(:to="{name: 'babel_transform'}") JavaScript コンソール (ES2015変換)
               router-link.navbar-item(:to="{name: 'textarea_test'}") テキストエリア縦幅自動調整
@@ -73,11 +84,6 @@
               router-link.navbar-item(:to="{name: 'vue_draggable_test'}") ドラッグアンドドロップ (Vue.draggable)
               router-link.navbar-item(:to="{name: 'html5_geolocation_api'}") 位置情報取得 (HTML5 Geolocation API)
               router-link.navbar-item(:to="{name: 'navigator_vibrate'}") 振動機能
-
-              hr.navbar-divider
-              router-link.navbar-item(:to="{name: 'html_audio_checker'}") HTML Audio
-              router-link.navbar-item(:to="{name: 'web_audio_api_checker'}") Web Audio API
-              router-link.navbar-item(:to="{name: 'web_audio_api_for_mobile'}") Web Audio API for Mobile
 
               //- hr.navbar-divider
               //- hr.navbar-divider
