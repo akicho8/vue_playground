@@ -16,20 +16,20 @@
 
         .buttons
           template(v-if="mode === 'standby'")
-            button.button.is-primary.is-large(@click="start_run") 開始
+            button.button.is-primary(@click="start_run") 開始
           template(v-else)
-            button.button.is-danger.is-large(@click="stop_run") REC
+            button.button.is-danger(@click="stop_run") REC
 
           template(v-if="mode === 'playing'")
             template(v-if="book_mode === 'time_only'")
-              button.button.is-primary.is-large(@click="lap_handle('o')" ref="lap_ref") ラップ
+              button.button.is-primary(@click="lap_handle('o')" ref="lap_ref") ラップ
             template(v-else)
               .ox_buttons
-                button.button.is-success.is-outlined.is-large.ox_button(@click="lap_handle('o')" ref="o_button_ref") ○
-                button.button.is-success.is-outlined.is-large.ox_button(@click="lap_handle('x')") ×
+                button.button.is-success.is-outlined.ox_button(@click="lap_handle('o')" ref="o_button_ref") ○
+                button.button.is-success.is-outlined.ox_button(@click="lap_handle('x')") ×
           template(v-else)
             template(v-if="total_counter >= 1")
-              button.button.is-large(@click="reset" key="reset_key") リセット
+              button.button(@click="reset" key="reset_key") リセット
 
       .field
         label.label 開始番号
@@ -37,7 +37,7 @@
           input.input(type="number" v-model.number="current_track")
 
       .field
-        label.label 番号置換
+        //- label.label 番号置換
         .control
           textarea.textarea(v-model.trim="quest_list_str" rows="1" placeholder="スペース区切りで記述すると番号を置き換える")
 
@@ -63,6 +63,7 @@
         h6 ショートカット
         ul
           li p or k --- 開始/停止
+          li o --- 「○」ボタン
           li x --- 「×」ボタン
 
       br
@@ -143,6 +144,7 @@
 
 <script>
 import dayjs from "dayjs"
+import { Howl, Howler } from 'howler'
 
 import button46_mp3 from "@/assets/button46.mp3"
 import button23_mp3 from "@/assets/button23.mp3"
@@ -182,6 +184,9 @@ export default {
     document.addEventListener("keypress", e => {
       if (e.key === "x") {
         this.lap_handle('x')
+      }
+      if (e.key === "o") {
+        this.lap_handle('o')
       }
       if (e.key === "p" || e.key === "k") {
         this.pause()
@@ -309,8 +314,12 @@ export default {
     },
 
     sound_play(src) {
-      const audio = new Audio(src)
-      audio.play()
+      if (false) {
+        const audio = new Audio(src)
+        audio.play()
+      } else {
+        new Howl({src: src, autoplay: true, volume: 1.0})
+      }
     },
 
     clear_interval_safe() {
