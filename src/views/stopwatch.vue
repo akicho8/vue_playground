@@ -29,7 +29,7 @@
                 button.button.is-success.is-outlined.ox_button(@click="lap_handle('x')") ×
           template(v-else)
             template(v-if="total_counter >= 1")
-              button.button(@click="reset" key="reset_key") リセット
+              button.button(@click="reset_handle" key="reset_key") リセット
 
       .field
         label.label 開始番号
@@ -229,7 +229,7 @@ export default {
       this.clear_interval_safe()
     },
 
-    reset() {
+    reset_handle() {
       this.rows = []
       this.total_counter = 0
       this.lap_counter = 0
@@ -260,7 +260,6 @@ export default {
         this.lap_counter = 0
         this.focus_to_button()
         this.sound_play(this.sound_src(o_or_x))
-        this.canvas_update()
       }
     },
 
@@ -389,6 +388,8 @@ export default {
       location.hash = encodeURIComponent(json_str)
 
       localStorage.setItem("stopwatch", json_str)
+
+      this.canvas_update()
     },
   },
 

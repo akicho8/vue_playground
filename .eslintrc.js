@@ -12,6 +12,7 @@ module.exports = {
     'no-console': 'off',
     'no-debugger': 'off',
     'no-constant-condition': 'off',
+    'no-unused-vars': 'off',
   },
   globals: {
     inspect: true,

@@ -90,6 +90,16 @@ export default {
       web_audio_context: null,
       source: null,
       state: null,
+
+      EventInfo3: [
+        { key: "statechange",        name: "",     description: "", func: (e) => { this.state = e.target.state }}, // or this.web_audio_context.state
+        { key: "complete",           name: "",     description: "", },
+        { key: "ended",              name: "",     description: "", },
+        { key: "message",            name: "",     description: "", },
+        { key: "loaded",             name: "",     description: "", },
+        { key: "audioprocess",       name: "",     description: "", },
+        { key: "nodecreate        ", name: "",     description: "", },
+      ].reduce((a, e, i) => ({...a, [e.key]: {code: i, ...e}}), {})
     }
   },
 
@@ -243,18 +253,6 @@ export default {
     EventInfo2() {
       return [
         { key: "ended",              name: "完了", description: "?", },
-      ].reduce((a, e, i) => ({...a, [e.key]: {code: i, ...e}}), {})
-    },
-
-    EventInfo3() {
-      return [
-        { key: "statechange",        name: "",     description: "", func: (e) => { this.state = e.target.state }}, // or this.web_audio_context.state
-        { key: "complete",           name: "",     description: "", },
-        { key: "ended",              name: "",     description: "", },
-        { key: "message",            name: "",     description: "", },
-        { key: "loaded",             name: "",     description: "", },
-        { key: "audioprocess",       name: "",     description: "", },
-        { key: "nodecreate        ", name: "",     description: "", },
       ].reduce((a, e, i) => ({...a, [e.key]: {code: i, ...e}}), {})
     },
 
