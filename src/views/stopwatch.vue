@@ -12,7 +12,7 @@
           | {{time_format(lap_counter)}}
           |
           span.is-size-4.has-text-grey-light
-            | {{time_format(total_counter)}}
+            | {{time_format(total_seconds2)}}
 
         .buttons
           template(v-if="mode === 'standby'")
@@ -28,7 +28,7 @@
                 button.button.is-success.is-outlined.ox_button(@click="lap_handle('o')" ref="o_button_ref") ○
                 button.button.is-success.is-outlined.ox_button(@click="lap_handle('x')") ×
           template(v-else)
-            template(v-if="total_counter >= 1")
+            template(v-if="total_seconds2 >= 1")
               button.button(@click="reset_handle" key="reset_key") リセット
 
       .field
@@ -161,7 +161,7 @@ export default {
   data() {
     return {
       current_track: null,
-      total_counter: null,
+      // total_counter: null,
       lap_counter: null,
       rows: null,
       quest_list_str: null,
@@ -231,7 +231,7 @@ export default {
 
     reset_handle() {
       this.rows = []
-      this.total_counter = 0
+      // this.total_counter = 0
       this.lap_counter = 0
     },
 
@@ -306,7 +306,7 @@ export default {
 
         this.current_track -= 1
         this.lap_counter = 0
-        this.total_counter -= record.lap_counter
+        // this.total_counter -= record.lap_counter
         this.focus_to_button()
         this.sound_play(button46_mp3)
       }
@@ -329,7 +329,7 @@ export default {
     },
 
     step_next() {
-      this.total_counter += 1
+      // this.total_counter += 1
       this.lap_counter += 1
     },
 
@@ -374,7 +374,7 @@ export default {
 
     restore_data(value) {
       this.current_track  = value.current_track || 1
-      this.total_counter  = value.total_counter || 0
+      // this.total_counter  = value.total_counter || 0
       this.lap_counter    = value.lap_counter || 0
       this.rows           = value.rows || []
       this.quest_list_str = value.quest_list_str || ""
@@ -395,7 +395,7 @@ export default {
 
   watch: {
     current_track()     { this.save_process() },
-    total_counter()     { this.save_process() },
+    // total_counter()     { this.save_process() },
     lap_counter()       { this.save_process() },
     quest_list_str()    { this.save_process() },
     book_mode()         { this.save_process() },
@@ -443,6 +443,10 @@ export default {
 
     total_seconds() {
       return _.sumBy(this.rows, e => e.lap_counter)
+    },
+
+    total_seconds2() {
+      return this.total_seconds + this.lap_counter
     },
 
     quest_lables() {
@@ -496,7 +500,7 @@ export default {
     save_data() {
       return {
         current_track:  this.current_track,
-        total_counter:  this.total_counter,
+        // total_counter:  this.total_counter,
         lap_counter:    this.lap_counter,
         rows:           this.rows,
         quest_list_str: this.quest_list_str,
