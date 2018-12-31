@@ -31,10 +31,11 @@
             template(v-if="total_seconds2 >= 1")
               button.button(@click="reset_handle" key="reset_key") リセット
 
-      .field
-        label.label 開始番号
-        .control
-          input.input(type="number" v-model.number="current_track")
+      template(v-if="quest_list.length === 0")
+        .field
+          label.label 開始番号
+          .control
+            input.input(type="number" v-model.number="current_track")
 
       .field
         //- label.label 番号置換
@@ -74,6 +75,9 @@
     .column
       article.message.is-primary.is-size-7
         .message-body
+          template(v-if="quest_list.length >= 1")
+            div
+              | 全{{quest_list.length}}問
           template(v-if="rows.length >= 1")
             div
               | {{quest_range}}
