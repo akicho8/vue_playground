@@ -75,16 +75,15 @@
     .column
       article.message.is-primary.is-size-7
         .message-body
-          template(v-if="quest_list.length >= 1")
-            div
-              | 全{{quest_list.length}}問
-          template(v-if="rows.length >= 1")
-            div
-              | {{quest_range}}
-              | 計{{rows.length}}問
-              | {{human_rate}}
-              | {{ja_time_format(total_seconds)}}
-              | {{human_avg}}
+          div
+            | {{quest_range}}
+            | 計{{rows.length}}問
+            template(v-if="quest_list.length >= 1")
+              | /全{{quest_list.length}}問
+            |
+            | {{human_rate}}
+            | {{ja_time_format(total_seconds)}}
+            | {{human_avg}}
 
           template(v-for="(rows, key) in o_group_by_min")
             br
@@ -103,6 +102,9 @@
               template(v-for="row in ox_group['x']")
                 | {{quest_name(row)}}
                 |
+
+      template(v-if="quest_list.length >= 1")
+        progress(:value="progress_value")
 
     .column
       article.message.is-primary.is-size-7.compact
@@ -340,9 +342,8 @@ export default {
     quest_name(row) {
       if (this.quest_list.length >= 1) {
         return this.quest_list[row.index] || "?"
-      } else {
-        return row.track
       }
+      return row.track
     },
 
     human_minute(key) {
@@ -511,6 +512,12 @@ export default {
         book_mode:      this.book_mode,
       }
     },
+
+    progress_value() {
+      if (this.quest_list.length >= 1) {
+        return this.rows.length / this.quest_list.length
+      }
+    },
   },
 }
 </script>
@@ -524,4 +531,6 @@ export default {
     margin-left: 0.7rem
   article
     font-family: Osaka-mono, "Osaka-等幅", "ＭＳ ゴシック", monospace
+  progress
+    width: 100%
 </style>
