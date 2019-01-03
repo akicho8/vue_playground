@@ -1,5 +1,5 @@
 <template lang="pug">
-.splatoon_weapon_test
+.splatoon_weapon_test2
   .h2.title {{$options.title}}
   hr
 
@@ -9,6 +9,19 @@
         img.buki(:src="require(`@/assets/splatoon_weapon_list/${current_data.key}_xlarge.png`)")
 
     .column
+      .field
+        template(v-for="e in buki_names")
+          b-radio(size="is-small" v-model="current_buki_name" :native-value="e")
+            span(v-text="e")
+      .field
+        template(v-for="e in sub_names")
+          b-radio(size="is-small" v-model="current_sub_name" :native-value="e")
+            span(v-text="e")
+      .field
+        template(v-for="e in sp_names")
+          b-radio(size="is-small" v-model="current_sp_name" :native-value="e")
+            span(v-text="e")
+
       template(v-if="current_data")
         .buttons
           button.button.is-large(@click="count_add('o_count')") ○
@@ -28,7 +41,7 @@
 
     //- .column
     //-   .box
-    //-     b-table(:data="splatoon_list" :hoverable="true" :columns="table_columns" narrowed)
+    //-     b-table(:data="mondai_list" :hoverable="true" :columns="table_columns" narrowed)
 
 </template>
 
@@ -36,10 +49,16 @@
 import splatoon_weapon_list from "./splatoon_weapon_list.js"
 
 export default {
-  name: "splatoon_weapon_test",
+  name: "splatoon_weapon_test2",
   title: "スプラトゥーン2ブキクイズ",
   data() {
     return {
+      splatoon_weapon_list,
+      limit: 2,
+      current_buki_name: null,
+      current_sub_name: null,
+      current_sp_name: null,
+
       current_index: 0,
       o_count: 0,
       x_count: 0,
@@ -62,12 +81,28 @@ export default {
       ]
     },
 
-    splatoon_list() {
-      return _.shuffle(splatoon_weapon_list)
+    mondai_list() {
+      return _.take(_.shuffle(this.splatoon_weapon_list), this.limit)
+    },
+
+    // all_buki_names() {
+    //   return _.uniq(this.splatoon_weapon_list.map(e => e.name))
+    // },
+
+    buki_names() {
+      return _.uniq(this.mondai_list.map(e => e.name))
+    },
+
+    sub_names() {
+      return _.uniq(this.splatoon_weapon_list.map(e => e.sub_name))
+    },
+
+    sp_names() {
+      return _.uniq(this.splatoon_weapon_list.map(e => e.sp_name))
     },
 
     current_data() {
-      return this.splatoon_list[this.current_index]
+      return this.mondai_list[this.current_index]
     },
   },
 }
@@ -76,7 +111,7 @@ export default {
 <style scoped lang="sass">
 @import "../assets/scss/variables"
 
-.splatoon_weapon_test
+.splatoon_weapon_test2
   .buki
     width: 100%
   .button
