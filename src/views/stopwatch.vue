@@ -59,6 +59,7 @@
       .buttons
         template(v-if="rows.length >= 1")
           a.button.is-small(@click.prevent="revert") 1つ前に戻す
+        a.button.is-small(@click.prevent="rap_reset") 直近ラップのみリセット
 
       .box.content.has-text-grey.is-size-7
         h6 ショートカット
@@ -301,7 +302,7 @@ export default {
       if (o_or_x === "o") {
         sound_src = button46_mp3
       } else {
-        sound_src = button23_mp3
+        sound_src = button62_mp3
       }
       return sound_src
     },
@@ -316,6 +317,11 @@ export default {
         this.focus_to_button()
         this.sound_play(button46_mp3)
       }
+    },
+
+    rap_reset() {
+      this.lap_counter = 0
+      this.focus_to_button()
     },
 
     sound_play(src) {
