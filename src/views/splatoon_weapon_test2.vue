@@ -4,44 +4,32 @@
   hr
 
   .columns
-    .column
+    .column.is-one-third
       template(v-if="current_data")
         img.buki(:src="require(`@/assets/splatoon_weapon_list/${current_data.key}_xlarge.png`)")
+        progress(:value="progress_value")
+      .contnent
+        .is-size-3
+          | 正解:{{o_count}}
+          | 誤答:{{x_count}}
+          |
+          v-template(v-if="current_index >= 1")
+            | 正解率:{{Math.floor(this.o_count / (this.o_count + this.x_count) * 100)}}%
 
     .column
-      .field
-        template(v-for="e in buki_names")
-          b-radio(size="is-small" v-model="current_buki_name" :native-value="e")
-            span(v-text="e")
-      .field
-        template(v-for="e in sub_names")
-          b-radio(size="is-small" v-model="current_sub_name" :native-value="e")
-            span(v-text="e")
-      .field
-        template(v-for="e in sp_names")
-          b-radio(size="is-small" v-model="current_sp_name" :native-value="e")
-            span(v-text="e")
-
       template(v-if="current_data")
-        .buttons
-          button.button.is-large(@click="count_add('o_count')") ○
-          button.button.is-large(@click="count_add('x_count')") ×
-
-      .contnent
-        p 正解: {{o_count}}
-        p 誤答: {{x_count}}
-
-      template(v-if="current_data")
-        br
-        .box
-          .has-text-grey-lighter.is-size-7
-            div {{current_data.name}}
-            div {{current_data.sub_name}}
-            div {{current_data.sp_name}}
-
-    //- .column
-    //-   .box
-    //-     b-table(:data="mondai_list" :hoverable="true" :columns="table_columns" narrowed)
+        .field.box
+          template(v-for="e in weapon_names")
+            b-radio(size="is-small" v-model="current_name" :native-value="e")
+              span(v-text="e")
+        .field.box
+          template(v-for="e in sub_names")
+            b-radio(size="is-small" v-model="current_sub_name" :native-value="e")
+              span(v-text="e")
+        .field.box
+          template(v-for="e in sp_names")
+            b-radio(size="is-small" v-model="current_sp_name" :native-value="e")
+              span(v-text="e")
 
 </template>
 
@@ -54,8 +42,8 @@ export default {
   data() {
     return {
       splatoon_weapon_list,
-      limit: 2,
-      current_buki_name: null,
+      limit: 10,
+      current_name: null,
       current_sub_name: null,
       current_sp_name: null,
 
@@ -69,40 +57,56 @@ export default {
     count_add(v) {
       this.$data[v] = this.$data[v] + 1
       this.current_index += 1
+
+      this.$nextTick(() => {
+        this.current_name     = null
+        this.current_sub_name = null
+        this.current_sp_name  = null
+      })
+    },
+
+    anser_valid() {
+      if (this.current_name && this.current_sub_name && this.current_sp_name) {
+        if (this.current_data.name === this.current_name &&
+            this.current_data.sub_name === this.current_sub_name &&
+            this.current_data.sp_name === this.current_sp_name) {
+          this.count_add("o_count")
+        } else {
+          this.count_add("x_count")
+        }
+      }
     },
   },
 
-  computed: {
-    table_columns() {
-      return [
-        { field: 'name',     label: '名前',       sortable: true, },
-        { field: 'sub_name', label: 'サブ',       sortable: true, },
-        { field: 'sp_name',  label: 'スペシャル', sortable: true, },
-      ]
-    },
+  watch: {
+    current_name()     { this.anser_valid() },
+    current_sub_name() { this.anser_valid() },
+    current_sp_name()  { this.anser_valid() },
+  },
 
-    mondai_list() {
+  computed: {
+    quiz_list() {
       return _.take(_.shuffle(this.splatoon_weapon_list), this.limit)
     },
 
-    // all_buki_names() {
-    //   return _.uniq(this.splatoon_weapon_list.map(e => e.name))
-    // },
-
-    buki_names() {
-      return _.uniq(this.mondai_list.map(e => e.name))
+    weapon_names() {
+      return _.sortBy(_.uniq(this.quiz_list.map(e => e.name)))
     },
 
     sub_names() {
-      return _.uniq(this.splatoon_weapon_list.map(e => e.sub_name))
+      return _.sortBy(_.uniq(this.splatoon_weapon_list.map(e => e.sub_name)))
     },
 
     sp_names() {
-      return _.uniq(this.splatoon_weapon_list.map(e => e.sp_name))
+      return _.sortBy(_.uniq(this.splatoon_weapon_list.map(e => e.sp_name)))
     },
 
     current_data() {
-      return this.mondai_list[this.current_index]
+      return this.quiz_list[this.current_index]
+    },
+
+    progress_value() {
+      return this.current_index / this.quiz_list.length
     },
   },
 }
@@ -116,4 +120,6 @@ export default {
     width: 100%
   .button
     width: 4em
+  progress
+    width: 100%
 </style>
