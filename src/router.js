@@ -65,7 +65,7 @@ export default new Router({
     { path: '/css_close_button_sample',   name: 'css_close_button_sample',   component: () => import(/* webpackChunkName: "css_close_button_sample" */ './views/css_close_button_sample.vue'),     },
     { path: '/css_balloon_sample',        name: 'css_balloon_sample',        component: () => import(/* webpackChunkName: "css_balloon_sample" */ './views/css_balloon_sample.vue'),               },
     { path: '/quill_test',                name: 'quill_test',                component: () => import(/* webpackChunkName: "quill_test" */ './views/quill_test.vue'),                               },
-    { path: '/splatoon_weapon_test',      name: 'splatoon_weapon_test',      component: () => import(/* webpackChunkName: "splatoon_weapon_test" */ './views/splatoon_weapon_test.vue'),           },
+    { path: '/splatoon_weapon_quiz1',      name: 'splatoon_weapon_quiz1',      component: () => import(/* webpackChunkName: "splatoon_weapon_quiz1" */ './views/splatoon_weapon_quiz1.vue'),           },
     { path: '/abcjs_test',                name: 'abcjs_test',                component: () => import(/* webpackChunkName: "abcjs_test" */ './views/abcjs_test.vue'),                               },
     { path: '/marked_test',               name: 'marked_test',               component: () => import(/* webpackChunkName: "marked_test" */ './views/marked_test.vue'),                             },
     { path: '/lzma_package_test',         name: 'lzma_package_test',         component: () => import(/* webpackChunkName: "lzma_package_test" */ './views/lzma_package_test.vue'),                 },
@@ -78,6 +78,6 @@ export default new Router({
     { path: '/chartjs_test',           name: 'chartjs_test',           component: () => import(/* webpackChunkName: "chartjs_test" */ './views/chartjs_test.vue'),                     },
     { path: '/howler_simple_test',           name: 'howler_simple_test',           component: () => import(/* webpackChunkName: "howler_simple_test" */ './views/howler_simple_test.vue'),                     },
     { path: '/howler_play_format_test',           name: 'howler_play_format_test',           component: () => import(/* webpackChunkName: "howler_play_format_test" */ './views/howler_play_format_test.vue'),                     },
-    { path: '/splatoon_weapon_test2',           name: 'splatoon_weapon_test2',           component: () => import(/* webpackChunkName: "splatoon_weapon_test2" */ './views/splatoon_weapon_test2.vue'),                     },
+    { path: '/splatoon_weapon_quiz2',           name: 'splatoon_weapon_quiz2',           component: () => import(/* webpackChunkName: "splatoon_weapon_quiz2" */ './views/splatoon_weapon_quiz2.vue'),                     },
   ]
 })

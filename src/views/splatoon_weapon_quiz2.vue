@@ -1,5 +1,5 @@
 <template lang="pug">
-.splatoon_weapon_test2
+.splatoon_weapon_quiz2
   .h2.title {{$options.title}}
   hr
 
@@ -8,15 +8,17 @@
       template(v-if="current_data")
         img.buki(:src="require(`@/assets/splatoon_weapon_list/${current_data.key}_xlarge.png`)")
         progress(:value="progress_value")
+        | {{current_index + 1}} / {{limit}}
+
       .contnent
-        .is-size-3
+        .is-size-4
           | 正解:{{o_count}}
           | 誤答:{{x_count}}
           |
           v-template(v-if="current_index >= 1")
             | 正解率:{{Math.floor(this.o_count / (this.o_count + this.x_count) * 100)}}%
 
-    .column
+    .column.is-size-7
       template(v-if="current_data")
         .field.box
           template(v-for="e in weapon_names")
@@ -35,9 +37,12 @@
 
 <script>
 import splatoon_weapon_list from "./splatoon_weapon_list.js"
+import button26_mp3 from "@/assets/button26.mp3"
+import button62_mp3 from "@/assets/button62.mp3"
+import { Howl, Howler } from 'howler'
 
 export default {
-  name: "splatoon_weapon_test2",
+  name: "splatoon_weapon_quiz2",
   title: "スプラトゥーン2ブキクイズ",
   data() {
     return {
@@ -55,6 +60,14 @@ export default {
 
   methods: {
     count_add(v) {
+      let src = null
+      if (v === "o_count") {
+        src = button26_mp3
+      } else {
+        src = button62_mp3
+      }
+      new Howl({src: src, autoplay: true, volume: 1.0})
+
       this.$data[v] = this.$data[v] + 1
       this.current_index += 1
 
@@ -115,7 +128,7 @@ export default {
 <style scoped lang="sass">
 @import "../assets/scss/variables"
 
-.splatoon_weapon_test2
+.splatoon_weapon_quiz2
   .buki
     width: 100%
   .button

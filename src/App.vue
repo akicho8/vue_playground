@@ -65,8 +65,8 @@
               router-link.navbar-item(:to="{name: 'lzma_package_test'}") 圧縮復元 (lzma)
               router-link.navbar-item(:to="{name: 'marked_test'}") Markdown変換 (marked)
               router-link.navbar-item(:to="{name: 'abcjs_test'}") 楽譜入力 (abcjs)
-              router-link.navbar-item(:to="{name: 'splatoon_weapon_test'}") スプラトゥーン2ブキクイズ
-              router-link.navbar-item(:to="{name: 'splatoon_weapon_test2'}") スプラトゥーン2ブキクイズ2
+              router-link.navbar-item(:to="{name: 'splatoon_weapon_quiz1'}") スプラトゥーン2ブキクイズ
+              router-link.navbar-item(:to="{name: 'splatoon_weapon_quiz2'}") スプラトゥーン2ブキクイズ2
               router-link.navbar-item(:to="{name: 'lissajous'}") いろいろな曲線
               router-link.navbar-item(:to="{name: 'strange_attractor'}") ストレンジアトラクター
 

@@ -1,5 +1,5 @@
 <template lang="pug">
-.splatoon_weapon_test
+.splatoon_weapon_quiz1
   .h2.title {{$options.title}}
   hr
 
@@ -36,7 +36,7 @@
 import splatoon_weapon_list from "./splatoon_weapon_list.js"
 
 export default {
-  name: "splatoon_weapon_test",
+  name: "splatoon_weapon_quiz1",
   title: "スプラトゥーン2ブキクイズ",
   data() {
     return {
@@ -76,7 +76,7 @@ export default {
 <style scoped lang="sass">
 @import "../assets/scss/variables"
 
-.splatoon_weapon_test
+.splatoon_weapon_quiz1
   .buki
     width: 100%
   .button
