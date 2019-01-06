@@ -8,15 +8,19 @@
       template(v-if="current_data")
         img.buki(:src="require(`@/assets/splatoon_weapon_list/${current_data.key}_xlarge.png`)")
         progress(:value="progress_value")
-        | {{current_index + 1}} / {{limit}}
+        | {{current_index}} / {{limit}}
 
       .contnent
         .is-size-4
           | 正解:{{o_count}}
+          |
           | 誤答:{{x_count}}
           |
-          v-template(v-if="current_index >= 1")
-            | 正解率:{{Math.floor(this.o_count / (this.o_count + this.x_count) * 100)}}%
+          | 正解率:{{rate}}
+
+      template(v-if="!current_data")
+        .buttons
+          a.button.is-info.is-small(:href="twitter_url" target="_blank") ツイート
 
     .column.is-size-7
       template(v-if="current_data")
@@ -47,7 +51,7 @@ export default {
   data() {
     return {
       splatoon_weapon_list,
-      limit: 10,
+      limit: 2,
       current_name: null,
       current_sub_name: null,
       current_sp_name: null,
@@ -120,6 +124,23 @@ export default {
 
     progress_value() {
       return this.current_index / this.quiz_list.length
+    },
+
+    rate() {
+      const all = this.o_count + this.x_count
+      if (all >= 1) {
+        return Math.floor(this.o_count / all * 100) + "%"
+      } else {
+        return "0%"
+      }
+    },
+
+    twitter_url() {
+      return `https://twitter.com/intent/tweet?text=${encodeURIComponent(this.tweet_body)}`
+    },
+
+    tweet_body() {
+      return `${this.$options.title} 正解率:${this.rate}`
     },
   },
 }
