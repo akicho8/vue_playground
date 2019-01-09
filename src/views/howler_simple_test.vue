@@ -20,11 +20,20 @@ export default {
   title: "Howlerを使ったサウンド再生テスト",
   data() {
     return {
+      howl_object: null,
     }
   },
   methods: {
     run_case1() {
-      new Howl({
+      // 全体をシングルトンにしたいとき
+      // Howler.unload()
+
+      // 個別にシングルトンにする方法
+      // if (this.howl_object) {
+      //   this.howl_object.stop()
+      // }
+
+      this.howl_object = new Howl({
         src: require("@/assets/music_files/music1.mp3"),
         autoplay: true,
         volume: 0.5,

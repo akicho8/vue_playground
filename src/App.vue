@@ -67,6 +67,7 @@
               router-link.navbar-item(:to="{name: 'abcjs_test'}") 楽譜入力 (abcjs)
               router-link.navbar-item(:to="{name: 'splatoon_weapon_quiz1'}") スプラトゥーン2ブキクイズ
               router-link.navbar-item(:to="{name: 'splatoon_weapon_quiz2'}") スプラトゥーン2ブキクイズ2
+              router-link.navbar-item(:to="{name: 'jplist_test'}") JplistTest
               router-link.navbar-item(:to="{name: 'lissajous'}") いろいろな曲線
               router-link.navbar-item(:to="{name: 'strange_attractor'}") ストレンジアトラクター
 

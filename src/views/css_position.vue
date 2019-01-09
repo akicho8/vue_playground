@@ -189,8 +189,8 @@ export default {
 
   methods: {
     mode_reset() {
-      this.div0_position = null
-      this.div1_position = null
+      this.div0_position = "static"
+      this.div1_position = "static"
     },
 
     mode_absolute() {

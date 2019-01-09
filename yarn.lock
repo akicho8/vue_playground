@@ -6889,6 +6889,11 @@ joi@^13.0.0:
     isemail "3.x.x"
     topo "3.x.x"
 
+jplist-es6@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/jplist-es6/-/jplist-es6-1.2.0.tgz#f289b7524168e2a056b3b993cb94d92b2dc1ac8b"
+  integrity sha512-BPeJ3ary9AsVIxjFzmTVzVO6GEnsDa1qNnNIS0nbwK2hM6ZQS+ho1CuvWho4eUJNHfm9WjRnD0Kc3P6Yu6T7Hg==
+
 js-base64@^2.1.8:
   version "2.4.9"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.9.tgz#748911fb04f48a60c4771b375cac45a80df11c03"

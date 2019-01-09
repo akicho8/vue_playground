@@ -19,6 +19,7 @@ module.exports = {
     _: true,
     Opal: true,
     google: true,
+    jplist: true,
   },
   parserOptions: {
     parser: 'babel-eslint'
