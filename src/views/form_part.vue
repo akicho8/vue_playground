@@ -68,7 +68,7 @@
           input.input.is-small(type="number" v-model.number="inside_value" :min="form_part.params.min" :max="form_part.params.max" :step="form_part.params.step" :disabled="disabled(form_part)")
 
         template(v-if="form_part.type === 'text'")
-          textarea.textarea.is-small(v-model.trim="inside_value" :disabled="disabled(form_part)")
+          textarea.textarea.is-small(v-model.trim="inside_value" :disabled="disabled(form_part)" :rows="form_part.params.rows || 4")
 
 </template>
 

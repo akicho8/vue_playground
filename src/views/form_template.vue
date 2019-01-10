@@ -47,7 +47,7 @@ import form_parts from "./form_parts.vue"
 
 export default {
   name: "form_template",
-  title: "Form Template",
+  title: "FormTemplate",
   components: {
     form_parts,
   },

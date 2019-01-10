@@ -26,6 +26,7 @@
     "object-inspect": "^1.6.0",
     "prismjs": "^1.15.0",
     "register-service-worker": "^1.0.0",
+    "sass": "^1.15.3",
     "vue": "^2.5.17",
     "vue-carousel": "^0.16.0-rc2",
     "vue-quill-editor": "^3.0.6",

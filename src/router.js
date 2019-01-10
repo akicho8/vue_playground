@@ -80,5 +80,8 @@ export default new Router({
     { path: '/howler_play_format_test',           name: 'howler_play_format_test',           component: () => import(/* webpackChunkName: "howler_play_format_test" */ './views/howler_play_format_test.vue'),                     },
     { path: '/splatoon_weapon_quiz2',           name: 'splatoon_weapon_quiz2',           component: () => import(/* webpackChunkName: "splatoon_weapon_quiz2" */ './views/splatoon_weapon_quiz2.vue'),                     },
     { path: '/jplist_test',           name: 'jplist_test',           component: () => import(/* webpackChunkName: "jplist_test" */ './views/jplist_test.vue'),                     },
+    { path: '/clipboard_copy_test',           name: 'clipboard_copy_test',           component: () => import(/* webpackChunkName: "clipboard_copy_test" */ './views/clipboard_copy_test.vue'),                     },
+    { path: '/sass_test',           name: 'sass_test',           component: () => import(/* webpackChunkName: "sass_test" */ './views/sass_test.vue'),                     },
+    { path: '/text_overflow_ellipsis_test',           name: 'text_overflow_ellipsis_test',           component: () => import(/* webpackChunkName: "text_overflow_ellipsis_test" */ './views/text_overflow_ellipsis_test.vue'),                     },
   ]
 })

@@ -261,12 +261,16 @@ export default {
 
   methods: {
     item_class(i) {
-      const list = [
-        `size${(i - 1) % 3}`,
-      ]
+      const list = []
+
+      list.push(`item${i}`)
+
+      list.push(`size${(i - 1) % 3}`)
+
       if (this.active_item === i) {
         list.push("has-background-primary")
       }
+
       return list
     },
 
@@ -415,4 +419,19 @@ export default {
 
   .default
     font-weight: bold
+
+  // 実験
+  // .item1
+  //   width: 80px
+  // .item2
+  //   width: 30px
+  // .item3
+  //   width: 20px
+  //
+  // .item:nth-child(1)
+  //     flex-basis: 33.3%
+  // .item:nth-child(2)
+  // .item:nth-child(3)
+  //     flex-basis: 33.3%
+
 </style>

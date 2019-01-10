@@ -11,31 +11,22 @@
     data-order="asc"
     data-type="text")
 
-  div
-    input.input(
-      data-jplist-control="textbox-filter"
-      data-group="group1"
-      data-name="my-filter-1"
-      data-path=".name"
-      type="text"
-      value=""
-      data-clear-btn-id="name-clear-btn"
-      placeholder="Filter by Name")
+  input(
+    data-jplist-control="textbox-filter"
+    data-group="group1"
+    data-name="my-filter-1"
+    data-path=".name"
+    type="text"
+    value=""
+    data-clear-btn-id="name-clear-btn"
+    placeholder="Filter by Name")
 
-    button.button(type="button" id="name-clear-btn") Clear
+  button(type="button" id="name-clear-btn") Clear
 
-  table.table(data-jplist-group="group1")
-    thead
-      tr
-        th 名前
-        th サブ
-        th スペ
-    tbody
-      template(v-for="(row, i) in splatoon_weapon_list")
-        tr(data-jplist-item)
-          td.name {{row.name}}
-          td {{row.sub_name}}
-          td {{row.sp_name}}
+  div(data-jplist-group="group1")
+    template(v-for="(row, i) in splatoon_weapon_list")
+      div(data-jplist-item)
+        .name {{row.name}}
 
   div(data-jplist-control="no-results" data-group="group1" data-name="no-results") No Results Found
 

@@ -27,6 +27,7 @@
               router-link.navbar-item(:to="{name: 'css_object_fit'}") CSS object-fit
               router-link.navbar-item(:to="{name: 'css_filter'}") CSS Filter
               router-link.navbar-item(:to="{name: 'css_transform'}") CSS Transform
+              router-link.navbar-item(:to="{name: 'text_overflow_ellipsis_test'}") TextOverflowEllipsisTest
 
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'arrow_cursor_navigation'}") CSS 三角ナビゲーション
@@ -70,13 +71,15 @@
               router-link.navbar-item(:to="{name: 'jplist_test'}") JplistTest
               router-link.navbar-item(:to="{name: 'lissajous'}") いろいろな曲線
               router-link.navbar-item(:to="{name: 'strange_attractor'}") ストレンジアトラクター
+              router-link.navbar-item(:to="{name: 'clipboard_copy_test'}") クリップボードへのコピー
+              router-link.navbar-item(:to="{name: 'sass_test'}") SassTest
 
               hr.navbar-divider
               router-link.navbar-item(:to="{name: 'light_rpn'}") 逆ポーランド電卓
               router-link.navbar-item(:to="{name: 'vue_carousel_test'}") スライドショー (vue-carousel)
 
               hr.navbar-divider
-              router-link.navbar-item(:to="{name: 'form_template'}") Form Template
+              router-link.navbar-item(:to="{name: 'form_template'}") FormTemplate
               router-link.navbar-item(:to="{name: 'general_form_template'}") 一般向けフォームテンプレート
               router-link.navbar-item(:to="{name: 'password_form'}") パスワード入力
               router-link.navbar-item(:to="{name: 'form_zenhan'}") 全角半角変換
