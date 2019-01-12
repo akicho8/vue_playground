@@ -76,6 +76,8 @@ export default {
 
     retry() {
       this.quiz_list = this.quiz_list_generate()
+      
+      
 
       this.seikai_list = []
       this.current_index = 0
