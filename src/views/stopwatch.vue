@@ -31,7 +31,7 @@
             template(v-if="total_seconds2 >= 1")
               button.button(@click="reset_handle" key="reset_key") リセット
 
-      template(v-if="quest_list.length === 0")
+      template(v-if="quest_list.length === 0 || true")
         .field
           label.label 開始番号
           .control
