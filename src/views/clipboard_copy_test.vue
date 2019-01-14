@@ -3,16 +3,26 @@
   .h2.title {{$options.title}}
   hr
 
-  .buttons
-    button.button(@click="copy1_handle") 既存の dom を addRange する方法でコピー
-    button.button(@click="copy2_handle") テキストエリアを作って選択状態にする方法でコピー
-  .buttons
-    button.button(@click="reset_handle") リセット
+  .columns
+    .column
+      .buttons
+        button.button(@click="copy1_handle") 1. PCでしか動かないと言われている方法1
+        button.button(@click="copy2_handle") 2. iPhoneでも動くと言われている方法2
+      .buttons
+        button.button(@click="reset_handle") リセット
 
-  .box(ref="text_elem") {{window.location.href}}
-  //- input.input(ref="text_elem" :value="window.location.href")
-  div
-    | document.execCommand("copy") の戻値: {{retval}}
+      .field
+        input.input(v-model="input_value")
+
+      p
+        | document.execCommand("copy") の結果 → {{retval}}
+
+    .column
+      .field
+        button.button(@click="paste_run") ペースト
+      .field
+        textarea.textarea(ref="output_dom")
+
 </template>
 
 <script>
@@ -22,24 +32,32 @@ export default {
   data() {
     return {
       retval: null,
+      input_value: null,
     }
   },
   methods: {
     reset_handle() {
+      this.input_value = Math.floor(Math.random() * 100000000000000000).toString(36)
       this.retval = null
-    },
-
-    copy1_handle() {
-      const range = document.createRange()
-      range.selectNode(this.$refs.text_elem)
-      window.getSelection().addRange(range)
-      this.copy_exec()
-      window.getSelection().removeAllRanges()
     },
 
     copy2_handle() {
       const elem = document.createElement("textarea")
-      elem.value = location.href
+      elem.value = this.input_value
+      document.body.appendChild(elem)
+
+      const range = document.createRange()
+      range.selectNode(elem)
+      window.getSelection().addRange(range)
+      this.copy_exec()
+      window.getSelection().removeAllRanges()
+
+      document.body.removeChild(elem)
+    },
+
+    copy1_handle() {
+      const elem = document.createElement("textarea")
+      elem.value = this.input_value
       document.body.appendChild(elem)
       elem.select()
       this.copy_exec()
@@ -54,6 +72,13 @@ export default {
         alert("ERROR")
       }
     },
+
+    paste_run() {
+      this.$refs.output_dom.focus()
+      document.execCommand("paste") // うごかない？
+      console.log(this.$refs.output_dom.textContent)
+    },
+
   },
 }
 </script>
