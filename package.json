@@ -10,6 +10,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@tinymce/tinymce-vue": "^1.1.2",
     "abcjs": "^5.5.0",
     "babel-standalone": "^6.26.0",
     "buefy": "^0.7.0",
@@ -27,6 +28,8 @@
     "prismjs": "^1.15.0",
     "register-service-worker": "^1.0.0",
     "sass": "^1.15.3",
+    "tiptap": "^1.7.0",
+    "tiptap-extensions": "^1.7.0",
     "vue": "^2.5.17",
     "vue-carousel": "^0.16.0-rc2",
     "vue-quill-editor": "^3.0.6",

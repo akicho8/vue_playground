@@ -6,7 +6,7 @@
   .columns
     .column.is-one-third
       template(v-if="current_data")
-        img.buki(:src="require(`@/assets/splatoon_weapon_list/${current_data.key}_xlarge.png`)")
+        img.weapon(:src="require(`@/assets/splatoon_weapon_list/${current_data.key}_xlarge.png`)")
         progress(:value="progress_value")
         | {{current_index}} / {{limit}}
 
@@ -150,10 +150,8 @@ export default {
 @import "../assets/scss/variables"
 
 .splatoon_weapon_quiz3
-  .buki
+  .weapon
     width: 100%
-  .button
-    width: 4em
   progress
     width: 100%
 </style>

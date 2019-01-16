@@ -56,6 +56,8 @@ Vue.mixin({
       }
       if (this.$route.query.layout === "simple") {
         document.title = title
+      } else if (this.$options.layout === "simple") {
+        document.title = title
       } else {
         document.title = `${title} - Vue Playground`
       }

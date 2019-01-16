@@ -1,6 +1,6 @@
 <template lang="pug">
 #app
-  template(v-if="$route.query.layout !== 'simple'")
+  template(v-if="$route.query.layout !== 'simple' && $route.meta.layout !== 'simple'")
     nav.navbar.is-transparent.is-primary
       .navbar-brand
         router-link.navbar-item(to="/")
@@ -56,6 +56,7 @@
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
             .navbar-dropdown.is-boxed
+              router-link.navbar-item(:to="{name: 'tinymce_test'}") TinymceTest
               router-link.navbar-item(:to="{name: 'chartjs_test'}") グラフ描画 (chart.js)
               router-link.navbar-item(:to="{name: 'js_console'}") JavaScript コンソール
               router-link.navbar-item(:to="{name: 'babel_transform'}") JavaScript コンソール (ES2015変換)
@@ -69,7 +70,6 @@
               router-link.navbar-item(:to="{name: 'splatoon_weapon_quiz1'}") スプラトゥーン2ブキクイズ1
               router-link.navbar-item(:to="{name: 'splatoon_weapon_quiz2'}") スプラトゥーン2ブキクイズ2
               router-link.navbar-item(:to="{name: 'splatoon_weapon_quiz3'}") スプラトゥーン2ブキクイズ3
-              router-link.navbar-item(:to="{name: 'jplist_test'}") JplistTest
               router-link.navbar-item(:to="{name: 'lissajous'}") いろいろな曲線
               router-link.navbar-item(:to="{name: 'strange_attractor'}") ストレンジアトラクター
               router-link.navbar-item(:to="{name: 'clipboard_copy_test'}") クリップボードへのコピー
@@ -100,6 +100,8 @@
             .navbar-item.has-dropdown.is-hoverable
               span.navbar-link ゴミ箱
               .navbar-dropdown.is-boxed
+                router-link.navbar-item(:to="{name: 'jplist_test'}") JplistTest
+                router-link.navbar-item(:to="{name: 'tiptap_test'}") TiptapTest
                 router-link.navbar-item(:to="{name: 'quill_test'}") quill_test
                 router-link.navbar-item(:to="{name: 'puyosimu'}") ぷよぷよシミュレーター
                 router-link.navbar-item(:to="{name: 'mavon_editor_test'}") mavonEditor Test
