@@ -137,7 +137,7 @@ export default {
 
         rest = (this.answer_max - 1) - list2.length
         if (rest >= 1) {
-          econst list = collection.filter(e => !list2.includes(e))
+          const list = collection.filter(e => !list2.includes(e))
           const list3 = _.take(_.shuffle(list), rest)
           list2 = [...list2, ...list3]
         }
