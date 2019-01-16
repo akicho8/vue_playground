@@ -60,6 +60,7 @@
         template(v-if="rows.length >= 1")
           a.button.is-small(@click.prevent="revert") 1つ前に戻す
         a.button.is-small(@click.prevent="rap_reset") 直近ラップのみリセット
+        a.button.is-small(@click.prevent="permalink_to_url") パーマリンクをURLに反映
 
       .box.content.has-text-grey.is-size-7
         h6 ショートカット
@@ -393,14 +394,17 @@ export default {
     },
 
     save_process() {
-      const json_str = JSON.stringify(this.save_data)
-      // console.log(my_lzma.compress(json_str, 9))
+      // URLに保存するとブラウザが重くなるのでやめる
+      // this.permalink_to_url()
 
-      location.hash = encodeURIComponent(json_str)
-
-      localStorage.setItem("stopwatch", json_str)
+      // 開き直したおきに復元できるようにするため
+      localStorage.setItem("stopwatch", snapshot_json)
 
       this.canvas_update()
+    },
+
+    permalink_to_url() {
+      location.hash = this.encoded_snapshot_json
     },
   },
 
@@ -418,6 +422,18 @@ export default {
   },
 
   computed: {
+    permalink() {
+      return `${window.location.href}#${this.encoded_snapshot_json}`
+    },
+
+    snapshot_json() {
+      return JSON.stringify(this.save_data)
+    },
+
+    encoded_snapshot_json() {
+      return encodeURIComponent(this.snapshot_json)
+    },
+
     new_record() {
       return {
         index: this.rows.length,
