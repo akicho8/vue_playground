@@ -34,6 +34,8 @@
               router-link.navbar-item(:to="{name: 'css_close_button_sample'}") CSS 右上配置の閉じる×ボタン
               router-link.navbar-item(:to="{name: 'css_balloon_sample'}") CSS 吹き出し
               router-link.navbar-item(:to="{name: 'color_scheme'}") 配色エディター
+              router-link.navbar-item(:to="{name: 'css_pattern_test'}") CSS 背景パターン
+              router-link.navbar-item(:to="{name: 'css_animation_restart'}") CSS アニメーション 再スタート
 
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link Google API

@@ -286,7 +286,7 @@ export default {
 <style lang="sass">
 @import "../assets/scss/variables"
 
-body
+html
   background: black
 
 .splatoon_weapon_quiz2
