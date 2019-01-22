@@ -296,7 +296,6 @@ html
     width: 100%
   progress, meter
     width: 100%
-    // transition: all 1s 0s ease-in-out
 
   .radio_element
     line-height: 180%

@@ -6,8 +6,9 @@
   .columns
     .column
       .buttons
-        button.button(@click="copy1_handle") 1. PCでしか動かないと言われている方法1
-        button.button(@click="copy2_handle") 2. iPhoneでも動くと言われている方法2
+        button.button(@click="pc_handle") 1. PCでしか動かなかった方法
+        button.button(@click="ios_handle") 2. iPhoneでも動くが言われているがiPhoneでしか動かない方法
+        button.button(@click="main_handle") 3. 順番に試す
       .buttons
         button.button(@click="reset_handle") リセット
 
@@ -15,11 +16,13 @@
         input.input(v-model="input_value")
 
       p
-        | document.execCommand("copy") の結果 → {{retval}}
+        div PC: {{pc_retv}}
+        div iOS: {{ios_retv}}
+        div 結果: {{retv}}
 
     .column
       .field
-        button.button(@click="paste_run") ペースト
+        button.button(@click="paste_run") ペースト(うごかん)
       .field
         textarea.textarea(ref="output_dom")
 
@@ -31,46 +34,89 @@ export default {
   title: "クリップボードへのコピー",
   data() {
     return {
-      retval: null,
+      retv: null,
+      pc_retv: null,
+      ios_retv: null,
       input_value: null,
     }
   },
+
+  created() {
+    this.reset_handle()
+  },
+
   methods: {
     reset_handle() {
       this.input_value = Math.floor(Math.random() * 100000000000000000).toString(36)
-      this.retval = null
+      this.retv = null
+      this.pc_retv = null
+      this.ios_retv = null
     },
 
-    copy2_handle() {
+    pc_handle() {
+      this.reset_handle()
+      this.retv = this.copy_to_clipboard_for_pc(this.input_value)
+    },
+
+    ios_handle() {
+      this.reset_handle()
+      this.retv = this.copy_to_clipboard_for_ios(this.input_value)
+    },
+
+    main_handle() {
+      this.reset_handle()
+      this.retv = this.copy_to_clipboard(this.input_value)
+    },
+
+    copy_to_clipboard_for_pc(str) {
       const elem = document.createElement("textarea")
-      elem.value = this.input_value
+      elem.value = str
+      document.body.appendChild(elem)
+
+      elem.select()
+      const retv = this.copy_exec()
+      this.pc_retv = retv
+
+      document.body.removeChild(elem)
+      return retv
+    },
+
+    copy_to_clipboard_for_ios(str) {
+      const elem = document.createElement("textarea")
+      elem.value = str
       document.body.appendChild(elem)
 
       const range = document.createRange()
       range.selectNode(elem)
       window.getSelection().addRange(range)
-      this.copy_exec()
+      const retv = this.copy_exec()
+      this.ios_retv = retv
       window.getSelection().removeAllRanges()
 
       document.body.removeChild(elem)
+      return retv
     },
 
-    copy1_handle() {
-      const elem = document.createElement("textarea")
-      elem.value = this.input_value
-      document.body.appendChild(elem)
-      elem.select()
-      this.copy_exec()
-      document.body.removeChild(elem)
+    // PC用で試して失敗したらios用で試す
+    copy_to_clipboard(str) {
+      let retv = null
+
+      retv = this.copy_to_clipboard_for_pc(str)
+      if (!retv) {
+        retv = this.copy_to_clipboard_for_ios(str)
+      }
+
+      return retv
     },
 
     copy_exec() {
-      this.retval = null
+      let retv = null
       try {
-        this.retval = document.execCommand("copy") // なんの嫌がらせか実際にクリックしていないと動作しないので注意
-      } catch(err) {
-        alert("ERROR")
+        retv = document.execCommand("copy") // なんの嫌がらせか実際にクリックしていないと動作しないので注意
+      } catch(error) {
+        alert(`ERROR: ${error}`)
       }
+      return retv
     },
 
     paste_run() {
