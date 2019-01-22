@@ -5,7 +5,9 @@
 
   .columns
     .column
-      TinyMceEditor(api-key="9qx9mi2wmcz572kkki94zhl493ukduxyhfxpecsszpsnzt52" v-model="body" :init="editor_options" ref="tinymce_dom")
+      TinyMceEditor(api-key="9qx9mi2wmcz572kkki94zhl493ukduxyhfxpecsszpsnzt52" v-model="body" :init="tiny_mce_options" ref="tinymce_dom")
+      .field
+        a(href="https://www.tiny.cloud/docs/" target="_blank") https://www.tiny.cloud/docs/
 
     .column
       b-message.is-primary(title="HTML" type="" :closable="false")
@@ -112,15 +114,59 @@ export default {
 <p style="text-align: left;"><a href="img/icons/mstile-150x150.png">http://localhost:8082/img/icons/mstile-150x150.png</a></p>
 <p style="text-align: left;"><img src="img/icons/mstile-150x150.png" alt="" width="119" height="119" /></p>
 `,
-      editor_options: {
+    }
+  },
+  computed: {
+    // https://oxynotes.com/?p=11177
+    tiny_mce_options() {
+      return {
         height: 400,
         plugins: [
-          'advlist autolink lists link image charmap print preview anchor',
-          'searchreplace visualblocks code fullscreen',
-          'insertdatetime media table contextmenu paste code'
+          'advlist',
+          "autolink",
+          "lists",
+          "link",
+          "image",
+          "charmap",
+          // "print",
+          "preview",
+          // "anchor",
+          "searchreplace",
+          // "visualblocks",
+          "code",
+          "fullscreen",
+          // "insertdatetime",
+          "media",
+          "table",
+          "contextmenu",
+          "paste",
+          "code",
+          "textcolor",
         ],
-        toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-      },
+        toolbar: [
+          "undo redo | insert | styleselect | forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+        ],
+
+        branding: false,    // クレジットを表示する？
+        elementpath: false, // ステイタスバーにタグのパスを表示する？(不要なら statusbar: false とした方がいい)
+        inline: false,      // クリックしたときに起動する？
+        statusbar: false,   // ステイタスバーを表示する？
+
+        //////////////////////////////////////////////////////////////////////////////// https://www.tiny.cloud/docs/plugins/image/
+
+        // 【便利】設定しておくとツールバーの image の選択肢に出てくる
+        image_list: [
+          {title: "画像名1", value: this.sample_images[0]},
+          {title: "画像名2", value: this.sample_images[1]},
+        ],
+
+        image_advtab: true,     // 画像張り付けのときにマージンとか指定できる
+
+        relative_urls: false,      // 相対パス OFF
+        remove_script_host: false, // ホスト部分の削除 OFF
+
+        // image_prepend_url: "http://localhost:3000/",
+      }
     }
   },
 }

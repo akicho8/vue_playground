@@ -1,44 +1,57 @@
 <template lang="pug">
 .splatoon_weapon_quiz2
-  .is-5.field.title.has-text-centered {{$options.title}}
+  .foo
+
+  template(v-if="play_mode === 'standby' || game_over_p")
+    .is-5.field.title.has-text-centered.has-text-white
+      div スプラトゥーン2
+      div ブキクイズ
 
   .columns
-    .column.is-one-third
+    .column
       template(v-if="play_mode === 'standby'")
         .field.has-text-centered
-          a.button.is-primary(@click.prevent="game_start") START
+          a.button.is-primary.is-rounded(@click.prevent="game_start") START
 
       template(v-if="play_mode === 'running'")
         template(v-if="current_data && player_life >= 1")
-          img.weapon_image(:src="require(`@/assets/splatoon_weapon_list/${current_data.master.key}_xlarge.png`)")
-          div
-            div(:class="count_down_bar_class" ref="count_down_bar" :style="{animationDuration: `${quiz_life_max_seconds}s`}")
+          .has-text-centered
+            img.weapon_image(:src="require(`@/assets/splatoon_weapon_list/${current_data.master.key}_xlarge.png`)")
 
-          //- progress(:value="progress_value2")
-          meter(:value="progress_value1")
-
-        .field.has-text-centered
-          small
-            //- | {{current_index}}/{{quiz_max}}
-            | 正解率:{{rate}}
-            //- p.has-text-grey-light
-            //-   | {{time_format(player_life)}}
+        .field.has-text-centered.has-text-white
+          //- small
+          //-   //- | {{current_index}}/{{quiz_max}}
+          //-   //- | 正解率:{{rate}}
+          //-   //- p.has-text-grey-light
+          //-   //-   | {{time_format(player_life)}}
 
           template(v-if="!current_data || player_life === 0")
             .field
+              | 正解数:{{o_count}}
               br
-              a.button.is-info.tweet_button(:href="twitter_url" target="_blank") ツイート
+              | 正解率:{{rate}}
+              br
+              | 所要時間: {{time_format(player_life)}}
 
             .field
-              br
-              a.button(@click.prevent="quiz_init") もっかいやる
+              a.button.is-info.is-rounded.tweet_button(:href="twitter_url" target="_blank") ツイート
 
-    template(v-if="playing_p")
-      .column.is-size-7
+            .field
+              a.button.is-rounded(@click.prevent="quiz_init") もっかいやる
+
+      template(v-if="playing_p")
+        template(v-if="play_mode === 'running'")
+          template(v-if="current_data && player_life >= 1")
+            .bar_wrap.has-text-centered
+              div(:class="count_down_bar_class" ref="count_down_bar" :style="{animationDuration: `${quiz_life_max_seconds}s`}")
+
+            //- progress(:value="progress_value2")
+            meter(:value="progress_value1")
+
         .box
           template(v-for="e in current_data.kotae_list")
             .radio_element
-              b-radio(size="is-small" v-model="current_name" :native-value="e.name")
+              b-radio(size="" v-model="current_name" :native-value="e.name")
                 span(v-text="e.name")
 
 </template>
@@ -285,32 +298,68 @@ export default {
 
 <style lang="sass">
 @import "../assets/scss/variables"
-
-html
-  background: black
+@import "../assets/scss/splatoon_preset"
 
 .splatoon_weapon_quiz2
-  background: black
-
   .weapon_image
-    width: 100%
+    filter: drop-shadow(0px 0px 4px black)
+    border-radius: 10px
+    max-height: 40vh
+
   progress, meter
+    margin: 0.5em 0
     width: 100%
 
   .radio_element
-    line-height: 180%
+    line-height: 200%
 
-  .anime_off
-    animation-name: none
+  .bar_wrap
+    .anime_off
+      animation-name: none
 
-  .anime_on
-    animation: bar_anime1 3s linear 0s
-    height: 6px
-    background: $primary
+    .anime_on
+      animation: bar_anime1 0s linear 0s
+      height: 16px
+      border: 1px solid white
+      background: $sp_color_green_dark
+      border-radius: 8px
 
   @keyframes bar_anime1
     0%
       width: 100%
     100%
       width: 0%
+
+  .title
+    color: transparent ! important
+    font-size: 2.5em
+    -webkit-text-stroke: 1px hsla(0, 50%, 100%, 1.0)
+
+  .box
+    text-align: left
+
+  .button
+    margin: 1em 0
+
+html
+  overflow: hidden
+
+.bg-window
+  background-color: $sp_color_red_dark
+  background-image: repeating-linear-gradient(45deg, $sp_color_red_light, $sp_color_red_light 24px, transparent 0, transparent 48px)
+  height: 200%
+
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  animation: scroll1 30s linear infinite
+  z-index: -1
+
+  @keyframes scroll1
+    0%
+      transform: translate3d(0, -50%, 0)
+    100%
+      transform: translate3d(0, 0, 0)
 </style>

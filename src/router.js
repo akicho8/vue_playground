@@ -88,5 +88,6 @@ export default new Router({
     { path: '/tinymce_vue_test',            name: 'tinymce_vue_test',                component: () => import(/* webpackChunkName: "tinymce_vue_test" */ './views/tinymce_vue_test.vue'),                     },
     { path: '/css_pattern_test',            name: 'css_pattern_test',                component: () => import(/* webpackChunkName: "css_pattern_test" */ './views/css_pattern_test.vue'),                     },
     { path: '/css_animation_restart',            name: 'css_animation_restart',                component: () => import(/* webpackChunkName: "css_animation_restart" */ './views/css_animation_restart.vue'),                     },
+    { path: '/css_pattern_test2',            name: 'css_pattern_test2',                component: () => import(/* webpackChunkName: "css_pattern_test2" */ './views/css_pattern_test2.vue'),                     },
   ]
 })

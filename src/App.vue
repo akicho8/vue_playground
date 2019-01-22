@@ -36,6 +36,7 @@
               router-link.navbar-item(:to="{name: 'color_scheme'}") 配色エディター
               router-link.navbar-item(:to="{name: 'css_pattern_test'}") CSS 背景パターン
               router-link.navbar-item(:to="{name: 'css_animation_restart'}") CSS アニメーション 再スタート
+              router-link.navbar-item(:to="{name: 'css_pattern_test2'}") CSS スタイル実験
 
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link Google API
@@ -124,6 +125,7 @@
   .section
     .container.is-fluid
       router-view
+  .bg-window
 
   template(v-if="false")
     template(v-if="$route.query.layout !== 'simple'")

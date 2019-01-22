@@ -47,11 +47,7 @@ export default {
 
 <style scoped lang="sass">
 @import "../assets/scss/variables"
-
-$color_red_dark:    hsla(332, 100%, 47%, 1) // 赤濃
-$color_red_light:   hsla(331, 100%, 50%, 1) // 赤薄
-$color_green_dark:  hsla(120, 100%, 39%, 1) // 緑濃
-$color_green_light: hsla(120, 100%, 43%, 1) // 緑薄
+@import "../assets/scss/splatoon_preset"
 
 // https://copypet.jp/2206/
 
@@ -63,13 +59,13 @@ $color_green_light: hsla(120, 100%, 43%, 1) // 緑薄
     padding: 0.5rem
 
   &.box1
-    background-color: $color_red_dark
-    background-image: radial-gradient($color_red_light 8px, transparent 8px) // 後ろのパラメータは、ぼかし度のようになる
+    background-color: $sp_color_red_dark
+    background-image: radial-gradient($sp_color_red_light 8px, transparent 8px) // 後ろのパラメータは、ぼかし度のようになる
     background-size: 32px 32px
 
   &.box2
-    background-color: $color_green_dark
-    background-image: repeating-linear-gradient(-45deg, $color_green_light, $color_green_light 7.5px, transparent 0, transparent 15px)
+    background-color: $sp_color_green_dark
+    background-image: repeating-linear-gradient(-45deg, $sp_color_green_light, $sp_color_green_light 7.5px, transparent 0, transparent 15px)
 
   &.box3
     position: relative
@@ -77,8 +73,8 @@ $color_green_light: hsla(120, 100%, 43%, 1) // 緑薄
     overflow: hidden            // これをとると何がおきているか確認しやすい
 
     .bg_window
-      background-color: $color_green_dark
-      background-image: repeating-linear-gradient(-45deg, $color_green_light, $color_green_light 8px, transparent 0, transparent 16px)
+      background-color: $sp_color_green_dark
+      background-image: repeating-linear-gradient(-45deg, $sp_color_green_light, $sp_color_green_light 8px, transparent 0, transparent 16px)
 
       // background-position: center center
       // background-size: 500px 320px
