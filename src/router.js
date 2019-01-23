@@ -89,5 +89,6 @@ export default new Router({
     { path: '/css_pattern_test',            name: 'css_pattern_test',                component: () => import(/* webpackChunkName: "css_pattern_test" */ './views/css_pattern_test.vue'),                     },
     { path: '/css_animation_restart',            name: 'css_animation_restart',                component: () => import(/* webpackChunkName: "css_animation_restart" */ './views/css_animation_restart.vue'),                     },
     { path: '/css_pattern_test2',            name: 'css_pattern_test2',                component: () => import(/* webpackChunkName: "css_pattern_test2" */ './views/css_pattern_test2.vue'),                     },
+    { path: '/vue_script2_test',            name: 'vue_script2_test',                component: () => import(/* webpackChunkName: "vue_script2_test" */ './views/vue_script2_test.vue'),                     },
   ]
 })

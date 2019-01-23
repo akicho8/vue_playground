@@ -59,6 +59,7 @@
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
             .navbar-dropdown.is-boxed
+              router-link.navbar-item(:to="{name: 'vue_script2_test'}") scriptタグ埋め込みテスト (vue-script2)
               router-link.navbar-item(:to="{name: 'tinymce_vue_test'}") TinyMCE
               router-link.navbar-item(:to="{name: 'chartjs_test'}") グラフ描画 (chart.js)
               router-link.navbar-item(:to="{name: 'js_console'}") JavaScript コンソール

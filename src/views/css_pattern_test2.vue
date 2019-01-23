@@ -10,6 +10,7 @@
           img(:src="sample_image")
           .box_right
             | ００００００００００１１１１１１１１１１２２２２２２２２２２３３３３３３３３３３
+
 </template>
 
 <script>
@@ -40,4 +41,5 @@ export default {
       margin-right: 0.5em
       margin-top: 0.5em
       margin-bottom: 0.5em
+
 </style>

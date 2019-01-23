@@ -395,7 +395,7 @@ export default {
 
     save_process() {
       // URLに保存するとブラウザが重くなるのでやめる
-      // this.permalink_to_url()
+      this.permalink_to_url()
 
       // 開き直したおきに復元できるようにするため
       localStorage.setItem("stopwatch", snapshot_json)

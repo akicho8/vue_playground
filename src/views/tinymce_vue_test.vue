@@ -101,6 +101,14 @@ require("tinymce-i18n/langs/ja.js") // window.tinymce に設定する
 // ちなみにこれを使わないと v-model 的な連動ができない
 import TinyMceEditor from '@tinymce/tinymce-vue'
 
+//////////////////////////////////////////////////////////////////////////////// vue-script2
+
+// https://www.npmjs.com/package/vue-script2
+import Vue from 'vue'
+import VS2 from 'vue-script2'
+
+Vue.use(VS2)
+
 export default {
   name: "tinymce_vue_test",
   title: "TinyMCE",
@@ -110,6 +118,9 @@ export default {
   data() {
     return {
       body: `
+<blockquote class="twitter-tweet" data-lang="ja"><p lang="ja" dir="ltr">昨年7月から全国12都市で開催されている「第4回スプラトゥーン甲子園」。<br>今週末1/27(日)の闘会議2019で、いよいよ日本一のナワバリバトルチームが決定する！<br>本日から少しずつ、各地区の代表チームをおさらいするぞ！<br>ニコニコ生放送(<a href="https://t.co/PN3f41zbXl">https://t.co/PN3f41zbXl</a>)<br>YouTube(<a href="https://t.co/umcMEi2vSX">https://t.co/umcMEi2vSX</a>) <a href="https://t.co/hpehMonR7N">pic.twitter.com/hpehMonR7N</a></p>&mdash; Splatoon（スプラトゥーン） (@SplatoonJP) <a href="https://twitter.com/SplatoonJP/status/1087641737084858369?ref_src=twsrc%5Etfw">2019年1月22日</a></blockquote>
+<script2 async src="https://platform.twitter.com/widgets.js" charset="utf-8" />
+
 <p style="text-align: left;">あの<strong>イーハトーヴォ</strong>のすきとおった風</p>
 <p style="text-align: left;"><a href="img/icons/mstile-150x150.png">http://localhost:8082/img/icons/mstile-150x150.png</a></p>
 <p style="text-align: left;"><img src="img/icons/mstile-150x150.png" alt="" width="119" height="119" /></p>
@@ -144,13 +155,28 @@ export default {
           "textcolor",
         ],
         toolbar: [
-          "undo redo | insert | styleselect | forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+          "undo redo | insert | styleselect | forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | code preview",
         ],
 
         branding: false,    // クレジットを表示する？
         elementpath: false, // ステイタスバーにタグのパスを表示する？(不要なら statusbar: false とした方がいい)
         inline: false,      // クリックしたときに起動する？
         statusbar: false,   // ステイタスバーを表示する？
+
+        // http://blog.yuhiisk.com/archive/2017/05/11/tiny-mce-before-init-setting.html
+        valid_elements: '*[*]',          // 知らないタグを消さないようにする
+        extended_valid_elements: '*[*]', // 知らないタグを消さないようにする
+
+        // $init_array['valid_elements'] = '*[*]'; //すべてのタグを許可(削除されないように)
+        // $init_array['extended_valid_elements'] = '*[*]'; //すべてのタグを許可(削除されないように)
+        // $init_array['valid_children'] = '+a[' . implode( '|', array_keys( $allowedposttags ) ) . ']'; //aタグ内にすべてのタグを入れられるように
+        // $init_array['indent'] = true; //インデントを有効に
+        // $init_array['wpautop'] = false; //テキストやインライン要素を自動的にpタグで囲む機能を無効に
+        // $init_array['force_p_newlines'] = false; //改行したらpタグを挿入する機能を無効に
+
+        // https://masshiro.blog/tinymce-table-resize/
+        table_resize_bars: false,
+        object_resizing: "img", // videoタグにサイズが付与されるのを防ぐ(しかしimgにするとvideoにも適用されてしまう)
 
         //////////////////////////////////////////////////////////////////////////////// https://www.tiny.cloud/docs/plugins/image/
 
