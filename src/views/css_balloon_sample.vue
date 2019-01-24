@@ -1,6 +1,6 @@
 <template lang="pug">
 .css_balloon_sample
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .box.balloon_wrap
@@ -15,7 +15,6 @@
 <script>
 export default {
   name: "css_balloon_sample",
-  title: "CSS 吹き出し",
 }
 </script>
 

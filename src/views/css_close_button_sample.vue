@@ -1,6 +1,6 @@
 <template lang="pug">
 .css_close_button_sample
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .target_box
@@ -12,7 +12,6 @@
 <script>
 export default {
   name: "css_close_button_sample",
-  title: "右上配置の閉じる×ボタン",
 }
 </script>
 

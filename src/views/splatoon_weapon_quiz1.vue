@@ -1,6 +1,6 @@
 <template lang="pug">
 .splatoon_weapon_quiz1
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -37,7 +37,6 @@ import splatoon_weapon_list from "./splatoon_weapon_list.js"
 
 export default {
   name: "splatoon_weapon_quiz1",
-  title: "スプラトゥーン2ブキクイズ",
   data() {
     return {
       current_index: 0,

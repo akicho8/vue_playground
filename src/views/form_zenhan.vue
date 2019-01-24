@@ -1,6 +1,6 @@
 <template lang="pug">
 .form_zenhan
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .field.is-horizontal
@@ -23,7 +23,6 @@
 <script>
 export default {
   name: "form_zenhan",
-  title: "全角半角変換",
   data() {
     return {
       zenkaku_val: null,

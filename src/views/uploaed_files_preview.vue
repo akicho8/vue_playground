@@ -1,6 +1,6 @@
 <template lang="pug">
 .uploaed_files_preview
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .field
@@ -34,7 +34,6 @@
 <script>
 export default {
   name: "uploaed_files_preview",
-  title: "単一アップロードファイルプレビュー (FileReader)",
   data() {
     return {
       file_infos: [],

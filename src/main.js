@@ -48,15 +48,30 @@ import sample_image_mod from "./sample_image_mod.js"
 Vue.mixin(sample_image_mod)
 
 Vue.mixin({
+  computed: {
+    current_title() {
+      return this.$options.title || this.$route.meta.title
+    },
+    current_layout() {
+      return this.$route.query.layout || this.$options.layout || this.$route.meta.layout
+    },
+  },
+
+  methods: {
+    foobar(key) {
+      // const title = this.$router.resolve({name: key}).route.meta.title
+      // return `<router-link class="navbar-item" :to="{name: '${key}'}">${title}</router-link>`
+      return this.$createElement("div", "a")
+    },
+  },
+
   mounted() {
-    let { title } = this.$options
+    let title = this.current_title
     if (title) {
       if (typeof title === 'function') {
         title = title.call(this)
       }
-      if (this.$route.query.layout === "simple") {
-        document.title = title
-      } else if (this.$options.layout === "simple") {
+      if (this.current_layout === "simple") {
         document.title = title
       } else {
         document.title = `${title} - Vue Playground`

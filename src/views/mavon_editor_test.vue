@@ -1,6 +1,6 @@
 <template lang="pug">
 .mavon_editor_test
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   mavon-editor(v-model="markdown_text" language="en")
@@ -23,7 +23,6 @@ Vue.use(mavonEditor)
 
 export default {
   name: "mavon_editor_test",
-  title: "mavonEditor Test",
   data() {
     return {
       markdown_text: "",

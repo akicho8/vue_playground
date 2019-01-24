@@ -1,6 +1,6 @@
 <template lang="pug">
 .jplist_test
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   div(
@@ -39,7 +39,6 @@ require("jplist-es6/dist/1.2.0/jplist-es6.min.js")
 
 export default {
   name: "jplist_test",
-  title: "JplistTest",
   data() {
     return {
       splatoon_weapon_list,

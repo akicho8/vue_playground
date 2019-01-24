@@ -1,6 +1,6 @@
 <template lang="pug">
 .quill_test
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   quill-editor(v-model="content")
@@ -22,7 +22,6 @@ import { quillEditor } from 'vue-quill-editor'
 
 export default {
   name: "quill_test",
-  title: "quill_test",
   components: {
     quillEditor,
   },

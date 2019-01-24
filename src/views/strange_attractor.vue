@@ -1,6 +1,6 @@
 <template lang="pug">
 .strange_attractor
-  h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -34,7 +34,6 @@ import canvas_methods from "./canvas_methods.js"
 
 export default {
   name: 'strange_attractor',
-  title: "ストレンジアトラクターエディター",
   mixins: [canvas_methods],
   data() {
     return {

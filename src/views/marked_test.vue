@@ -1,6 +1,6 @@
 <template lang="pug">
 .markdown_test
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -22,7 +22,6 @@ import Prism from 'prismjs'
 
 export default {
   name: "markdown_test",
-  title: "Markdown変換 (marked)",
   data() {
     return {
       source_body: require("./marked_test.md"),

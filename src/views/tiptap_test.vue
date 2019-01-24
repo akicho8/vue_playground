@@ -1,6 +1,6 @@
 <template lang="pug">
 .tiptap_test
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -122,7 +122,6 @@ import {
 
 export default {
   name: "tiptap_test",
-  title: "TiptapTest",
   components: {
     EditorContent,
     EditorMenuBar,

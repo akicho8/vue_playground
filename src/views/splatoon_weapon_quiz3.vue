@@ -1,6 +1,6 @@
 <template lang="pug">
 .splatoon_weapon_quiz3
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -47,7 +47,6 @@ import { Howl, Howler } from 'howler'
 
 export default {
   name: "splatoon_weapon_quiz3",
-  title: "スプラトゥーン2ブキクイズ",
   data() {
     return {
       splatoon_weapon_list,

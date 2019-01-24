@@ -1,6 +1,6 @@
 <template lang="pug">
 .html_audio_checker
-  h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -84,7 +84,6 @@ import dayjs from "dayjs"
 
 export default {
   name: 'html_audio_checker',
-  title: "HTML Audio",
   data() {
     return {
       timer_delay: "",

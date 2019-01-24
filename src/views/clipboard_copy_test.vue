@@ -1,6 +1,6 @@
 <template lang="pug">
 .clipboard_copy_test
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -31,7 +31,6 @@
 <script>
 export default {
   name: "clipboard_copy_test",
-  title: "クリップボードへのコピー",
   data() {
     return {
       retv: null,

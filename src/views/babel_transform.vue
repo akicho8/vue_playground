@@ -1,6 +1,6 @@
 <template lang="pug">
 .babel_transform
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -42,7 +42,6 @@ const Babel = require("babel-standalone") // import では動かない ← 違�
 
 export default {
   name: "babel_transform",
-  title: "JavaScript コンソール (ES2015変換)",
   mixins: [console_log_methods],
   data() {
     return {

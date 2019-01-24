@@ -1,6 +1,6 @@
 <template lang="pug">
 .google_geocoding_api
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -54,7 +54,6 @@ import qs from "querystring"
 
 export default {
   name: "google_geocoding_api",
-  title: "Google Geocoding API",
   components: {
     form_parts,
   },

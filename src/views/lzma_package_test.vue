@@ -1,6 +1,6 @@
 <template lang="pug">
 .lzma_package_test
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -29,7 +29,6 @@ import { LZMA } from "lzma/src/lzma_worker-min.js"
 
 export default {
   name: "lzma_package_test",
-  title: "圧縮復元 (lzma)",
   data() {
     return {
       input_str1: "",

@@ -1,6 +1,6 @@
 <template lang="pug">
 .howler_play_format_test
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .box
@@ -38,7 +38,6 @@ import { Howl, Howler } from 'howler'
 
 export default {
   name: "howler_play_format_test",
-  title: "各種フォーマットのサウンド再生テスト (Howler)",
   data() {
     return {
       singleton_p: false,

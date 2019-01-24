@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
   .field.is-horizontal
     .field-label.is-small
@@ -22,7 +22,6 @@ div
 <script>
 export default {
   name: "navigator_vibrate",
-  title: "振動機能",
 
   data() {
     return {

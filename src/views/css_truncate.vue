@@ -1,6 +1,6 @@
 <template lang="pug">
 .overflow_value_ellipsis_test
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -21,7 +21,6 @@ import form_parts from "./form_parts.vue"
 
 export default {
   name: "overflow_value_ellipsis_test",
-  title: "TextOverflowEllipsisTest",
   components: {
     form_parts,
   },

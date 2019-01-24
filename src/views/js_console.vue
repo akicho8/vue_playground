@@ -1,6 +1,6 @@
 <template lang="pug">
 .js_console
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -28,7 +28,6 @@ import console_log_methods from "./console_log_methods.js"
 
 export default {
   name: "js_console",
-  title: "JavaScript コンソール",
   mixins: [console_log_methods],
   data() {
     return {

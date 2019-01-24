@@ -1,6 +1,6 @@
 <template lang="pug">
 .html_audio_checker
-  h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .buttons
@@ -45,7 +45,6 @@ import pekowave1_wav from "@/assets/pekowave1.wav"
 
 export default {
   name: 'web_audio_api_for_mobile',
-  title: "Web Audio API for Mobile",
   data() {
     return {
       context: null,

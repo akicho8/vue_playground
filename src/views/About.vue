@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-  h2.title {{$options.title}}
+  h2.title {{current_title}}
 
   .section
     h3.title Vue.js
@@ -25,7 +25,7 @@ div
 <script>
 export default {
   name: 'about',
-  title: "About",
+  title: 'About',
   data() {
     return {
     }

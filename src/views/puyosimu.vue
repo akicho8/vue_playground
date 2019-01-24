@@ -1,6 +1,6 @@
 <template lang="pug">
 .puyosimu
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -47,7 +47,6 @@ import form_parts from "./form_parts.vue"
 
 export default {
   name: "puyosimu",
-  title: "ぷよぷよシミュレーター",
   components: {
     form_parts,
   },

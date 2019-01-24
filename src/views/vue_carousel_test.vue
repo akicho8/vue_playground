@@ -1,6 +1,6 @@
 <template lang="pug">
 .vue_carousel_test
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -70,7 +70,6 @@ import form_parts from "./form_parts.vue"
 
 export default {
   name: "vue_carousel_test",
-  title: "スライドショー (vue-carousel)",
   components: {
     form_parts,
   },

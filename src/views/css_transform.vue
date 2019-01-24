@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
   .columns
     .column
@@ -113,7 +113,6 @@ div
 <script>
 export default {
   name: "css_transform",
-  title: "CSS Transform",
   data() {
     return {
       real_value_p: false,

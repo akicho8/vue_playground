@@ -1,6 +1,6 @@
 <template lang="pug">
 .general_form_template
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .title.is-5 お名前
@@ -211,7 +211,6 @@
 <script>
 export default {
   name: "general_form_template",
-  title: "一般向けフォームテンプレート",
   data() {
     return {
     }

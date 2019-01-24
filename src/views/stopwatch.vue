@@ -1,6 +1,6 @@
 <template lang="pug">
 .stopwatch
-  h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -165,7 +165,6 @@ import Chart from "chart.js"
 
 export default {
   name: "stopwatch",
-  title: "ストップウォッチ",
   data() {
     return {
       current_track: null,
@@ -398,7 +397,7 @@ export default {
       this.permalink_to_url()
 
       // 開き直したおきに復元できるようにするため
-      localStorage.setItem("stopwatch", snapshot_json)
+      localStorage.setItem("stopwatch", this.snapshot_json)
 
       this.canvas_update()
     },

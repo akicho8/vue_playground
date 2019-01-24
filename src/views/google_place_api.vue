@@ -1,6 +1,6 @@
 <template lang="pug">
 .google_place_api
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -49,7 +49,6 @@ import qs from "querystring"
 
 export default {
   name: "google_geocoding_api",
-  title: "お店検索 (Google Place API)",
   components: {
     form_parts,
   },

@@ -1,6 +1,6 @@
 <template lang="pug">
 .abcjs_test
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -24,7 +24,6 @@ import abcjs from "abcjs/midi"
 
 export default {
   name: "abcjs_test",
-  title: "楽譜入力 (abcjs)",
   data() {
     return {
       abc_body: "",

@@ -1,6 +1,6 @@
 <template lang="pug">
 .form_template
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -46,7 +46,6 @@ import form_parts from "./form_parts.vue"
 
 export default {
   name: 'google_maps_playground',
-  title: "Google Maps Playground",
   components: {
     form_parts,
   },

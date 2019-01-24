@@ -1,6 +1,6 @@
 <template lang="pug">
 .textarea_test
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -22,7 +22,6 @@
 <script>
 export default {
   name: "textarea_test",
-  title: "テキストエリア縦幅自動調整",
   data() {
     return {
       source_body: "",

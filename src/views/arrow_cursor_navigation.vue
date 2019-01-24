@@ -1,6 +1,6 @@
 <template lang="pug">
 .arrow_cursor_navigation
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   form_parts
@@ -21,7 +21,6 @@ import sample_images_hash from "./sample_images_hash.js"
 
 export default {
   name: "arrow_cursor_navigation",
-  title: "三角ナビゲーション",
   components: {
     form_parts,
   },

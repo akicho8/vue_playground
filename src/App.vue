@@ -12,88 +12,87 @@
           span
       #main_navar.navbar-menu
         .navbar-start
-          router-link.navbar-item(:to="{name: 'stopwatch'}") ストップウォッチ
-          router-link.navbar-item(:to="{name: 'ruby_code_transpiler'}") Ruby Code Transpiler
+          MenuElement(name="stopwatch")
+          MenuElement(name="ruby_code_transpiler")
 
           template(v-if="false")
             router-link.navbar-item(to="/about") About
-            router-link.navbar-item(to="/html5_geolocation_api") 位置情報取得 (HTML5 Geolocation API)
 
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link CSS
             .navbar-dropdown.is-boxed
-              router-link.navbar-item(:to="{name: 'css_flexbox'}") CSS Flexbox
-              router-link.navbar-item(:to="{name: 'css_position'}") CSS Position
-              router-link.navbar-item(:to="{name: 'css_object_fit'}") CSS object-fit
-              router-link.navbar-item(:to="{name: 'css_filter'}") CSS Filter
-              router-link.navbar-item(:to="{name: 'css_transform'}") CSS Transform
-              router-link.navbar-item(:to="{name: 'text_overflow_ellipsis_test'}") TextOverflowEllipsisTest
+              MenuElement(name="css_flexbox")
+              MenuElement(name="css_position")
+              MenuElement(name="css_object_fit")
+              MenuElement(name="css_filter")
+              MenuElement(name="css_transform")
+              MenuElement(name="css_truncate")
 
               hr.navbar-divider
-              router-link.navbar-item(:to="{name: 'arrow_cursor_navigation'}") CSS 三角ナビゲーション
-              router-link.navbar-item(:to="{name: 'css_close_button_sample'}") CSS 右上配置の閉じる×ボタン
-              router-link.navbar-item(:to="{name: 'css_balloon_sample'}") CSS 吹き出し
-              router-link.navbar-item(:to="{name: 'color_scheme'}") 配色エディター
-              router-link.navbar-item(:to="{name: 'css_pattern_test'}") CSS 背景パターン
-              router-link.navbar-item(:to="{name: 'css_animation_restart'}") CSS アニメーション 再スタート
-              router-link.navbar-item(:to="{name: 'css_pattern_test2'}") CSS スタイル実験
+              MenuElement(name="arrow_cursor_navigation")
+              MenuElement(name="css_close_button_sample")
+              MenuElement(name="css_balloon_sample")
+              MenuElement(name="color_scheme")
+              MenuElement(name="css_pattern_test")
+              MenuElement(name="css_animation_restart")
+              MenuElement(name="css_pattern_test2")
 
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link Google API
             .navbar-dropdown.is-boxed
-              router-link.navbar-item(:to="{name: 'google_maps_playground'}") Google Maps Playground
-              router-link.navbar-item(:to="{name: 'google_maps_basic'}") GoogleMapsのいちばん簡単な例
-              router-link.navbar-item(:to="{name: 'google_geocoding_api'}") Google Geocoding API
-              router-link.navbar-item(:to="{name: 'google_place_api'}") お店検索 (Google Place API)
+              MenuElement(name="google_maps_playground")
+              MenuElement(name="google_maps_basic")
+              MenuElement(name="google_geocoding_api")
+              MenuElement(name="google_place_api")
 
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link メディア再生
             .navbar-dropdown.is-boxed
-              router-link.navbar-item(:to="{name: 'html_audio_checker'}") HTML Audio
-              router-link.navbar-item(:to="{name: 'web_audio_api_checker'}") Web Audio API
-              router-link.navbar-item(:to="{name: 'web_audio_api_for_mobile'}") Web Audio API for Mobile
+              MenuElement(name="html_audio_checker")
+              MenuElement(name="web_audio_api_checker")
+              MenuElement(name="web_audio_api_for_mobile")
               hr.navbar-divider
-              router-link.navbar-item(:to="{name: 'howler_simple_test'}") Howlerを使ったサウンド再生テスト
-              router-link.navbar-item(:to="{name: 'howler_play_format_test'}") 各種フォーマットのサウンド再生テスト (Howler)
+              MenuElement(name="howler_simple_test")
+              MenuElement(name="howler_play_format_test")
 
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
             .navbar-dropdown.is-boxed
-              router-link.navbar-item(:to="{name: 'vue_script2_test'}") scriptタグ埋め込みテスト (vue-script2)
-              router-link.navbar-item(:to="{name: 'tinymce_vue_test'}") TinyMCE
-              router-link.navbar-item(:to="{name: 'chartjs_test'}") グラフ描画 (chart.js)
-              router-link.navbar-item(:to="{name: 'js_console'}") JavaScript コンソール
-              router-link.navbar-item(:to="{name: 'babel_transform'}") JavaScript コンソール (ES2015変換)
-              router-link.navbar-item(:to="{name: 'textarea_test'}") テキストエリア縦幅自動調整
-              router-link.navbar-item(:to="{name: 'uploaed_file_preview'}") 単一アップロードファイルプレビュー (FileReader)
-              router-link.navbar-item(:to="{name: 'uploaed_files_preview'}") 複数アップロードファイルプレビュー (FileReader)
-              router-link.navbar-item(:to="{name: 'prism_test'}") コードフォーマット (prism)
-              router-link.navbar-item(:to="{name: 'lzma_package_test'}") 圧縮復元 (lzma)
-              router-link.navbar-item(:to="{name: 'marked_test'}") Markdown変換 (marked)
-              router-link.navbar-item(:to="{name: 'abcjs_test'}") 楽譜入力 (abcjs)
-              router-link.navbar-item(:to="{name: 'splatoon_weapon_quiz1'}") スプラトゥーン2ブキクイズ1
-              router-link.navbar-item(:to="{name: 'splatoon_weapon_quiz2'}") スプラトゥーン2ブキクイズ2
-              router-link.navbar-item(:to="{name: 'splatoon_weapon_quiz3'}") スプラトゥーン2ブキクイズ3
-              router-link.navbar-item(:to="{name: 'lissajous'}") いろいろな曲線
-              router-link.navbar-item(:to="{name: 'strange_attractor'}") ストレンジアトラクター
-              router-link.navbar-item(:to="{name: 'clipboard_copy_test'}") クリップボードへのコピー
-              router-link.navbar-item(:to="{name: 'sass_test'}") SassTest
+              MenuElement(name="vue_script2_test1")
+              MenuElement(name="vue_script2_test2")
+              MenuElement(name="tinymce_vue_test")
+              MenuElement(name="chartjs_test")
+              MenuElement(name="js_console")
+              MenuElement(name="babel_transform")
+              MenuElement(name="textarea_test")
+              MenuElement(name="uploaed_file_preview")
+              MenuElement(name="uploaed_files_preview")
+              MenuElement(name="prism_test")
+              MenuElement(name="lzma_package_test")
+              MenuElement(name="marked_test")
+              MenuElement(name="abcjs_test")
+              MenuElement(name="splatoon_weapon_quiz1")
+              MenuElement(name="splatoon_weapon_quiz2")
+              MenuElement(name="splatoon_weapon_quiz3")
+              MenuElement(name="lissajous")
+              MenuElement(name="strange_attractor")
+              MenuElement(name="clipboard_copy_test")
+              MenuElement(name="sass_test")
+              hr.navbar-divider
+              MenuElement(name="light_rpn")
+              MenuElement(name="vue_carousel_test")
 
               hr.navbar-divider
-              router-link.navbar-item(:to="{name: 'light_rpn'}") 逆ポーランド電卓
-              router-link.navbar-item(:to="{name: 'vue_carousel_test'}") スライドショー (vue-carousel)
+              MenuElement(name="form_template")
+              MenuElement(name="general_form_template")
+              MenuElement(name="password_form")
+              MenuElement(name="form_zenhan")
 
               hr.navbar-divider
-              router-link.navbar-item(:to="{name: 'form_template'}") FormTemplate
-              router-link.navbar-item(:to="{name: 'general_form_template'}") 一般向けフォームテンプレート
-              router-link.navbar-item(:to="{name: 'password_form'}") パスワード入力
-              router-link.navbar-item(:to="{name: 'form_zenhan'}") 全角半角変換
-
-              hr.navbar-divider
-              router-link.navbar-item(:to="{name: 'html5_drag_and_drop'}") ドラッグアンドドロップ (プリミティブ)
-              router-link.navbar-item(:to="{name: 'vue_draggable_test'}") ドラッグアンドドロップ (Vue.draggable)
-              router-link.navbar-item(:to="{name: 'html5_geolocation_api'}") 位置情報取得 (HTML5 Geolocation API)
-              router-link.navbar-item(:to="{name: 'navigator_vibrate'}") 振動機能
+              MenuElement(name="html5_drag_and_drop")
+              MenuElement(name="vue_draggable_test")
+              MenuElement(name="html5_geolocation_api")
+              MenuElement(name="navigator_vibrate")
 
               //- hr.navbar-divider
               //- hr.navbar-divider
@@ -104,11 +103,11 @@
             .navbar-item.has-dropdown.is-hoverable
               span.navbar-link ゴミ箱
               .navbar-dropdown.is-boxed
-                router-link.navbar-item(:to="{name: 'jplist_test'}") JplistTest
-                router-link.navbar-item(:to="{name: 'tiptap_test'}") TiptapTest
-                router-link.navbar-item(:to="{name: 'quill_test'}") quill_test
-                router-link.navbar-item(:to="{name: 'puyosimu'}") ぷよぷよシミュレーター
-                router-link.navbar-item(:to="{name: 'mavon_editor_test'}") mavonEditor Test
+                MenuElement(name="jplist_test")
+                MenuElement(name="tiptap_test")
+                MenuElement(name="quill_test")
+                MenuElement(name="puyosimu")
+                MenuElement(name="mavon_editor_test")
                 //- router-link.navbar-item(to="/about") About
 
           template(v-if="NODE_ENV !== 'production'")
@@ -134,6 +133,17 @@
         .content.has-text-centered
           a(href="https://github.com/akicho8/vue_playground") GitHub
 </template>
+
+<script>
+import MenuElement from "./components/MenuElement.vue"
+
+export default {
+  name: "App",
+  components: {
+    MenuElement,
+  },
+}
+</script>
 
 <style lang="sass">
 #app

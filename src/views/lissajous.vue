@@ -1,6 +1,6 @@
 <template lang="pug">
 .lissajous
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -88,7 +88,6 @@ class Point {
 
 export default {
   name: "lissajous",
-  title: "いろいろな曲線",
   components: {
     form_parts,
   },

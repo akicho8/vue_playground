@@ -1,6 +1,6 @@
 <template lang="pug">
 .prism_test
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -25,7 +25,6 @@ import "prismjs/components/prism-ruby.js"
 
 export default {
   name: "prism_test",
-  title: "コードフォーマット (prism)",
   components: {
     form_parts,
   },

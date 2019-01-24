@@ -1,6 +1,6 @@
 <template lang="pug">
 .vue_draggable_test
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -59,7 +59,6 @@ import form_parts from "./form_parts.vue"
 
 export default {
   name: "vue_draggable_test",
-  title: "ドラッグアンドドロップ (Vue.draggable)",
   components: {
     draggable,
     form_parts,

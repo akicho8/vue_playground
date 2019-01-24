@@ -1,6 +1,6 @@
 <template lang="pug">
 .password_form
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .title.is-5 登録時
@@ -36,7 +36,6 @@
 <script>
 export default {
   name: "password_form",
-  title: "パスワード入力",
   data() {
     return {
       password_value: "",

@@ -1,6 +1,6 @@
 <template lang="pug">
 .css_animation_restart
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   button.button(@click="restart_handle") 再実行
@@ -13,7 +13,6 @@
 <script>
 export default {
   name: "css_animation_restart",
-  title: "CSS アニメーション 再スタート",
   methods: {
     restart_handle() {
       const parent = this.$refs.my_bar_ref.parentElement

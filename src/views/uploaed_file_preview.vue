@@ -1,6 +1,6 @@
 <template lang="pug">
 .uploaed_file_preview
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -23,7 +23,6 @@
 <script>
 export default {
   name: "uploaed_file_preview",
-  title: "単一アップロードファイルプレビュー (FileReader)",
   data() {
     return {
       file_info: null,

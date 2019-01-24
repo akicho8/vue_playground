@@ -1,6 +1,6 @@
 <template lang="pug">
 .css_pattern_test
-  h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -19,7 +19,6 @@
 <script>
 export default {
   name: "css_pattern_test",
-  title: "CSS 背景パターン",
   data() {
     return {
     }

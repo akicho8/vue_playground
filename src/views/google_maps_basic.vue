@@ -1,6 +1,6 @@
 <template lang="pug">
 .google_maps_basic
-  h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
   .gmap_div(ref="gmap")
 </template>
@@ -8,7 +8,6 @@
 <script>
 export default {
   name: 'google_maps_basic',
-  title: "GoogleMapsのいちばん簡単な例",
   mounted() {
     const ll = new google.maps.LatLng(35.792621, 139.806513)
     new google.maps.Map(this.$refs.gmap, {zoom: 12, center: ll})

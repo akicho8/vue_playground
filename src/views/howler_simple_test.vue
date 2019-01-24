@@ -1,6 +1,6 @@
 <template lang="pug">
 .howler_simple_test
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .buttons
@@ -17,7 +17,6 @@ import { Howl, Howler } from 'howler'
 
 export default {
   name: "howler_simple_test",
-  title: "Howlerを使ったサウンド再生テスト",
   data() {
     return {
       howl_object: null,

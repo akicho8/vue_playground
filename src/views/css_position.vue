@@ -1,6 +1,6 @@
 <template lang="pug">
 .css_position
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -125,7 +125,6 @@
 <script>
 export default {
   name: "css_position",
-  title: "CSS Position",
   data() {
     return {
       real_value_p: false,

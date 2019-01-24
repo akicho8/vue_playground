@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -84,7 +84,6 @@ import rails from "@/assets/rails.png"
 
 export default {
   name: "css_filter",
-  title: "CSS Filter",
   data() {
     return {
       current_image_index: 0,

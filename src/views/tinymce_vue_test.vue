@@ -1,6 +1,6 @@
 <template lang="pug">
 .tinymce_vue_test
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -13,7 +13,7 @@
       b-message.is-primary(title="HTML" type="" :closable="false")
         | {{body}}
       b-message.is-primary(title="プレビュー" type="" :closable="false")
-        div(v-html="body")
+        div(v-html="body" key="a")
 </template>
 
 <script>
@@ -105,28 +105,42 @@ import TinyMceEditor from '@tinymce/tinymce-vue'
 
 // https://www.npmjs.com/package/vue-script2
 import Vue from 'vue'
-import VS2 from 'vue-script2'
+import VueScript2 from 'vue-script2'
 
-Vue.use(VS2)
+Vue.use(VueScript2)
 
 export default {
   name: "tinymce_vue_test",
-  title: "TinyMCE",
   components: {
     TinyMceEditor,
   },
   data() {
     return {
-      body: `
+//       body: `
+// <div>
+// <blockquote class="twitter-tweet" data-lang="ja"><p lang="ja" dir="ltr">昨年7月から全国12都市で開催されている「第4回スプラトゥーン甲子園」。<br>今週末1/27(日)の闘会議2019で、いよいよ日本一のナワバリバトルチームが決定する！<br>本日から少しずつ、各地区の代表チームをおさらいするぞ！<br>ニコニコ生放送(<a href="https://t.co/PN3f41zbXl">https://t.co/PN3f41zbXl</a>)<br>YouTube(<a href="https://t.co/umcMEi2vSX">https://t.co/umcMEi2vSX</a>) <a href="https://t.co/hpehMonR7N">pic.twitter.com/hpehMonR7N</a></p>&mdash; Splatoon（スプラトゥーン） (@SplatoonJP) <a href="https://twitter.com/SplatoonJP/status/1087641737084858369?ref_src=twsrc%5Etfw">2019年1月22日</a></blockquote>
+// <script2 async src="https://platform.twitter.com/widgets.js" charset="utf-8" />
+// </div>
+//
+// <p style="text-align: left;">あの<strong>イーハトーヴォ</strong>のすきとおった風</p>
+// <p style="text-align: left;"><a href="img/icons/mstile-150x150.png">http://localhost:8082/img/icons/mstile-150x150.png</a></p>
+// <p style="text-align: left;"><img src="img/icons/mstile-150x150.png" alt="" width="119" height="119" /></p>
+// `,
+
+      body: `<div>
 <blockquote class="twitter-tweet" data-lang="ja"><p lang="ja" dir="ltr">昨年7月から全国12都市で開催されている「第4回スプラトゥーン甲子園」。<br>今週末1/27(日)の闘会議2019で、いよいよ日本一のナワバリバトルチームが決定する！<br>本日から少しずつ、各地区の代表チームをおさらいするぞ！<br>ニコニコ生放送(<a href="https://t.co/PN3f41zbXl">https://t.co/PN3f41zbXl</a>)<br>YouTube(<a href="https://t.co/umcMEi2vSX">https://t.co/umcMEi2vSX</a>) <a href="https://t.co/hpehMonR7N">pic.twitter.com/hpehMonR7N</a></p>&mdash; Splatoon（スプラトゥーン） (@SplatoonJP) <a href="https://twitter.com/SplatoonJP/status/1087641737084858369?ref_src=twsrc%5Etfw">2019年1月22日</a></blockquote>
 <script2 async src="https://platform.twitter.com/widgets.js" charset="utf-8" />
-
-<p style="text-align: left;">あの<strong>イーハトーヴォ</strong>のすきとおった風</p>
-<p style="text-align: left;"><a href="img/icons/mstile-150x150.png">http://localhost:8082/img/icons/mstile-150x150.png</a></p>
-<p style="text-align: left;"><img src="img/icons/mstile-150x150.png" alt="" width="119" height="119" /></p>
+</div>
 `,
+
     }
   },
+
+  created() {
+    // これを入れると一応動く
+    VueScript2.load('https://platform.twitter.com/widgets.js').then(() => console.log("VueScript2.load: OK"))
+  },
+
   computed: {
     // https://oxynotes.com/?p=11177
     tiny_mce_options() {
@@ -155,24 +169,35 @@ export default {
           "textcolor",
         ],
         toolbar: [
-          "undo redo | insert | styleselect | forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | code preview",
+          "undo redo | insert | styleselect | forecolor backcolor | fontsizeselect bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | code preview",
         ],
 
-        branding: false,    // クレジットを表示する？
-        elementpath: false, // ステイタスバーにタグのパスを表示する？(不要なら statusbar: false とした方がいい)
-        inline: false,      // クリックしたときに起動する？
-        statusbar: false,   // ステイタスバーを表示する？
+        // 必須の設定
+        relative_urls: false,      // 相対パス OFF
+        remove_script_host: false, // ホスト部分の削除 OFF
+
+        branding: false,           // クレジットを表示する？
+        elementpath: true,         // ステイタスバーにタグのパスを表示する？(不要なら statusbar: false とした方がいい)
+        inline: false,             // クリックしたときに起動する？
+        statusbar: false,          // ステイタスバーを表示する？
 
         // http://blog.yuhiisk.com/archive/2017/05/11/tiny-mce-before-init-setting.html
         valid_elements: '*[*]',          // 知らないタグを消さないようにする
         extended_valid_elements: '*[*]', // 知らないタグを消さないようにする
 
-        // $init_array['valid_elements'] = '*[*]'; //すべてのタグを許可(削除されないように)
-        // $init_array['extended_valid_elements'] = '*[*]'; //すべてのタグを許可(削除されないように)
+        // https://oxynotes.com/?p=11236
+        forced_root_block: false,  // 「enter で p」と「shift + enter で br」の組み合わせを逆にする
+
+        // forced_root_block_attrs: "class",
+        // forced_root_block: "div",
+
         // $init_array['valid_children'] = '+a[' . implode( '|', array_keys( $allowedposttags ) ) . ']'; //aタグ内にすべてのタグを入れられるように
         // $init_array['indent'] = true; //インデントを有効に
-        // $init_array['wpautop'] = false; //テキストやインライン要素を自動的にpタグで囲む機能を無効に
-        // $init_array['force_p_newlines'] = false; //改行したらpタグを挿入する機能を無効に
+        // wpautop: false,          // テキストやインライン要素を自動的にpタグで囲む機能を無効に
+        // force_p_newlines: false, // 改行したらpタグを挿入する機能を無効に
+
+        // fontsize_formats: '50% 75% 100% 125% 150%',
+        fontsize_formats: "超小さい=60% 小さい=75% 普通=100% 大きい=125% 超大きい=150%",
 
         // https://masshiro.blog/tinymce-table-resize/
         table_resize_bars: false,
@@ -188,9 +213,6 @@ export default {
 
         image_advtab: true,     // 画像張り付けのときにマージンとか指定できる
 
-        relative_urls: false,      // 相対パス OFF
-        remove_script_host: false, // ホスト部分の削除 OFF
-
         // image_prepend_url: "http://localhost:3000/",
       }
     }
@@ -202,4 +224,8 @@ export default {
 @import "../assets/scss/variables"
 
 .tinymce_vue_test
+
+// .mce-content-body
+//   font-size: 50px !important
+
 </style>

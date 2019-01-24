@@ -1,6 +1,6 @@
 <template lang="pug">
 .web_audio_api_checker
-  h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -80,7 +80,6 @@ import dayjs from "dayjs"
 
 export default {
   name: 'web_audio_api_checker',
-  title: "Web Audio API",
   data() {
     return {
       timer_delay: "",

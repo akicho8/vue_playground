@@ -1,6 +1,6 @@
 <template lang="pug">
 .css_object_fit
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .columns
@@ -103,7 +103,6 @@ import rails from "@/assets/rails.png"
 
 export default {
   name: "css_object_fit",
-  title: "CSS object-fit",
   data() {
     return {
       real_value_p: false,

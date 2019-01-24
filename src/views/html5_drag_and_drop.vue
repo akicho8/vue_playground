@@ -1,6 +1,6 @@
 <template lang="pug">
 .html5_drag_and_drop
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .my_item#item_c(draggable="true" @dragstart="dragstart_handle") C
@@ -21,7 +21,6 @@
 
 export default {
   name: "html5_drag_and_drop",
-  title: "ドラッグアンドドロップ (プリミティブ)",
   // components: {
   //   form_parts,
   // },

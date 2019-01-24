@@ -1,6 +1,6 @@
 <template lang="pug">
 .color_scheme
-  h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .field.is-horizontal
@@ -80,7 +80,6 @@ import chroma from "chroma-js"
 
 export default {
   name: 'color_scheme',
-  title: "配色エディター",
   data() {
     let color = chroma.random().hex()
     if (this.$route.query.color) {

@@ -1,6 +1,6 @@
 <template lang="pug">
 .html5_geolocation_api
-  h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   .field.is-horizontal
@@ -105,7 +105,6 @@
 <script>
 export default {
   name: 'html5_geolocation_api',
-  title: "位置情報取得 (HTML5 Geolocation API)",
   data() {
     return {
       counter: 0,

@@ -1,6 +1,6 @@
 <template lang="pug">
 .light_rpn
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   // @keyup.enter にすると改行するまで待つので長い数字も入力できる
@@ -13,7 +13,6 @@
 <script>
 export default {
   name: "light_rpn",
-  title: "逆ポーランド電卓",
 
   data() {
     return {

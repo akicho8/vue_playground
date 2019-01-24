@@ -1,6 +1,6 @@
 <template lang="pug">
 .chatjs_test
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
   canvas(ref="canvas1")
 
@@ -16,7 +16,6 @@ import Chart from "chart.js"
 
 export default {
   name: "chatjs_test",
-  title: "グラフ描画 (chart.js)",
   data() {
     return {
     }

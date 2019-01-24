@@ -1,6 +1,6 @@
 <template lang="pug">
 .sass_test
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   b-message(title="SASS" type="" :closable="false")
@@ -18,7 +18,6 @@ const sass = require('sass')
 
 export default {
   name: "sass_test",
-  title: "SassTest",
   data() {
     return {
       sass_body: null,

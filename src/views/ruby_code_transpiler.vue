@@ -1,6 +1,6 @@
 <template lang="pug">
 .ruby_code_transpiler
-  .h2.title {{$options.title}}
+  h2.title {{current_title}}
   hr
 
   b-message(title="Rubyのコード" type="" :closable="false")
@@ -30,7 +30,6 @@ import console_log_methods from "./console_log_methods.js"
 
 export default {
   name: "ruby_code_transpiler",
-  title: "Ruby Code Transpiler",
   mixins: [console_log_methods],
   components: {
     form_parts,

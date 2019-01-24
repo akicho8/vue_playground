@@ -65,7 +65,6 @@ import dayjs from "dayjs"
 
 export default {
   name: "splatoon_weapon_quiz2",
-  title: "スプラトゥーン2ブキクイズ",
   layout: "simple",
   data() {
     return {
