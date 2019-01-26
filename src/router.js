@@ -92,5 +92,7 @@ export default new Router({
     { meta: { title: "CSS スタイル実験"                                }, path: '/css_pattern_test2',           name: 'css_pattern_test2',           component: () => import(/* webpackChunkName: "css_pattern_test2" */ './views/css_pattern_test2.vue'),                       },
     { meta: { title: "vue-script2: 自分でscript2に変換して張る→成功", }, path: '/vue_script2_test1',           name: 'vue_script2_test1',           component: () => import(/* webpackChunkName: "vue_script2_test1" */ './views/vue_script2_test1.vue'),                       },
     { meta: { title: "vue-script2: 自動で変換してv-htmlで入力→失敗",  }, path: '/vue_script2_test2',           name: 'vue_script2_test2',           component: () => import(/* webpackChunkName: "vue_script2_test2" */ './views/vue_script2_test2.vue'),                       },
+    { meta: { title: "fabric_test1",                                   }, path: '/fabric_test1',                name: 'fabric_test1',                component: () => import(/* webpackChunkName: "fabric_test1" */ './views/fabric_test1.vue'),                       },
+    { meta: { title: "fabric_test2",                                   }, path: '/fabric_test2',                name: 'fabric_test2',                component: () => import(/* webpackChunkName: "fabric_test2" */ './views/fabric_test2.vue'),                       },
   ]
 })

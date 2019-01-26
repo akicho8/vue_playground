@@ -58,6 +58,8 @@
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
             .navbar-dropdown.is-boxed
+              MenuElement(name="fabric_test1")
+              MenuElement(name="fabric_test2")
               MenuElement(name="vue_script2_test1")
               MenuElement(name="vue_script2_test2")
               MenuElement(name="tinymce_vue_test")
