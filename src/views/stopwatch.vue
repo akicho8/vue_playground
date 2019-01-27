@@ -31,7 +31,7 @@
             template(v-if="total_seconds2 >= 1")
               button.button(@click="reset_handle" key="reset_key") リセット
 
-      template(v-if="quest_list.length === 0 || true")
+      template(v-if="quest_list.length === 0")
         .field
           label.label 開始番号
           .control
@@ -57,10 +57,10 @@
 
       br
       .buttons
-        template(v-if="rows.length >= 1")
-          a.button.is-small(@click.prevent="revert") 1つ前に戻す
+        a.button.is-small(@click.prevent="revert" :disabled="rows.length === 0") 1つ前に戻す
         a.button.is-small(@click.prevent="rap_reset") 直近ラップのみリセット
         a.button.is-small(@click.prevent="permalink_to_url") パーマリンクをURLに反映
+        a.button.is-small(@click.prevent="matigai_set") 不正解だけ再テスト
 
       .box.content.has-text-grey.is-size-7
         h6 ショートカット
@@ -405,12 +405,18 @@ export default {
     permalink_to_url() {
       location.hash = this.encoded_snapshot_json
     },
+
+    matigai_set() {
+      this.quest_list_str = this.matigai_list.join(" ")
+      this.reset_handle()
+      this.focus_to_button()
+    },
   },
 
   watch: {
     current_track()     { this.save_process() },
     // total_counter()     { this.save_process() },
-    lap_counter()       { this.save_process() },
+    // lap_counter()       { this.save_process() },
     quest_list_str()    { this.save_process() },
     book_mode()         { this.save_process() },
     rows()              { this.save_process() },
@@ -465,6 +471,11 @@ export default {
     // 正解のみ分グループ
     o_group_by_min() {
       return _.groupBy(this.ox_group["o"], e => Math.floor(e.lap_counter / 60))
+    },
+
+    // 間違った問題リスト
+    matigai_list() {
+      return this.ox_group['x'].map(e => this.quest_name(e))
     },
 
     total_seconds() {
@@ -539,6 +550,7 @@ export default {
         return this.rows.length / this.quest_list.length
       }
     },
+
   },
 }
 </script>
