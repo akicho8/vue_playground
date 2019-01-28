@@ -5,7 +5,7 @@
 
   .columns
     .column
-      TinyMceEditor(api-key="9qx9mi2wmcz572kkki94zhl493ukduxyhfxpecsszpsnzt52" v-model="body" :init="tiny_mce_options" ref="tinymce_dom")
+      TinyMceEditor(api-key="" v-model="body" :init="tiny_mce_options" ref="tinymce_dom")
       .field
         a(href="https://www.tiny.cloud/docs/" target="_blank") https://www.tiny.cloud/docs/
 
@@ -196,8 +196,17 @@ export default {
         // wpautop: false,          // テキストやインライン要素を自動的にpタグで囲む機能を無効に
         // force_p_newlines: false, // 改行したらpタグを挿入する機能を無効に
 
-        // fontsize_formats: '50% 75% 100% 125% 150%',
-        fontsize_formats: "超小さい=60% 小さい=75% 普通=100% 大きい=125% 超大きい=150%",
+        fontsize_formats: '50% 75% 100% 125% 150%',
+        // fontsize_formats: "超小さい=60% 小さい=75% 普通=100% 大きい=125% 超大きい=150%",
+        // content_style: ".mce-content-body {font-size:75;font-family:Arial,sans-serif;}",
+        // content_style: ".mce-content-body {font-size:75%}",
+
+        setup(o) {
+          o.on('init', () => {
+            // this.execCommand("fontName", false, "tahoma");
+            o.execCommand("fontSize", false, "100%");
+          })
+        },
 
         // https://masshiro.blog/tinymce-table-resize/
         table_resize_bars: false,

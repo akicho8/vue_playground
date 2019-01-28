@@ -31,7 +31,7 @@
               br
               | 正解率:{{rate}}
               br
-              | 所要時間: {{time_format(player_life)}}
+              | 所要時間: {{time_format(total_counter)}}
 
             .field
               a.button.is-info.is-rounded.tweet_button(:href="twitter_url" target="_blank") ツイート
@@ -79,14 +79,14 @@ export default {
       x_count: null,
       total_counter: null,
 
-      o_life: 5,
-      x_life: -10,
-      player_life_max: 100,
+      player_life_max: 100,    // 元の体力
+      o_life: 5,               // 正解したときの加算値
+      x_life: -10,             // 間違えたときの加算値
       player_life: null,
 
       quiz_life: null,
       quiz_life_max_seconds: 3,
-      seido: 10,
+      seido: 1,
 
       quiz_list: null,
       seikai_list: null,
@@ -116,12 +116,12 @@ export default {
 
     step_next1() {
       if (this.playing_p) {
-        // this.total_counter += 1
+        this.total_counter += 1
         // this.player_life -= 1
 
         if (this.quiz_life > 0) {
           this.quiz_life -= 1
-          // this.player_life -= 0.5
+          this.player_life -= 1.0
           if (this.quiz_life === 0) {
             this.count_add("x_count")
           }
@@ -172,12 +172,15 @@ export default {
 
     count_add(v) {
       let src = null
+      let volume = null
       if (v === "o_count") {
         src = button26_mp3
+        volume = 0.5
       } else {
         src = button62_mp3
+        volume = 0.25
       }
-      // new Howl({src: src, autoplay: true, volume: 0.5})
+      new Howl({src: src, autoplay: true, volume: volume})
 
       this.$data[v] = this.$data[v] + 1
       this.current_index += 1
@@ -188,8 +191,8 @@ export default {
       })
 
       if (v === "o_count") {
-        // this.player_life += this.o_life
-        this.player_life += (this.quiz_life / this.seido)
+        // this.player_life += (this.quiz_life / this.seido) * this.o_life
+        this.player_life += this.o_life
       } else {
         this.player_life += this.x_life
       }
@@ -289,7 +292,12 @@ export default {
     },
 
     tweet_body() {
-      return `#${this.$options.title}\n正解率: ${this.rate} (${this.o_count}/${this.quiz_max})\n所要時間: ${this.time_format(this.total_counter)}\n\n${window.location.href}`
+      return `#${this.$options.title}
+正解数:{{this.o_count}}
+正解率: ${this.rate}
+所要時間: ${this.time_format(this.total_counter)}
+
+${window.location.href}`
     },
   },
 }
