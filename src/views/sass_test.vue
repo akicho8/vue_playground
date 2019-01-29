@@ -14,6 +14,7 @@
 </template>
 
 <script>
+// const sass = require('sass')
 const sass = require('sass')
 
 export default {
@@ -26,14 +27,14 @@ export default {
     }
   },
   created() {
-    console.log(location.hash)
-    if (location.hash) {
-      let s = location.hash
-      s = s.replace(/^#/, "")
-      this.sass_body = decodeURIComponent(s)
-    } else {
-      this.sass_body = `body { color: blue; };`
-    }
+    // console.log(location.hash)
+    // if (location.hash) {
+    //   let s = location.hash
+    //   s = s.replace(/^#/, "")
+    //   this.sass_body = decodeURIComponent(s)
+    // } else {
+    //   this.sass_body = `body { color: blue; };`
+    // }
   },
   watch: {
     sass_body() {

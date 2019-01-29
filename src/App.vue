@@ -58,6 +58,7 @@
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
             .navbar-dropdown.is-boxed
+              MenuElement(name="create_object_url_test")
               MenuElement(name="fabric_test1")
               MenuElement(name="fabric_test2")
               MenuElement(name="vue_script2_test1")
@@ -91,6 +92,7 @@
               MenuElement(name="form_zenhan")
 
               hr.navbar-divider
+              MenuElement(name="html5_dialog_test")
               MenuElement(name="html5_drag_and_drop")
               MenuElement(name="vue_draggable_test")
               MenuElement(name="html5_geolocation_api")

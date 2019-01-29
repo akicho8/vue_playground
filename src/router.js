@@ -94,5 +94,7 @@ export default new Router({
     { meta: { title: "vue-script2: 自動で変換してv-htmlで入力→失敗",  }, path: '/vue_script2_test2',           name: 'vue_script2_test2',           component: () => import(/* webpackChunkName: "vue_script2_test2" */ './views/vue_script2_test2.vue'),                       },
     { meta: { title: "fabric_test1",                                   }, path: '/fabric_test1',                name: 'fabric_test1',                component: () => import(/* webpackChunkName: "fabric_test1" */ './views/fabric_test1.vue'),                       },
     { meta: { title: "fabric_test2",                                   }, path: '/fabric_test2',                name: 'fabric_test2',                component: () => import(/* webpackChunkName: "fabric_test2" */ './views/fabric_test2.vue'),                       },
+    { meta: { title: "HTML5 dialog (Chromeしか対応してない)",          }, path: '/html5_dialog_test',                name: 'html5_dialog_test',                component: () => import(/* webpackChunkName: "html5_dialog_test" */ './views/html5_dialog_test.vue'),                       },
+    { meta: { title: "create_object_url_test",                         }, path: '/create_object_url_test',                name: 'create_object_url_test',                component: () => import(/* webpackChunkName: "create_object_url_test" */ './views/create_object_url_test.vue'),                       },
   ]
 })
