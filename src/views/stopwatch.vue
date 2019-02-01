@@ -154,6 +154,9 @@
 import dayjs from "dayjs"
 import { Howl, Howler } from 'howler'
 
+import o_mp3 from "@/assets/oto_logic/Quiz-Correct_Answer02-1.mp3"
+import x_mp3 from "@/assets/oto_logic/Quiz-Wrong_Buzzer02-1.mp3"
+
 import button46_mp3 from "@/assets/button46.mp3"
 import button23_mp3 from "@/assets/button23.mp3"
 import button62_mp3 from "@/assets/button62.mp3"
@@ -300,9 +303,9 @@ export default {
     sound_src(o_or_x) {
       let sound_src = null
       if (o_or_x === "o") {
-        sound_src = button46_mp3
+        sound_src = o_mp3
       } else {
-        sound_src = button62_mp3
+        sound_src = x_mp3
       }
       return sound_src
     },

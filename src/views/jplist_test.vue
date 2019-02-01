@@ -24,7 +24,7 @@
   button(type="button" id="name-clear-btn") Clear
 
   div(data-jplist-group="group1")
-    template(v-for="(row, i) in splatoon_weapon_list")
+    template(v-for="(row, i) in splatoon2_weapon_list")
       div(data-jplist-item)
         .name {{row.name}}
 
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import splatoon_weapon_list from "./splatoon_weapon_list.js"
+import splatoon2_weapon_list from "./splatoon2_weapon_list.js"
 
 require("jplist-es6/dist/1.2.0/jplist-es6.min.js")
 
@@ -41,7 +41,7 @@ export default {
   name: "jplist_test",
   data() {
     return {
-      splatoon_weapon_list,
+      splatoon2_weapon_list,
     }
   },
 

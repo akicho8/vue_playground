@@ -1,12 +1,12 @@
 <template lang="pug">
-.splatoon_weapon_quiz3
+.splatoon2_weapon_quiz3
   h2.title {{current_title}}
   hr
 
   .columns
     .column.is-one-third
       template(v-if="current_data")
-        img.weapon(:src="require(`@/assets/splatoon_weapon_list/${current_data.key}_xlarge.png`)")
+        img.weapon(:src="require(`@/assets/splatoon2_weapon_list/${current_data.key}_xlarge.png`)")
         progress(:value="progress_value")
         | {{current_index}} / {{limit}}
 
@@ -40,16 +40,16 @@
 </template>
 
 <script>
-import splatoon_weapon_list from "./splatoon_weapon_list.js"
-import button26_mp3 from "@/assets/button26.mp3"
-import button62_mp3 from "@/assets/button62.mp3"
+import splatoon2_weapon_list from "./splatoon2_weapon_list.js"
+import o_mp3 from "@/assets/oto_logic/Quiz-Correct_Answer02-1.mp3"
+import x_mp3 from "@/assets/oto_logic/Quiz-Wrong_Buzzer02-1.mp3"
 import { Howl, Howler } from 'howler'
 
 export default {
-  name: "splatoon_weapon_quiz3",
+  name: "splatoon2_weapon_quiz3",
   data() {
     return {
-      splatoon_weapon_list,
+      splatoon2_weapon_list,
       limit: 2,
       current_name: null,
       current_sub_name: null,
@@ -65,9 +65,9 @@ export default {
     count_add(v) {
       let src = null
       if (v === "o_count") {
-        src = button26_mp3
+        src = o_mp3
       } else {
-        src = button62_mp3
+        src = x_mp3
       }
       new Howl({src: src, autoplay: true, volume: 1.0})
 
@@ -102,7 +102,7 @@ export default {
 
   computed: {
     quiz_list() {
-      return _.take(_.shuffle(this.splatoon_weapon_list), this.limit)
+      return _.take(_.shuffle(this.splatoon2_weapon_list), this.limit)
     },
 
     weapon_names() {
@@ -110,11 +110,11 @@ export default {
     },
 
     sub_names() {
-      return _.sortBy(_.uniq(this.splatoon_weapon_list.map(e => e.sub_name)))
+      return _.sortBy(_.uniq(this.splatoon2_weapon_list.map(e => e.sub_name)))
     },
 
     sp_names() {
-      return _.sortBy(_.uniq(this.splatoon_weapon_list.map(e => e.sp_name)))
+      return _.sortBy(_.uniq(this.splatoon2_weapon_list.map(e => e.sp_name)))
     },
 
     current_data() {
@@ -148,7 +148,7 @@ export default {
 <style scoped lang="sass">
 @import "../assets/scss/variables"
 
-.splatoon_weapon_quiz3
+.splatoon2_weapon_quiz3
   .weapon
     width: 100%
   progress

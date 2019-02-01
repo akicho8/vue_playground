@@ -176,7 +176,7 @@ export default {
       this.params_sepia = 100
       this.params_grayscale = 85
       this.params_blur = 1
-      this.params_shadow = 20
+      this.params_shadow = 2
     },
 
     // mode2_absolute() {

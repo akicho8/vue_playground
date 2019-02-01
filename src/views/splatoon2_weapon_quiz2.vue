@@ -1,12 +1,12 @@
 <template lang="pug">
-.splatoon_weapon_quiz1
+.splatoon2_weapon_quiz2
   h2.title {{current_title}}
   hr
 
   .columns
     .column
       template(v-if="current_data")
-        img.buki(:src="require(`@/assets/splatoon_weapon_list/${current_data.key}_xlarge.png`)")
+        img.buki(:src="require(`@/assets/splatoon2_weapon_list/${current_data.key}_xlarge.png`)")
 
     .column
       template(v-if="current_data")
@@ -33,10 +33,10 @@
 </template>
 
 <script>
-import splatoon_weapon_list from "./splatoon_weapon_list.js"
+import splatoon2_weapon_list from "./splatoon2_weapon_list.js"
 
 export default {
-  name: "splatoon_weapon_quiz1",
+  name: "splatoon2_weapon_quiz2",
   data() {
     return {
       current_index: 0,
@@ -62,7 +62,7 @@ export default {
     },
 
     splatoon_list() {
-      return _.shuffle(splatoon_weapon_list)
+      return _.shuffle(splatoon2_weapon_list)
     },
 
     current_data() {
@@ -75,7 +75,7 @@ export default {
 <style scoped lang="sass">
 @import "../assets/scss/variables"
 
-.splatoon_weapon_quiz1
+.splatoon2_weapon_quiz2
   .buki
     width: 100%
   .button
