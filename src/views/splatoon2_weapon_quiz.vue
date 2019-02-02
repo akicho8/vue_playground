@@ -12,24 +12,24 @@
           a.button.is-rounded.start_button(@click.prevent="start_handle") スタート
 
       template(v-if="scene === 'sm_running'")
+        .my_bar.player_life_bar(:style="{width: `${player_life_bar_rate * 100}%`}")
         .has-text-centered
           img.weapon_image(:src="require(`@/assets/splatoon2_weapon_list/${current_data.master.key}_xlarge.png`)")
 
-        .bar_wrap
-          .bar(:class="count_down_bar_class" ref="count_down_bar" :style="{animationDuration: `${quiz_life_max_seconds}s`}")
+        //- .bar_wrap
+        //-   .bar(:class="count_down_bar_class" ref="count_down_bar" :style="{animationDuration: `${quiz_life_max_seconds}s`}")
 
         //- progress(:value="progress_value")
         //- meter(:value="progress_value")
 
-        .bar2(:style="{width: `${quiz_life_max_seconds2 * 100}%`}")
-
+        .my_bar.time_limit_bar(:style="{width: `${time_limit_bar_rate * 100}%`}")
         .box
           ul
             li.radio_element(v-for="e in current_data.choice_list" :key="e.key" @click.prevent="answerd_data_set(e)") {{e.name}}
 
       template(v-if="scene === 'sm_life_zero' || scene === 'sm_all_clear'")
         .field.has-text-centered.has-text-white
-          a.button.is-rounded.start_button(@click.prevent="start_handle") リトライ
+          a.button.is-rounded.start_button(@click.prevent="start_handle") スタート
 
         .box.has-text-centered
           | せいかい {{o_count}}
@@ -49,7 +49,7 @@
             li o_count: {{o_count}} {{answer_parcentage}}
             li x_count: {{x_count}}
             li quiz_life_max_seconds: {{quiz_life_max_seconds}}
-            li quiz_life_max_seconds2: {{quiz_life_max_seconds2}}
+            li player_life_bar_rate: {{player_life_bar_rate}}
 
       a.credit.has-text-white.has-text-centered.is-size-6(@click.prevent="credit_modal_p = true") クレジット
 
@@ -141,7 +141,7 @@ export default {
       this.quiz_max = this.quiz_max || this.splatoon2_weapon_list.length
     } else {
       this.quiz_max = this.quiz_max || 50
-
+      // this.quiz_max = this.splatoon2_weapon_list.length
       // this.quiz_life_max_seconds = 10000
       // this.player_life_max = 10000000
     }
@@ -351,7 +351,11 @@ export default {
   },
 
   computed: {
-    quiz_life_max_seconds2() {
+    time_limit_bar_rate() {
+      return this.quiz_life / (this.quiz_life_max_seconds * this.accuracy) - 0.02
+    },
+
+    player_life_bar_rate() {
       return this.player_life / this.player_life_max
     },
 
@@ -404,6 +408,7 @@ ${window.location.href}`
     filter: drop-shadow(0px 0px 4px black)
     border-radius: 10px
     max-height: 40vh
+    transition: all 0.5s 0s linear
 
   .start_button
     margin-top: 1em
@@ -419,30 +424,6 @@ ${window.location.href}`
     width: 100%
     font-size: 120%
     line-height: 220%
-    // &:active
-    //   color: blue
-    // &:hover
-    //   color: $sp_color_red_dark
-
-      // border: 1px solid blue
-    // .radio_name
-    //   position: relative
-    //   top: -1px
-
-  .bar_wrap
-    .bar
-      margin-top: 3px
-      margin-left: auto
-      margin-right: auto
-      &.anime_off
-        animation-name: none
-
-      &.anime_on
-        animation: bar_anime1 0s linear 0s
-        height: 6px
-        border: 1px solid white
-        background: hsla(0, 50%, 100%, 0.5)
-        border-radius: 4px
 
   @keyframes bar_anime1
     0%
@@ -450,14 +431,22 @@ ${window.location.href}`
     100%
       width: 0%
 
-  .bar2
-    transition: all 0.1s 0s linear
-    margin-top: 3px
-    margin-bottom: 3px
-    height: 12px
+  .my_bar
     border: 1px solid white
-    background: hsla(120, 100%, 43%, 1.0)
+    background: hsla(0, 50%, 100%, 0.3)
+    transition: all 0.1s 0s linear
     border-radius: 4px
+    margin-left: auto
+    margin-right: auto
+
+    &.player_life_bar
+      margin-bottom: 5px
+      height: 12px
+
+    &.time_limit_bar
+      margin-top: 3px
+      margin-bottom: 4px
+      height: 6px
 
   .title
     color: transparent ! important
