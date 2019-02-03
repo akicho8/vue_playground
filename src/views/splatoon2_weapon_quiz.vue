@@ -1,5 +1,5 @@
 <template lang="pug">
-.splatoon2_weapon_quiz.spla_font
+.splatoon2_weapon_quiz.spla_font.is-unselectable
   template(v-if="scene === 'sm_standby' || scene === 'sm_life_zero' || scene === 'sm_all_clear'")
     .is-5.field.title.has-text-centered.has-text-white
       div スプラトゥーン2
@@ -9,7 +9,7 @@
     .column
       template(v-if="scene === 'sm_standby'")
         .field.has-text-centered
-          a.button.is-rounded(@click.prevent="start_handle") スタート
+          a.button.is-rounded.start_button(@click.prevent="start_handle") スタート
 
       template(v-if="scene === 'sm_running'")
         .has-text-centered
@@ -19,15 +19,18 @@
           .bar(:class="count_down_bar_class" ref="count_down_bar" :style="{animationDuration: `${quiz_life_max_seconds}s`}")
 
         //- progress(:value="progress_value")
-        meter(:value="progress_value")
+        //- meter(:value="progress_value")
+
+        .bar2(:style="{width: `${quiz_life_max_seconds2 * 100}%`}")
 
         .box
-          template(v-for="e in current_data.kotae_list")
-            .radio_element
-              b-radio(size="" v-model="current_name" :native-value="e.name")
-                span.radio_name(v-text="e.name")
+          ul
+            li.radio_element(v-for="e in current_data.choice_list" :key="e.key" @click.prevent="answerd_data_set(e)") {{e.name}}
 
       template(v-if="scene === 'sm_life_zero' || scene === 'sm_all_clear'")
+        .field.has-text-centered.has-text-white
+          a.button.is-rounded.start_button(@click.prevent="start_handle") リトライ
+
         .box.has-text-centered
           | せいかい {{o_count}}
           br
@@ -37,9 +40,6 @@
           br
           a.button.is-info.is-rounded.tweet_button(:href="twitter_url" target="_blank") ツイート
 
-        .has-text-centered.has-text-white
-          a.button.is-rounded(@click.prevent="start_handle") リトライ
-
       template(v-if="NODE_ENV !== 'production'")
         .has-text-white
           ul
@@ -48,6 +48,8 @@
             li quiz_list.length: {{quiz_list ? quiz_list.length : ""}}
             li o_count: {{o_count}} {{answer_parcentage}}
             li x_count: {{x_count}}
+            li quiz_life_max_seconds: {{quiz_life_max_seconds}}
+            li quiz_life_max_seconds2: {{quiz_life_max_seconds2}}
 
       a.credit.has-text-white.has-text-centered.is-size-6(@click.prevent="credit_modal_p = true") クレジット
 
@@ -58,23 +60,20 @@
     section.modal-card-body
       | フォント:
       |
-      a(href="https://aramugi.com/?page_id=807" target="_blank") あらむぎ
-      |
-      | さま
+      a(href="https://aramugi.com/?page_id=807" target="_blank") イカモドキ (あらむぎ さま)
       br
       | おとそざい:
       |
-      a(href="https://otologic.jp" target="_blank") OtoLogic
-      |
-      | さま
+      a(href="https://otologic.jp" target="_blank") OtoLogic さま
       br
       | がぞう:
       |
-      | スプラトゥーンこうしきツイッター さま
+      a(href="https://twitter.com/splatoonjp" target="_blank") スプラトゥーンこうしきツイッター
     template(v-if="true")
       footer.modal-card-foot
         button.button.is-primary.spla_font(@click.prevent="credit_modal_p = false") とじる
 
+  link(href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet")
 </template>
 
 <script>
@@ -104,7 +103,7 @@ export default {
       quiz_max: null,
       select_element_max: parseInt(this.$route.query.select_element_max || 3),
 
-      current_name: null,
+      answerd_data: null,
 
       current_index: null,
       o_count: null,
@@ -118,7 +117,7 @@ export default {
       player_life_add: -5,     // 1秒間に減らす値
 
       quiz_life: null,
-      quiz_life_max_seconds: 3,
+      quiz_life_max_seconds: 5, // 1問の時間
       accuracy: 10,             // setTimeout の精度
 
       quiz_list: null,
@@ -127,19 +126,21 @@ export default {
       scene: "sm_standby",
       credit_modal_p: false,
       sound_list: [],
+
+      tapFlag: false,
+      timer: null,
+      last_touch: 0
     }
   },
 
   created() {
-    // スクロール禁止 (スマホ用)
-    // https://qiita.com/shge/items/d2ae44621ce2eec183e6
-    document.addEventListener("touchmove", e => e.preventDefault(), {passive: false})
+    this.user_scalable_none()
 
     this.quiz_max = this.$route.query.quiz_max
     if (this.NODE_ENV === 'production') {
       this.quiz_max = this.quiz_max || this.splatoon2_weapon_list.length
     } else {
-      this.quiz_max = this.quiz_max || 5
+      this.quiz_max = this.quiz_max || 50
 
       // this.quiz_life_max_seconds = 10000
       // this.player_life_max = 10000000
@@ -213,10 +214,6 @@ export default {
       // })
     },
 
-    time_format(seconds) {
-      return dayjs().startOf("year").set("seconds", seconds).format("m:ss")
-    },
-
     count_add(v) {
       let src = null
       let volume = null
@@ -249,7 +246,7 @@ export default {
 
       if (this.scene === "sm_running") {
         this.$nextTick(() => {
-          this.current_name = null
+          this.answerd_data = null
           document.activeElement.blur()
           if (this.scene === "sm_running") {
             this.next_quiz_setup()
@@ -267,13 +264,11 @@ export default {
       }
     },
 
-    anser_valid() {
-      if (this.current_name) {
-        if (this.current_data.master.name === this.current_name) {
-          this.count_add("o_count")
-        } else {
-          this.count_add("x_count")
-        }
+    answerd_data_set(v) {
+      if (this.current_data.master === v) {
+        this.count_add("o_count")
+      } else {
+        this.count_add("x_count")
       }
     },
 
@@ -305,7 +300,7 @@ export default {
 
         list2 = _.sortBy(list2, e => e.name)
 
-        quiz_list.push({master: item, kotae_list: list2})
+        quiz_list.push({master: item, choice_list: list2})
       })
       return quiz_list
     },
@@ -318,13 +313,48 @@ export default {
       this.sound_list.forEach(e => e.stop())
       this.sound_list = []
     },
+
+    time_format(seconds) {
+      return dayjs().startOf("year").set("seconds", seconds).format("m:ss")
+    },
+
+    // iOS10のSafariでuser-scalable=no が効かなくズームがされる問題への対策
+    // https://qiita.com/peutes/items/d74e5758a36478fbc039
+    user_scalable_none() {
+      // スクロール禁止 (スマホ用)
+      // https://qiita.com/shge/items/d2ae44621ce2eec183e6
+      // document.addEventListener("touchmove", e => e.preventDefault(), {passive: false})
+      //
+      // // ダブルタップ禁止 (スマホ用)
+      // // https://qiita.com/peutes/items/d74e5758a36478fbc039#%E3%83%80%E3%83%96%E3%83%AB%E3%82%BF%E3%83%83%E3%83%97%E3%82%92%E9%98%B2%E3%81%90
+      // document.addEventListener('touchend', e => {
+      //   const now = window.performance.now()
+      //   if (now - this.last_touch <= 500) {
+      //     e.preventDefault()
+      //   }
+      //   this.last_touch = now
+      // }, {passive: false})
+      //
+      // // 複数指で拡大縮小が出来てしまうのを防ぐ
+      // // https://qiita.com/peutes/items/d74e5758a36478fbc039#%E8%A4%87%E6%95%B0%E6%8C%87%E3%81%A7%E6%8B%A1%E5%A4%A7%E7%B8%AE%E5%B0%8F%E3%81%8C%E5%87%BA%E6%9D%A5%E3%81%A6%E3%81%97%E3%81%BE%E3%81%86%E3%81%AE%E3%82%92%E9%98%B2%E3%81%90
+      // document.addEventListener('touchstart', e => {
+      //   if (e.touches.length > 1) {
+      //     e.preventDefault()
+      //   }
+      // }, {passive: false})
+    },
+
   },
 
   watch: {
-    current_name()     { this.anser_valid() },
+    // answerd_data()     { this.answerd_data_set() },
   },
 
   computed: {
+    quiz_life_max_seconds2() {
+      return this.player_life / this.player_life_max
+    },
+
     current_data() {
       return this.quiz_list[this.current_index]
     },
@@ -367,7 +397,7 @@ ${window.location.href}`
   src: url(../assets/ikamodoki/ikamodoki1_0.ttf)
 
 .spla_font
-  font-family: "SplaFontFace"
+  font-family: "SplaFontFace", "Nico Moji"
 
 .splatoon2_weapon_quiz
   .weapon_image
@@ -375,16 +405,29 @@ ${window.location.href}`
     border-radius: 10px
     max-height: 40vh
 
+  .start_button
+    margin-top: 1em
+    margin-bottom: 1em
+
   progress, meter
     margin: 5px 0
     width: 100%
     border-radius: 4px
 
   .radio_element
+    color: inherit
+    width: 100%
+    font-size: 120%
     line-height: 220%
-    .radio_name
-      position: relative
-      top: -1px
+    // &:active
+    //   color: blue
+    // &:hover
+    //   color: $sp_color_red_dark
+
+      // border: 1px solid blue
+    // .radio_name
+    //   position: relative
+    //   top: -1px
 
   .bar_wrap
     .bar
@@ -407,6 +450,15 @@ ${window.location.href}`
     100%
       width: 0%
 
+  .bar2
+    transition: all 0.1s 0s linear
+    margin-top: 3px
+    margin-bottom: 3px
+    height: 12px
+    border: 1px solid white
+    background: hsla(120, 100%, 43%, 1.0)
+    border-radius: 4px
+
   .title
     color: transparent ! important
     font-size: 2.5em
@@ -427,7 +479,7 @@ ${window.location.href}`
     margin: auto
 
 // スクロール禁止(PC用)
-html
+html, body
   overflow: hidden
 
 .bg-window

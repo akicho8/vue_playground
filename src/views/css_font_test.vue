@@ -7,14 +7,13 @@
     .column
       article.message.is-primary
         .message-header
-          | いかもどき
+          | イカモドキ
         .message-body
           .spla_font
             | {{sample_text}}
           a(href="https://aramugi.com/?page_id=807" target="_blank") https://aramugi.com/?page_id=807
     .column
       article.message.is-primary
-        link(href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet")
         .message-header
           | ニコもじ
         .message-body
@@ -23,7 +22,6 @@
           a(href="https://googlefonts.github.io/japanese/#nicomoji" target="_blank") https://googlefonts.github.io/japanese/#nicomoji
     .column
       article.message.is-primary
-        link(href="https://fonts.googleapis.com/earlyaccess/hannari.css" rel="stylesheet")
         .message-header
           | はんなり
         .message-body
@@ -31,6 +29,8 @@
             | {{sample_text}}
           a(href="https://googlefonts.github.io/japanese/#hannari" target="_blank") https://googlefonts.github.io/japanese/#hannari
 
+  link(href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet")
+  link(href="https://fonts.googleapis.com/earlyaccess/hannari.css" rel="stylesheet")
 </template>
 
 <script>
@@ -62,13 +62,13 @@ ABCDEFGHIJKLMNOPQRSTUVWXYZ
 .message-body
   word-break: break-all
 
-//////////////////////////////////////////////////////////////////////////////// 「いかもどき」フォントの場所がわかるもの
+//////////////////////////////////////////////////////////////////////////////// 「イカモドキ」フォントの場所がわかるもの
 @font-face
   font-family: "SplaFontFace"
   src: url(../assets/ikamodoki/ikamodoki1_0.ttf)
 
 .spla_font
-  font-family: "SplaFontFace"
+  font-family: "SplaFontFace"   // font-family: "SplaFontFace", "Nico Moji" のようにするとアルファベットは "Nico Moji" を使うようになる
   font-size: 150%
 
 //////////////////////////////////////////////////////////////////////////////// 「ニコもじ」Google Font を使う場合は link を読み込んでこれ
