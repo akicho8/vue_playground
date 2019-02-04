@@ -27,6 +27,7 @@
               MenuElement(name="css_filter")
               MenuElement(name="css_transform")
               MenuElement(name="css_truncate")
+              MenuElement(name="css_font_test")
 
               hr.navbar-divider
               MenuElement(name="arrow_cursor_navigation")

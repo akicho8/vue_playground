@@ -1,7 +1,5 @@
 <template lang="pug">
-.splatoon2_weapon_quiz
-  .foo
-
+.splatoon2_weapon_quiz.spla_font
   template(v-if="scene === 'sm_standby' || scene === 'sm_life_zero' || scene === 'sm_all_clear'")
     .is-5.field.title.has-text-centered.has-text-white
       div スプラトゥーン2
@@ -17,8 +15,8 @@
         .has-text-centered
           img.weapon_image(:src="require(`@/assets/splatoon2_weapon_list/${current_data.master.key}_xlarge.png`)")
 
-        .bar_wrap.has-text-centered
-          div(:class="count_down_bar_class" ref="count_down_bar" :style="{animationDuration: `${quiz_life_max_seconds}s`}")
+        .bar_wrap
+          .bar(:class="count_down_bar_class" ref="count_down_bar" :style="{animationDuration: `${quiz_life_max_seconds}s`}")
 
         //- progress(:value="progress_value")
         meter(:value="progress_value")
@@ -27,15 +25,15 @@
           template(v-for="e in current_data.kotae_list")
             .radio_element
               b-radio(size="" v-model="current_name" :native-value="e.name")
-                span(v-text="e.name")
+                span.radio_name(v-text="e.name")
 
       template(v-if="scene === 'sm_life_zero' || scene === 'sm_all_clear'")
         .box.has-text-centered
-          | 正解数:{{o_count}}
+          | せいかい {{o_count}}
           br
-          | 正解率:{{answer_parcentage}}
+          | せいかいりつ {{answer_parcentage}}
           br
-          | 所要時間: {{time_format(total_counter / accuracy)}}
+          | じかん {{time_format(total_counter / accuracy)}}
           br
           a.button.is-info.is-rounded.tweet_button(:href="twitter_url" target="_blank") ツイート
 
@@ -51,10 +49,32 @@
             li o_count: {{o_count}} {{answer_parcentage}}
             li x_count: {{x_count}}
 
-      .credit.has-text-white.has-text-centered.is-size-7
-        | 使用した音素材:
-        |
-        a.has-text-white(href="https://otologic.jp" target="_blank") OtoLogic
+      a.credit.has-text-white.has-text-centered.is-size-6(@click.prevent="credit_modal_p = true") クレジット
+
+  b-modal(:active.sync="credit_modal_p")
+    header.modal-card-head
+      p.modal-card-title
+        | クレジット
+    section.modal-card-body
+      | フォント:
+      |
+      a(href="https://aramugi.com/?page_id=807" target="_blank") あらむぎ
+      |
+      | さま
+      br
+      | おとそざい:
+      |
+      a(href="https://otologic.jp" target="_blank") OtoLogic
+      |
+      | さま
+      br
+      | がぞう:
+      |
+      | スプラトゥーンこうしきツイッター さま
+    template(v-if="true")
+      footer.modal-card-foot
+        button.button.is-primary.spla_font(@click.prevent="credit_modal_p = false") とじる
+
 </template>
 
 <script>
@@ -66,7 +86,8 @@ import splatoon2_weapon_list from "./splatoon2_weapon_list.js"
 import o_mp3 from "@/assets/oto_logic/Quiz-Correct_Answer02-1.mp3"
 import x_mp3 from "@/assets/oto_logic/Quiz-Wrong_Buzzer02-1.mp3"
 import start_mp3 from "@/assets/oto_logic/Quiz-Question03-1.mp3"
-import sm_all_clear_mp3 from "@/assets/oto_logic/Quiz-Results02-1.mp3"
+import all_clear_mp3 from "@/assets/oto_logic/Quiz-Results02-1.mp3"
+
 import game_over_mp3 from "@/assets/oto_logic/Onmtp-Ding05-1.mp3"
 
 import bgm_mp3 from "@/assets/oto_logic/Loop02.mp3"
@@ -104,15 +125,24 @@ export default {
 
       count_down_bar_class: null,
       scene: "sm_standby",
+      credit_modal_p: false,
+      sound_list: [],
     }
   },
 
   created() {
+    // スクロール禁止 (スマホ用)
+    // https://qiita.com/shge/items/d2ae44621ce2eec183e6
+    document.addEventListener("touchmove", e => e.preventDefault(), {passive: false})
+
     this.quiz_max = this.$route.query.quiz_max
     if (this.NODE_ENV === 'production') {
       this.quiz_max = this.quiz_max || this.splatoon2_weapon_list.length
     } else {
       this.quiz_max = this.quiz_max || 5
+
+      // this.quiz_life_max_seconds = 10000
+      // this.player_life_max = 10000000
     }
   },
 
@@ -157,9 +187,10 @@ export default {
       this.total_counter = 0
       this.count_down_bar_class = "anime_on"
 
-      Howler.unload()
-      new Howl({src: bgm_mp3, autoplay: true, volume: 0.5, loop: true})
-      new Howl({src: start_mp3, autoplay: true, volume: 1.0})
+      // this.sound_stop()
+      this.sound_stop()
+      this.sound_play({src: bgm_mp3, autoplay: true, volume: 0.5, loop: true})
+      this.sound_play({src: start_mp3, autoplay: true, volume: 1.0})
 
       this.next_quiz_setup()
     },
@@ -196,7 +227,7 @@ export default {
         src = x_mp3
         volume = 1.0
       }
-      new Howl({src: src, autoplay: true, volume: volume})
+      this.sound_play({src: src, autoplay: true, volume: volume})
 
       if (v === "o_count") {
         // this.player_life += (this.quiz_life / this.accuracy) * this.o_life
@@ -205,14 +236,15 @@ export default {
         this.player_life += this.x_life
       }
       this.player_life = this.lodash.clamp(this.player_life, 0, this.player_life_max)
+      this.player_life_zero_check()
 
       this.$data[v] = this.$data[v] + 1
       this.current_index += 1
 
       if (!this.current_data) {
         this.scene = "sm_all_clear"
-        Howler.unload()
-        new Howl({src: sm_all_clear_mp3, autoplay: true, volume: 1.0})
+        this.sound_stop()
+        this.sound_play({src: all_clear_mp3, autoplay: true, volume: 1.0})
       }
 
       if (this.scene === "sm_running") {
@@ -223,7 +255,6 @@ export default {
             this.next_quiz_setup()
           }
         })
-        this.player_life_zero_check()
       }
     },
 
@@ -231,8 +262,8 @@ export default {
       if (this.player_life <= 0) {
         this.player_life = 0
         this.scene = "sm_life_zero"
-        Howler.unload()
-        new Howl({src: game_over_mp3, autoplay: true, volume: 1.0})
+        this.sound_stop()
+        this.sound_play({src: game_over_mp3, autoplay: true, volume: 1.0})
       }
     },
 
@@ -278,6 +309,15 @@ export default {
       })
       return quiz_list
     },
+
+    sound_play(params) {
+      this.sound_list.push(new Howl(params))
+    },
+
+    sound_stop() {
+      this.sound_list.forEach(e => e.stop())
+      this.sound_list = []
+    },
   },
 
   watch: {
@@ -322,6 +362,13 @@ ${window.location.href}`
 @import "../assets/scss/variables"
 @import "../assets/scss/splatoon_preset"
 
+@font-face
+  font-family: "SplaFontFace"
+  src: url(../assets/ikamodoki/ikamodoki1_0.ttf)
+
+.spla_font
+  font-family: "SplaFontFace"
+
 .splatoon2_weapon_quiz
   .weapon_image
     filter: drop-shadow(0px 0px 4px black)
@@ -329,22 +376,30 @@ ${window.location.href}`
     max-height: 40vh
 
   progress, meter
-    margin: 0.5em 0
+    margin: 5px 0
     width: 100%
+    border-radius: 4px
 
   .radio_element
-    line-height: 200%
+    line-height: 220%
+    .radio_name
+      position: relative
+      top: -1px
 
   .bar_wrap
-    .anime_off
-      animation-name: none
+    .bar
+      margin-top: 3px
+      margin-left: auto
+      margin-right: auto
+      &.anime_off
+        animation-name: none
 
-    .anime_on
-      animation: bar_anime1 0s linear 0s
-      height: 8px
-      border: 1px solid white
-      background: $sp_color_green_dark
-      border-radius: 4px
+      &.anime_on
+        animation: bar_anime1 0s linear 0s
+        height: 6px
+        border: 1px solid white
+        background: hsla(0, 50%, 100%, 0.5)
+        border-radius: 4px
 
   @keyframes bar_anime1
     0%
@@ -371,6 +426,7 @@ ${window.location.href}`
     height: 5%
     margin: auto
 
+// スクロール禁止(PC用)
 html
   overflow: hidden
 
@@ -378,6 +434,7 @@ html
   background-color: $sp_color_red_dark
   background-image: repeating-linear-gradient(45deg, $sp_color_red_light, $sp_color_red_light 24px, transparent 0, transparent 48px)
   height: 200%
+  overflow: hidden
 
   position: absolute
   top: 0
