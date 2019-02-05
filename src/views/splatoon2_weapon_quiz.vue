@@ -3,7 +3,7 @@
   template(v-if="scene === 'sm_standby' || scene === 'sm_life_zero' || scene === 'sm_all_clear'")
     .is-5.field.title.has-text-centered.has-text-white
       div スプラトゥーン2
-      div ブキクイズ
+      div ブキめいクイズ
 
   .columns
     .column
@@ -12,17 +12,11 @@
           a.button.is-rounded.start_button(@click.prevent="start_handle") スタート
 
       template(v-if="scene === 'sm_running'")
-        .my_bar.player_life_bar(:style="{width: `${player_life_bar_rate * 100}%`}")
-        .has-text-centered
+        .basic_bar.player_life_bar(:style="{width: `${player_life_bar_rate * 100}%`}")
+        .image_container.has-text-centered
           img.weapon_image(:src="require(`@/assets/splatoon2_weapon_list/${current_data.master.key}_xlarge.png`)")
 
-        //- .bar_wrap
-        //-   .bar(:class="count_down_bar_class" ref="count_down_bar" :style="{animationDuration: `${quiz_life_max_seconds}s`}")
-
-        //- progress(:value="progress_value")
-        //- meter(:value="progress_value")
-
-        .my_bar.time_limit_bar(:style="{width: `${time_limit_bar_rate * 100}%`}")
+        .basic_bar.time_limit_bar(:style="{width: `${time_limit_bar_rate * 100}%`}")
         .box
           ul
             li.radio_element(v-for="e in current_data.choice_list" :key="e.key" @click.prevent="answerd_data_set(e)") {{e.name}}
@@ -122,14 +116,15 @@ export default {
 
       quiz_list: null,
 
-      count_down_bar_class: null,
+      // count_down_bar_class: null,
       scene: "sm_standby",
       credit_modal_p: false,
       sound_list: [],
 
-      tapFlag: false,
+      tap_p: false,
       timer: null,
-      last_touch: 0
+      last_touch: 0,
+      interval_id: null,
     }
   },
 
@@ -152,8 +147,10 @@ export default {
   },
 
   beforeDestroy() {
-    clearInterval(this.interval_id)
-    // clearInterval(this.interval_id2)
+    if (this.interval_id) {
+      clearInterval(this.interval_id)
+      this.interval_id = null
+    }
   },
 
   methods: {
@@ -186,7 +183,7 @@ export default {
       this.o_count = 0
       this.x_count = 0
       this.total_counter = 0
-      this.count_down_bar_class = "anime_on"
+      // this.count_down_bar_class = "anime_on"
 
       // this.sound_stop()
       this.sound_stop()
@@ -200,36 +197,18 @@ export default {
       this.quiz_life = this.quiz_life_max_seconds * this.accuracy
 
       if (this.$refs.count_down_bar) {
-
-        // this.$refs.count_down_bar.classList.remove("anime_on")
-        // this.$nextTick(() => { this.$refs.count_down_bar.classList.add("anime_on") })
-
         const parent = this.$refs.count_down_bar.parentElement
         parent.removeChild(this.$refs.count_down_bar)
         parent.appendChild(this.$refs.count_down_bar)
       }
-
-      // this.$nextTick(() => {
-      //   this.$nextTick(() => { this.count_down_bar_class = "anime_on" })
-      // })
     },
 
     count_add(v) {
-      let src = null
-      let volume = null
       if (v === "o_count") {
-        src = o_mp3
-        volume = 1.0
-      } else {
-        src = x_mp3
-        volume = 1.0
-      }
-      this.sound_play({src: src, autoplay: true, volume: volume})
-
-      if (v === "o_count") {
-        // this.player_life += (this.quiz_life / this.accuracy) * this.o_life
+        this.sound_play({src: o_mp3, autoplay: true, volume: 1.0})
         this.player_life += this.o_life
       } else {
+        this.sound_play({src: x_mp3, autoplay: true, volume: 1.0})
         this.player_life += this.x_life
       }
       this.player_life = this.lodash.clamp(this.player_life, 0, this.player_life_max)
@@ -410,9 +389,17 @@ ${window.location.href}`
     max-height: 40vh
     transition: all 0.5s 0s linear
 
+  //   animation: animation1 1s ease-in-out 0s
+  //
+  // @keyframes animation1
+  //   0%
+  //     filter: blur(100px)
+  //   100%
+  //     filter: blur(0px)
+
   .start_button
-    margin-top: 1em
-    margin-bottom: 1em
+    margin-top: 2em
+    margin-bottom: 2em
 
   progress, meter
     margin: 5px 0
@@ -431,7 +418,7 @@ ${window.location.href}`
     100%
       width: 0%
 
-  .my_bar
+  .basic_bar
     border: 1px solid white
     background: hsla(0, 50%, 100%, 0.3)
     transition: all 0.1s 0s linear
@@ -466,6 +453,11 @@ ${window.location.href}`
     bottom: 0%
     height: 5%
     margin: auto
+
+  // .abcd-enter-active, .abcd-leave-active
+  //   transition: opacity .5s
+  // .abcd-enter, .abcd-leave-to
+  //   opacity: 0
 
 // スクロール禁止(PC用)
 html, body
