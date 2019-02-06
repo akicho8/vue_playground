@@ -1,5 +1,5 @@
 <template lang="pug">
-.splatoon2_weapon_quiz.spla_font.is-unselectable
+.splatoon2_weapon_quiz.spla_basic_font.is-unselectable
   template(v-if="scene === 'sm_standby' || scene === 'sm_life_zero' || scene === 'sm_all_clear'")
     .is-5.field.title.has-text-centered.has-text-white
       div スプラトゥーン2
@@ -19,7 +19,8 @@
         .basic_bar.time_limit_bar(:style="{width: `${time_limit_bar_rate * 100}%`}")
         .box
           ul
-            li.selection(v-for="e in current_data.choice_list" :key="e.key" @click.prevent="answerd_data_set(e)") {{e.name}}
+            li.selection(v-for="e in current_data.choice_list" :key="e.key" @click.prevent="answerd_data_set(e)")
+              span.spla_weapon_font {{hyphen_replace(e.name)}}
 
       template(v-if="scene === 'sm_life_zero' || scene === 'sm_all_clear'")
         .field.has-text-centered.has-text-white
@@ -69,7 +70,7 @@
       a(href="https://twitter.com/splatoonjp" target="_blank") スプラトゥーンこうしきツイッター
     template(v-if="true")
       footer.modal-card-foot
-        button.button.is-primary.spla_font(@click.prevent="credit_modal_p = false") とじる
+        button.button.is-primary.spla_basic_font(@click.prevent="credit_modal_p = false") とじる
 
   link(href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet")
 </template>
@@ -162,6 +163,11 @@ export default {
   },
 
   methods: {
+    hyphen_replace(str) {
+      return str
+      // return str.replace(/-/g, "ー")
+    },
+
     interval_handle() {
       if (this.scene === "sm_running") {
         this.total_counter += 1
@@ -404,8 +410,15 @@ ${window.location.href}`
   font-family: "IkamodokiFontFace"
   src: url(../assets/ikamodoki/ikamodoki1_0.ttf)
 
-.spla_font
+.spla_basic_font
   font-family: "IkamodokiFontFace", "ProjectPaintballFontFace", "M PLUS Rounded 1c", sans-serif
+  
+// IkamodokiFontFace だとハイフンがイカになるため普通に表示される ProjectPaintballFontFace を優先する
+// そしてなぜか上寄りなので下方向に微調整
+.spla_weapon_font
+  font-family: "ProjectPaintballFontFace", "IkamodokiFontFace", "M PLUS Rounded 1c", sans-serif
+  position: relative
+  top: 2px
 
 .splatoon2_weapon_quiz
   .weapon_image
