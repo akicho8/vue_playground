@@ -37,6 +37,7 @@
               MenuElement(name="css_pattern_test")
               MenuElement(name="css_animation_restart")
               MenuElement(name="css_pattern_test2")
+              MenuElement(name="image_switch_test")
 
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link Google API
@@ -59,9 +60,10 @@
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
             .navbar-dropdown.is-boxed
+              MenuElement(name="vue_inline_render_component_test")
               MenuElement(name="create_object_url_test")
-              MenuElement(name="fabric_test1")
-              MenuElement(name="fabric_test2")
+              MenuElement(name="fabric_basic_test")
+              MenuElement(name="fabric_export_test")
               MenuElement(name="vue_script2_test1")
               MenuElement(name="vue_script2_test2")
               MenuElement(name="tinymce_vue_test")
@@ -130,7 +132,6 @@
   .section
     .container.is-fluid
       router-view
-  .bg-window
 
   template(v-if="false")
     template(v-if="$route.query.layout !== 'simple'")

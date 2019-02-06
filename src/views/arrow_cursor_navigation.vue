@@ -9,8 +9,8 @@
     img(:src="sample_image")
 
     .arrow_cursor_navigation_wrap
-      .arrow_cursor.arrow_up(@click="relative_move_to(+1)" :class="relative_move_to_p(+1) ? 'active' : 'inactive'")
-      .arrow_cursor.arrow_do(@click="relative_move_to(-1)" :class="relative_move_to_p(-1) ? 'active' : 'inactive'")
+      .arrow_cursor.arrow_up(@click="sample_image_relative_move_to(+1)" :class="sample_image_relative_move_to_p(+1) ? 'active' : 'inactive'")
+      .arrow_cursor.arrow_do(@click="sample_image_relative_move_to(-1)" :class="sample_image_relative_move_to_p(-1) ? 'active' : 'inactive'")
 
 </template>
 

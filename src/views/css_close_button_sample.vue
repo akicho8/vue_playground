@@ -5,7 +5,7 @@
 
   .target_box
     img(:src="sample_image")
-    a.close_button(@click.prevent="sample_image_shuffle")
+    a.close_button(@click.prevent="sample_image_index_set_random")
       span ×
 </template>
 

@@ -7,11 +7,37 @@
     .column
       article.message.is-primary
         .message-header
+          | Project Paintball
+        .message-body
+          .project_paintball_font
+            | {{sample_text}}
+          a(href="http://fizzystack.web.fc2.com/paintball-ja.html" target="_blank") http://fizzystack.web.fc2.com/paintball-ja.html
+
+    .column
+      article.message.is-primary
+        .message-header
           | イカモドキ
+        .message-body
+          .ikamodoki_font
+            | {{sample_text}}
+          a(href="https://aramugi.com/?page_id=807" target="_blank") https://aramugi.com/?page_id=807
+
+    .column
+      article.message.is-primary
+        .message-header
+          | M PLUS Rounded 1c
+        .message-body
+          .m_plus_font
+            | {{sample_text}}
+          a(href="https://fonts.google.com/?subset=japanese&selection.family=M+PLUS+Rounded+1c:700" target="_blank") https://fonts.google.com/?subset=japanese&selection.family=M+PLUS+Rounded+1c:700
+    .column
+      article.message.is-primary
+        .message-header
+          | Project Paintball + イカモドキ + M PLUS Rounded 1c
         .message-body
           .spla_font
             | {{sample_text}}
-          a(href="https://aramugi.com/?page_id=807" target="_blank") https://aramugi.com/?page_id=807
+  .columns
     .column
       article.message.is-primary
         .message-header
@@ -29,8 +55,8 @@
             | {{sample_text}}
           a(href="https://googlefonts.github.io/japanese/#hannari" target="_blank") https://googlefonts.github.io/japanese/#hannari
 
-  link(href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet")
-  link(href="https://fonts.googleapis.com/earlyaccess/hannari.css" rel="stylesheet")
+  //- link(href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet")
+  //- link(href="https://fonts.googleapis.com/earlyaccess/hannari.css" rel="stylesheet")
 </template>
 
 <script>
@@ -49,7 +75,7 @@ abcdefghijklmnopqrstuvwxyz
 ABCDEFGHIJKLMNOPQRSTUVWXYZ
 ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ
 ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ
-+ ! @ # $ % & ( )
++ - ! @ # $ % & ( )
 `
     }
   },
@@ -59,25 +85,52 @@ ABCDEFGHIJKLMNOPQRSTUVWXYZ
 <style scoped lang="sass">
 @import "../assets/scss/variables"
 
+@import url("https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:700")
+@import url("https://fonts.googleapis.com/earlyaccess/nicomoji.css")
+@import url("https://fonts.googleapis.com/earlyaccess/hannari.css")
+
 .message-body
   word-break: break-all
 
-//////////////////////////////////////////////////////////////////////////////// 「イカモドキ」フォントの場所がわかるもの
+//////////////////////////////////////////////////////////////////////////////// イカモドキ
 @font-face
-  font-family: "SplaFontFace"
+  font-family: "IkamodokiFontFace"
   src: url(../assets/ikamodoki/ikamodoki1_0.ttf)
 
-.spla_font
-  font-family: "SplaFontFace"   // font-family: "SplaFontFace", "Nico Moji" のようにするとアルファベットは "Nico Moji" を使うようになる
+//////////////////////////////////////////////////////////////////////////////// project_paintball
+@font-face
+  font-family: "ProjectPaintballFontFace"
+  src: url(../assets/project_paintball/project_paintball_beta_4_by_japanyoshi-d93slk4.otf)
+  // これは project_paintball にあったものだけど公式のなので使ってはならん
+  // src: url(../assets/project_paintball/Splatoon1.otf)
+  // src: url(../assets/project_paintball/Splatoon2.otf)
+
+.ikamodoki_font
+  font-family: "IkamodokiFontFace"   // font-family: "IkamodokiFontFace", "Nico Moji" のようにするとアルファベットは "Nico Moji" を使うようになる
   font-size: 150%
 
-//////////////////////////////////////////////////////////////////////////////// 「ニコもじ」Google Font を使う場合は link を読み込んでこれ
+//////////////////////////////////////////////////////////////////////////////// ニコもじ
 .nico_moji_font
   font-family: "Nico Moji"
   font-size: 150%
 
-//////////////////////////////////////////////////////////////////////////////// 「はんなり」Google Font を使う場合は link を読み込んでこれ
+//////////////////////////////////////////////////////////////////////////////// はんなり
 .hannari_font
   font-family: "hannari"
+  font-size: 150%
+
+//////////////////////////////////////////////////////////////////////////////// 「M PLUS Rounded 1c」Google Font。@import で読み込む方法をつかっている
+.m_plus_font
+  font-family: "M PLUS Rounded 1c", sans-serif
+  font-size: 150%
+
+//////////////////////////////////////////////////////////////////////////////// 「M PLUS Rounded 1c」Google Font。@import で読み込む方法をつかっている
+.project_paintball_font
+  font-family: "ProjectPaintballFontFace", sans-serif
+  font-size: 150%
+
+//////////////////////////////////////////////////////////////////////////////// 合成
+.spla_font
+  font-family: "ProjectPaintballFontFace", "IkamodokiFontFace", "M PLUS Rounded 1c", sans-serif
   font-size: 150%
 </style>

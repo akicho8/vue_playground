@@ -3,7 +3,7 @@
   h2.title {{current_title}}
   hr
 
-  button.button(@click="restart_handle") 再実行
+  button.button(@click="restart_handle") 再スタート
 
   div
     .my_bar(ref="my_bar_ref")

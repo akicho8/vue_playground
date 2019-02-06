@@ -33,6 +33,9 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
 
+    { meta: { title: "ImageSwitchTest",     }, path: '/image_switch_test',                name: 'image_switch_test',                component: () => import(/* webpackChunkName: "image_switch_test" */ './views/image_switch_test.vue'),                       },
+    { meta: { title: "Vueの即席コンポでrenderする例",                  }, path: '/vue_inline_render_component_test',                name: 'vue_inline_render_component_test',                component: () => import(/* webpackChunkName: "vue_inline_render_component_test" */ './views/vue_inline_render_component_test.vue'),                       },
+
     { meta: { title: "CSS 背景パターン"                                }, path: '/css_pattern_test',            name: 'css_pattern_test',            component: () => import(/* webpackChunkName: "css_pattern_test" */ './views/css_pattern_test.vue'),                         },
     { meta: { title: "CSS アニメーション 再スタート"                   }, path: '/css_animation_restart',       name: 'css_animation_restart',       component: () => import(/* webpackChunkName: "css_animation_restart" */ './views/css_animation_restart.vue'),               },
     { meta: { title: "CSS スタイル実験"                                }, path: '/css_pattern_test2',           name: 'css_pattern_test2',           component: () => import(/* webpackChunkName: "css_pattern_test2" */ './views/css_pattern_test2.vue'),                       },
@@ -94,8 +97,8 @@ export default new Router({
     { meta: { title: "TinyMCE"                                         }, path: '/tinymce_vue_test',            name: 'tinymce_vue_test',            component: () => import(/* webpackChunkName: "tinymce_vue_test" */ './views/tinymce_vue_test.vue'),                         },
     { meta: { title: "vue-script2: 自分でscript2に変換して張る→成功", }, path: '/vue_script2_test1',           name: 'vue_script2_test1',           component: () => import(/* webpackChunkName: "vue_script2_test1" */ './views/vue_script2_test1.vue'),                       },
     { meta: { title: "vue-script2: 自動で変換してv-htmlで入力→失敗",  }, path: '/vue_script2_test2',           name: 'vue_script2_test2',           component: () => import(/* webpackChunkName: "vue_script2_test2" */ './views/vue_script2_test2.vue'),                       },
-    { meta: { title: "fabric_test1",                                   }, path: '/fabric_test1',                name: 'fabric_test1',                component: () => import(/* webpackChunkName: "fabric_test1" */ './views/fabric_test1.vue'),                       },
-    { meta: { title: "fabric_test2",                                   }, path: '/fabric_test2',                name: 'fabric_test2',                component: () => import(/* webpackChunkName: "fabric_test2" */ './views/fabric_test2.vue'),                       },
+    { meta: { title: "図形表示 fabric の簡単な使い方",                 }, path: '/fabric_basic_test',                name: 'fabric_basic_test',                component: () => import(/* webpackChunkName: "fabric_basic_test" */ './views/fabric_basic_test.vue'),                       },
+    { meta: { title: "図形表示 fabric の詳しい使い方",                 }, path: '/fabric_export_test',                name: 'fabric_export_test',                component: () => import(/* webpackChunkName: "fabric_export_test" */ './views/fabric_export_test.vue'),                       },
     { meta: { title: "HTML5 dialog (Chromeしか対応してない)",          }, path: '/html5_dialog_test',                name: 'html5_dialog_test',                component: () => import(/* webpackChunkName: "html5_dialog_test" */ './views/html5_dialog_test.vue'),                       },
     { meta: { title: "データをURL化する createObjectURL のテスト",     }, path: '/create_object_url_test',                name: 'create_object_url_test',                component: () => import(/* webpackChunkName: "create_object_url_test" */ './views/create_object_url_test.vue'),                       },
   ]

@@ -19,7 +19,7 @@
         .basic_bar.time_limit_bar(:style="{width: `${time_limit_bar_rate * 100}%`}")
         .box
           ul
-            li.radio_element(v-for="e in current_data.choice_list" :key="e.key" @click.prevent="answerd_data_set(e)") {{e.name}}
+            li.selection(v-for="e in current_data.choice_list" :key="e.key" @click.prevent="answerd_data_set(e)") {{e.name}}
 
       template(v-if="scene === 'sm_life_zero' || scene === 'sm_all_clear'")
         .field.has-text-centered.has-text-white
@@ -30,7 +30,7 @@
           br
           | せいかいりつ {{answer_parcentage}}
           br
-          | じかん {{time_format(total_counter / accuracy)}}
+          | タイム {{time_format(total_counter / accuracy)}}
           br
           a.button.is-info.is-rounded.tweet_button(:href="twitter_url" target="_blank") ツイート
 
@@ -45,7 +45,8 @@
             li quiz_life_max_seconds: {{quiz_life_max_seconds}}
             li player_life_bar_rate: {{player_life_bar_rate}}
 
-      a.credit.has-text-white.has-text-centered.is-size-6(@click.prevent="credit_modal_p = true") クレジット
+      template(v-if="scene === 'sm_standby' || scene === 'sm_life_zero' || scene === 'sm_all_clear'")
+        a.credit.has-text-white.has-text-centered.is-size-6(@click.prevent="credit_modal_p = true") クレジット
 
   b-modal(:active.sync="credit_modal_p")
     header.modal-card-head
@@ -53,12 +54,15 @@
         | クレジット
     section.modal-card-body
       | フォント:
-      |
-      a(href="https://aramugi.com/?page_id=807" target="_blank") イカモドキ (あらむぎ さま)
+      a(href="https://aramugi.com/?page_id=807" target="_blank") イカモドキ(あらむぎ)
+      br
+      a(href="http://fizzystack.web.fc2.com/paintball-ja.html" target="_blank") Project Paintball(JapanYoshi)
+      br
+      a(href="https://googlefonts.github.io/japanese/" target="_blank") M PLUS Rounded 1c
       br
       | おとそざい:
       |
-      a(href="https://otologic.jp" target="_blank") OtoLogic さま
+      a(href="https://otologic.jp" target="_blank") OtoLogic
       br
       | がぞう:
       |
@@ -129,6 +133,8 @@ export default {
   },
 
   created() {
+    this.bg_window_create()
+
     this.user_scalable_none()
 
     this.quiz_max = this.$route.query.quiz_max
@@ -147,6 +153,8 @@ export default {
   },
 
   beforeDestroy() {
+    this.bg_window_destroy()
+
     if (this.interval_id) {
       clearInterval(this.interval_id)
       this.interval_id = null
@@ -323,10 +331,21 @@ export default {
       // }, {passive: false})
     },
 
-  },
+    bg_window_create() {
+      const app = document.querySelector("#app")
+      if (app) {
+        const elem = document.createElement("div")
+        elem.classList.add("bg-window")
+        app.appendChild(elem)
+      }
+    },
 
-  watch: {
-    // answerd_data()     { this.answerd_data_set() },
+    bg_window_destroy() {
+      const elem = document.querySelector(".bg-window")
+      if (elem) {
+        elem.parentNode.removeChild(elem)
+      }
+    },
   },
 
   computed: {
@@ -375,12 +394,18 @@ ${window.location.href}`
 @import "../assets/scss/variables"
 @import "../assets/scss/splatoon_preset"
 
+@import url("https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:900")
+
 @font-face
-  font-family: "SplaFontFace"
+  font-family: "ProjectPaintballFontFace"
+  src: url(../assets/project_paintball/project_paintball_beta_4_by_japanyoshi-d93slk4.otf)
+
+@font-face
+  font-family: "IkamodokiFontFace"
   src: url(../assets/ikamodoki/ikamodoki1_0.ttf)
 
 .spla_font
-  font-family: "SplaFontFace", "Nico Moji"
+  font-family: "IkamodokiFontFace", "ProjectPaintballFontFace", "M PLUS Rounded 1c", sans-serif
 
 .splatoon2_weapon_quiz
   .weapon_image
@@ -406,11 +431,16 @@ ${window.location.href}`
     width: 100%
     border-radius: 4px
 
-  .radio_element
+  .selection
     color: inherit
     width: 100%
     font-size: 120%
     line-height: 220%
+    cursor: pointer
+    padding-left: 1em
+    &:hover
+      border-radius: 1em
+      background: hsla(331, 100%, 0%, 0.1)
 
   @keyframes bar_anime1
     0%

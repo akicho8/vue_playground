@@ -1,5 +1,5 @@
 <template lang="pug">
-.fabric_test1
+.fabric_basic_test
   h2.title {{current_title}}
   hr
   canvas(ref="my_canvas" width="320" height="240")
@@ -10,7 +10,7 @@
 import { fabric } from "fabric"
 
 export default {
-  name: "fabric_test1",
+  name: "fabric_basic_test",
   mounted() {
     const canvas_obj = new fabric.Canvas(this.$refs.my_canvas)
     const rect = new fabric.Rect({width: 80, height: 64, fill: '#00d1b2'})
