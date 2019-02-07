@@ -14,10 +14,10 @@
       template(v-if="scene === 'sm_running'")
         .basic_bar.player_life_bar(:style="{width: `${player_life_bar_rate * 100}%`}")
 
-        .example.is-size-7
-          .album_box
-            transition(name="effect" appear)
-              img(:src="require(`@/assets/splatoon2_weapon_list/${current_data.master.key}_xlarge.png`)" :key="current_data.master.key")
+        .image_box
+          img.sub_image(:src="require(`@/assets/splatoon2_weapon_list/${current_data.master.key}_xlarge.png`)")
+          transition(name="effect" appear)
+            img.main_image(:src="require(`@/assets/splatoon2_weapon_list/${current_data.master.key}_xlarge.png`)" :key="current_data.master.key")
 
         .basic_bar.time_limit_bar(:style="{width: `${time_limit_bar_rate * 100}%`}")
         .box
@@ -426,30 +426,28 @@ ${window.location.href}`
 $image_height: 40vh
 $transition_x: 90vw        // スライド量
 
-.example
-  margin-top: 1em
-  .album_box
+.splatoon2_weapon_quiz
+  .image_box
     position: relative
-    border: 1px dotted $primary
+    // border: 1px dotted $primary
 
-    width: auto
-    height: 240px
+    // スライドする画像と同じサイズのエリアを確保するため
+    .sub_image
+      display: block        // inline 要素のままだと隙間ができるため
+      visibility: hidden
+      max-height: 40vh
 
-    margin: 0.5em auto
-
-    img
+    .main_image
       position: absolute
       top: 0
       left: 0
       right: 0
       bottom: 0
       margin: auto
-      border: 1px dotted $info
+      // border: 1px dotted $info
       height: 100%
-      width: 100%
       filter: drop-shadow(0px 0px 4px black)
       border-radius: 10px
-      object-fit: scale-down
 
     .effect-enter-active, .effect-leave-active
       transition: all 0.5s ease
@@ -459,19 +457,6 @@ $transition_x: 90vw        // スライド量
       transform: translateX(-$transition_x)
     .effect-enter, .effect-leave-to
       opacity: 0
-
-.splatoon2_weapon_quiz
-  .weapon_image
-    max-height: 40vh
-    transition: all 0.5s 0s linear
-
-  //   animation: animation1 1s ease-in-out 0s
-  //
-  // @keyframes animation1
-  //   0%
-  //     filter: blur(100px)
-  //   100%
-  //     filter: blur(0px)
 
   .start_button
     margin-top: 2em
@@ -534,11 +519,6 @@ $transition_x: 90vw        // スライド量
     bottom: 0%
     height: 5%
     margin: auto
-
-  // .abcd-enter-active, .abcd-leave-active
-  //   transition: opacity .5s
-  // .abcd-enter, .abcd-leave-to
-  //   opacity: 0
 
 // スクロール禁止(PC用)
 html, body
