@@ -37,7 +37,7 @@
               MenuElement(name="css_pattern_test")
               MenuElement(name="css_animation_restart")
               MenuElement(name="css_pattern_test2")
-              MenuElement(name="image_switch_test")
+              MenuElement(name="vue_transition_test")
 
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link Google API

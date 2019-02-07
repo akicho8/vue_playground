@@ -1,16 +1,12 @@
 <template lang="pug">
-.image_switch_test
+.vue_transition_test
   h2.title {{current_title}}
   hr
 
   .columns
     .column.is-one-quarter
       .title.is-5 transition
-      //- form_parts
-      //- .field
       .buttons
-        //- a.button(@click="sample_image_relative_move_to(-1)") ←
-        //- a.button(@click="sample_image_relative_move_to(+1)") →
         a.button(@click="sample_image_index_cycle") cycle
     .column
       .example.is-size-7
@@ -53,34 +49,8 @@
 </template>
 
 <script>
-import form_parts from "./form_parts.vue"
-import sample_images_hash from "./sample_images_hash.js"
-
 export default {
-  name: "image_switch_test",
-  components: {
-    form_parts,
-  },
-  data() {
-    return {
-      form_parts: [
-        { key: "sample_image_index",  name: "インデックス", default_value: 0, type: "range", params: { min: 0, max: Object.values(sample_images_hash).length - 1, step: 1, }, },
-      ],
-    }
-  },
-
-  created() {
-    this.all_reset()
-  },
-
-  methods: {
-    all_reset() {
-      this.form_parts.forEach(e => this[e.key] = e.default_value)
-    },
-  },
-
-  computed: {
-  },
+  name: "vue_transition_test",
 }
 </script>
 

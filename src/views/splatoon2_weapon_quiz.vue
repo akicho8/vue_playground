@@ -13,8 +13,11 @@
 
       template(v-if="scene === 'sm_running'")
         .basic_bar.player_life_bar(:style="{width: `${player_life_bar_rate * 100}%`}")
-        .image_container.has-text-centered
-          img.weapon_image(:src="require(`@/assets/splatoon2_weapon_list/${current_data.master.key}_xlarge.png`)")
+
+        .example.is-size-7
+          .album_box
+            transition(name="effect" appear)
+              img(:src="require(`@/assets/splatoon2_weapon_list/${current_data.master.key}_xlarge.png`)" :key="current_data.master.key")
 
         .basic_bar.time_limit_bar(:style="{width: `${time_limit_bar_rate * 100}%`}")
         .box
@@ -412,7 +415,7 @@ ${window.location.href}`
 
 .spla_basic_font
   font-family: "IkamodokiFontFace", "ProjectPaintballFontFace", "M PLUS Rounded 1c", sans-serif
-  
+
 // IkamodokiFontFace だとハイフンがイカになるため普通に表示される ProjectPaintballFontFace を優先する
 // そしてなぜか上寄りなので下方向に微調整
 .spla_weapon_font
@@ -420,10 +423,45 @@ ${window.location.href}`
   position: relative
   top: 2px
 
+$image_height: 40vh
+$transition_x: 90vw        // スライド量
+
+.example
+  margin-top: 1em
+  .album_box
+    position: relative
+    border: 1px dotted $primary
+
+    width: auto
+    height: 240px
+
+    margin: 0.5em auto
+
+    img
+      position: absolute
+      top: 0
+      left: 0
+      right: 0
+      bottom: 0
+      margin: auto
+      border: 1px dotted $info
+      height: 100%
+      width: 100%
+      filter: drop-shadow(0px 0px 4px black)
+      border-radius: 10px
+      object-fit: scale-down
+
+    .effect-enter-active, .effect-leave-active
+      transition: all 0.5s ease
+    .effect-enter
+      transform: translateX($transition_x)
+    .effect-leave-to
+      transform: translateX(-$transition_x)
+    .effect-enter, .effect-leave-to
+      opacity: 0
+
 .splatoon2_weapon_quiz
   .weapon_image
-    filter: drop-shadow(0px 0px 4px black)
-    border-radius: 10px
     max-height: 40vh
     transition: all 0.5s 0s linear
 

@@ -33,7 +33,7 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
 
-    { meta: { title: "ImageSwitchTest",     }, path: '/image_switch_test',                name: 'image_switch_test',                component: () => import(/* webpackChunkName: "image_switch_test" */ './views/image_switch_test.vue'),                       },
+    { meta: { title: "CSS transiton (with Vue.js)",     }, path: '/vue_transition_test',                name: 'vue_transition_test',                component: () => import(/* webpackChunkName: "vue_transition_test" */ './views/vue_transition_test.vue'),                       },
     { meta: { title: "Vueの即席コンポでrenderする例",                  }, path: '/vue_inline_render_component_test',                name: 'vue_inline_render_component_test',                component: () => import(/* webpackChunkName: "vue_inline_render_component_test" */ './views/vue_inline_render_component_test.vue'),                       },
 
     { meta: { title: "CSS 背景パターン"                                }, path: '/css_pattern_test',            name: 'css_pattern_test',            component: () => import(/* webpackChunkName: "css_pattern_test" */ './views/css_pattern_test.vue'),                         },
