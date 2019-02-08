@@ -17,6 +17,7 @@
     "chart.js": "^2.7.3",
     "chroma-js": "^1.4.0",
     "class-transformer": "^0.1.10",
+    "css-browser-selector": "^0.6.5",
     "dayjs": "^1.7.7",
     "fabric": "^2.6.0",
     "howler": "^2.1.1",

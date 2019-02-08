@@ -1,6 +1,6 @@
 <template lang="pug">
 #app
-  template(v-if="$route.query.layout !== 'simple' && $route.meta.layout !== 'simple'")
+  template(v-if="current_layout !== 'simple'")
     nav.navbar.is-transparent.is-primary
       .navbar-brand
         router-link.navbar-item(to="/")
@@ -39,6 +39,7 @@
               MenuElement(name="css_pattern_test2")
               MenuElement(name="vue_transition_test")
               MenuElement(name="responsive_slide_image")
+              MenuElement(name="css_browser_selector_test")
 
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link Google API
@@ -130,12 +131,13 @@
             a.navbar-item(href="http://tk2-221-20341.vs.sakura.ne.jp/vp/" target="_blank") production
 
           router-link.navbar-item(:to="{name: 'about'}") About
-  .section
+
+  div(:class="{section: current_layout !== 'simple'}")
     .container.is-fluid
       router-view
 
   template(v-if="false")
-    template(v-if="$route.query.layout !== 'simple'")
+    template(v-if="current_layout !== 'simple'")
       footer.footer
         .content.has-text-centered
           a(href="https://github.com/akicho8/vue_playground") GitHub

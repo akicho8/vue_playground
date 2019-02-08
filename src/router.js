@@ -33,7 +33,8 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
 
-    { meta: { title: "transitonで切り替える画像のレスポンシブ対応",     }, path: '/responsive_slide_image',                name: 'responsive_slide_image',                component: () => import(/* webpackChunkName: "responsive_slide_image" */ './views/responsive_slide_image.vue'),                       },
+    { meta: { title: "ブラウザ情報をcssのクラスに変換して付与",        }, path: '/css_browser_selector_test',                name: 'css_browser_selector_test',                component: () => import(/* webpackChunkName: "css_browser_selector_test" */ './views/css_browser_selector_test.vue'),                       },
+    { meta: { title: "transitonで切り替える画像のレスポンシブ対応",    }, path: '/responsive_slide_image',                name: 'responsive_slide_image',                component: () => import(/* webpackChunkName: "responsive_slide_image" */ './views/responsive_slide_image.vue'),                       },
     { meta: { title: "CSS transiton (with Vue.js)",     }, path: '/vue_transition_test',                name: 'vue_transition_test',                component: () => import(/* webpackChunkName: "vue_transition_test" */ './views/vue_transition_test.vue'),                       },
     { meta: { title: "Vueの即席コンポでrenderする例",                  }, path: '/vue_inline_render_component_test',                name: 'vue_inline_render_component_test',                component: () => import(/* webpackChunkName: "vue_inline_render_component_test" */ './views/vue_inline_render_component_test.vue'),                       },
 

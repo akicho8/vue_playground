@@ -44,8 +44,9 @@ Vue.config.productionTip = false
 import './assets/scss/app.scss'
 
 import sample_image_mod from "./sample_image_mod.js"
-
 Vue.mixin(sample_image_mod)
+
+import "css-browser-selector"
 
 Vue.mixin({
   computed: {

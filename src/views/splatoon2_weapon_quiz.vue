@@ -5,52 +5,50 @@
       div スプラトゥーン2
       div ブキめいクイズ
 
-  .columns
-    .column
-      template(v-if="scene === 'sm_standby'")
-        .field.has-text-centered
-          a.button.is-rounded.start_button(@click.prevent="start_handle") スタート
+  template(v-if="scene === 'sm_standby'")
+    .field.has-text-centered
+      a.button.is-rounded.start_button(@click.prevent="start_handle") スタート
 
-      template(v-if="scene === 'sm_running'")
-        .basic_bar.player_life_bar(:style="{width: `${player_life_bar_rate * 100}%`}")
+  template(v-if="scene === 'sm_running'")
+    .basic_bar.player_life_bar(:style="{width: `${player_life_bar_rate * 100}%`}")
 
-        .image_box
-          img.sub_image(:src="require(`@/assets/splatoon2_weapon_list/${current_data.master.key}_xlarge.png`)")
-          transition(name="effect" appear)
-            img.main_image(:src="require(`@/assets/splatoon2_weapon_list/${current_data.master.key}_xlarge.png`)" :key="current_data.master.key")
+    .image_box
+      img.sub_image(:src="require(`@/assets/splatoon2_weapon_list/${current_data.master.key}_xlarge.png`)")
+      transition(name="effect" appear)
+        img.main_image(:src="require(`@/assets/splatoon2_weapon_list/${current_data.master.key}_xlarge.png`)" :key="current_data.master.key")
 
-        .basic_bar.time_limit_bar(:style="{width: `${time_limit_bar_rate * 100}%`}")
-        .box
-          ul
-            li.selection(v-for="e in current_data.choice_list" :key="e.key" @click.prevent="answerd_data_set(e)")
-              span.spla_weapon_font {{hyphen_replace(e.name)}}
+    .basic_bar.time_limit_bar(:style="{width: `${time_limit_bar_rate * 100}%`}")
+    .box
+      ul
+        li.selection(v-for="e in current_data.choice_list" :key="e.key" @click.prevent="answerd_data_set(e)")
+          span.spla_weapon_font {{hyphen_replace(e.name)}}
 
-      template(v-if="scene === 'sm_life_zero' || scene === 'sm_all_clear'")
-        .field.has-text-centered.has-text-white
-          a.button.is-rounded.start_button(@click.prevent="start_handle") スタート
+  template(v-if="scene === 'sm_life_zero' || scene === 'sm_all_clear'")
+    .field.has-text-centered.has-text-white
+      a.button.is-rounded.start_button(@click.prevent="start_handle") スタート
 
-        .box.has-text-centered
-          | せいかい {{o_count}}
-          br
-          | せいかいりつ {{answer_parcentage}}
-          br
-          | タイム {{time_format(total_counter / accuracy)}}
-          br
-          a.button.is-info.is-rounded.tweet_button(:href="twitter_url" target="_blank") ツイート
+    .box.has-text-centered
+      | せいかい {{o_count}}
+      br
+      | せいかいりつ {{answer_parcentage}}
+      br
+      | タイム {{time_format(total_counter / accuracy)}}
+      br
+      a.button.is-info.is-rounded.tweet_button(:href="twitter_url" target="_blank") ツイート
 
-      template(v-if="NODE_ENV !== 'production'")
-        .has-text-white
-          ul
-            li scene: {{scene}}
-            li total_counter: {{total_counter / accuracy}}
-            li quiz_list.length: {{quiz_list ? quiz_list.length : ""}}
-            li o_count: {{o_count}} {{answer_parcentage}}
-            li x_count: {{x_count}}
-            li quiz_life_max_seconds: {{quiz_life_max_seconds}}
-            li player_life_bar_rate: {{player_life_bar_rate}}
+  template(v-if="NODE_ENV !== 'production'")
+    .has-text-white
+      ul
+        li scene: {{scene}}
+        li total_counter: {{total_counter / accuracy}}
+        li quiz_list.length: {{quiz_list ? quiz_list.length : ""}}
+        li o_count: {{o_count}} {{answer_parcentage}}
+        li x_count: {{x_count}}
+        li quiz_life_max_seconds: {{quiz_life_max_seconds}}
+        li player_life_bar_rate: {{player_life_bar_rate}}
 
-      template(v-if="scene === 'sm_standby' || scene === 'sm_life_zero' || scene === 'sm_all_clear'")
-        a.credit.has-text-white.has-text-centered.is-size-6(@click.prevent="credit_modal_p = true") クレジット
+  template(v-if="scene === 'sm_standby' || scene === 'sm_life_zero' || scene === 'sm_all_clear'")
+    a.credit.has-text-white.has-text-centered.is-size-6(@click.prevent="credit_modal_p = true") クレジット
 
   b-modal(:active.sync="credit_modal_p")
     header.modal-card-head
@@ -58,9 +56,9 @@
         | クレジット
     section.modal-card-body
       | フォント:
-      a(href="https://aramugi.com/?page_id=807" target="_blank") イカモドキ(あらむぎ)
+      a(href="https://aramugi.com/?page_id=807" target="_blank") イカモドキ (あらむぎ)
       br
-      a(href="http://fizzystack.web.fc2.com/paintball-ja.html" target="_blank") Project Paintball(JapanYoshi)
+      a(href="http://fizzystack.web.fc2.com/paintball-ja.html" target="_blank") Project Paintball (JapanYoshi)
       br
       a(href="https://googlefonts.github.io/japanese/" target="_blank") M PLUS Rounded 1c
       br
@@ -146,6 +144,8 @@ export default {
       this.quiz_max = this.quiz_max || this.splatoon2_weapon_list.length
     } else {
       this.quiz_max = this.quiz_max || 50
+
+      this.quiz_max = 3
       // this.quiz_max = this.splatoon2_weapon_list.length
       // this.quiz_life_max_seconds = 10000
       // this.player_life_max = 10000000
@@ -154,6 +154,7 @@ export default {
 
   mounted() {
     this.interval_id = setInterval(this.interval_handle, 1000 / this.accuracy)
+    //- this.start_handle()
   },
 
   beforeDestroy() {
@@ -221,6 +222,9 @@ export default {
     },
 
     count_add(v) {
+      // const e = document.querySelector("body")
+      // e.scrollTop = 0
+
       if (v === "o_count") {
         this.sound_play({src: o_mp3, autoplay: true, volume: 1.0})
         this.player_life += this.o_life
@@ -320,7 +324,7 @@ export default {
       // スクロール禁止 (スマホ用)
       // https://qiita.com/shge/items/d2ae44621ce2eec183e6
       // document.addEventListener("touchmove", e => e.preventDefault(), {passive: false})
-      //
+
       // // ダブルタップ禁止 (スマホ用)
       // // https://qiita.com/peutes/items/d74e5758a36478fbc039#%E3%83%80%E3%83%96%E3%83%AB%E3%82%BF%E3%83%83%E3%83%97%E3%82%92%E9%98%B2%E3%81%90
       // document.addEventListener('touchend', e => {
@@ -330,9 +334,9 @@ export default {
       //   }
       //   this.last_touch = now
       // }, {passive: false})
-      //
-      // // 複数指で拡大縮小が出来てしまうのを防ぐ
-      // // https://qiita.com/peutes/items/d74e5758a36478fbc039#%E8%A4%87%E6%95%B0%E6%8C%87%E3%81%A7%E6%8B%A1%E5%A4%A7%E7%B8%AE%E5%B0%8F%E3%81%8C%E5%87%BA%E6%9D%A5%E3%81%A6%E3%81%97%E3%81%BE%E3%81%86%E3%81%AE%E3%82%92%E9%98%B2%E3%81%90
+
+      // 複数指で拡大縮小が出来てしまうのを防ぐ
+      // https://qiita.com/peutes/items/d74e5758a36478fbc039#%E8%A4%87%E6%95%B0%E6%8C%87%E3%81%A7%E6%8B%A1%E5%A4%A7%E7%B8%AE%E5%B0%8F%E3%81%8C%E5%87%BA%E6%9D%A5%E3%81%A6%E3%81%97%E3%81%BE%E3%81%86%E3%81%AE%E3%82%92%E9%98%B2%E3%81%90
       // document.addEventListener('touchstart', e => {
       //   if (e.touches.length > 1) {
       //     e.preventDefault()
@@ -427,6 +431,14 @@ $image_height: 40vh
 $transition_x: 90vw        // スライド量
 
 .splatoon2_weapon_quiz
+  padding: 0.5em
+
+  .title
+    margin-top: 1em
+    color: transparent ! important
+    font-size: 2.5em
+    -webkit-text-stroke: 1px hsla(0, 50%, 100%, 1.0)
+
   .image_box
     position: relative
     // border: 1px dotted $primary
@@ -497,14 +509,9 @@ $transition_x: 90vw        // スライド量
       height: 12px
 
     &.time_limit_bar
-      margin-top: 3px
-      margin-bottom: 4px
+      margin-top: 6px
+      margin-bottom: 5px
       height: 6px
-
-  .title
-    color: transparent ! important
-    font-size: 2.5em
-    -webkit-text-stroke: 1px hsla(0, 50%, 100%, 1.0)
 
   .box
     text-align: left
@@ -519,6 +526,13 @@ $transition_x: 90vw        // スライド量
     bottom: 0%
     height: 5%
     margin: auto
+
+// モバイルのとき選択した部分が次の問題になっても残ってしまう対策
+.mobile
+  .splatoon2_weapon_quiz
+    .selection
+      &:hover
+        background: none
 
 // スクロール禁止(PC用)
 html, body
@@ -543,4 +557,5 @@ html, body
       transform: translate3d(0, -50%, 0)
     100%
       transform: translate3d(0, 0, 0)
+
 </style>
