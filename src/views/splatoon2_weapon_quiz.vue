@@ -21,7 +21,10 @@
     .box
       ul
         li.selection(v-for="e in current_data.choice_list" :key="e.key" @click.prevent="answerd_data_set(e)")
-          span.spla_weapon_font {{hyphen_replace(e.name)}}
+          span.spla_weapon_font
+            template(v-if="NODE_ENV !== 'production' && current_data.master === e")
+              | ◎
+            | {{hyphen_replace(e.name)}}
 
   template(v-if="scene === 'sm_life_zero' || scene === 'sm_all_clear'")
     .field.has-text-centered.has-text-white
@@ -145,8 +148,8 @@ export default {
     } else {
       this.quiz_max = this.quiz_max || 50
 
-      this.quiz_max = 3
-      // this.quiz_max = this.splatoon2_weapon_list.length
+      // this.quiz_max = 3
+      this.quiz_max = this.splatoon2_weapon_list.length
       // this.quiz_life_max_seconds = 10000
       // this.player_life_max = 10000000
     }
