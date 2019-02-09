@@ -138,6 +138,7 @@ export default {
   },
 
   created() {
+
     this.bg_window_create()
 
     this.user_scalable_none()
@@ -156,6 +157,7 @@ export default {
   },
 
   mounted() {
+    this.preload_images()
     this.interval_id = setInterval(this.interval_handle, 1000 / this.accuracy)
     //- this.start_handle()
   },
@@ -170,6 +172,16 @@ export default {
   },
 
   methods: {
+    preload_images() {
+      this.splatoon2_weapon_list.forEach(e => {
+        const preload_link = document.createElement("link")
+        preload_link.href = require(`@/assets/splatoon2_weapon_list/${e.key}_xlarge.png`)
+        preload_link.rel = "preload"
+        preload_link.as = "image"
+        this.$el.appendChild(preload_link) // this.$el は document.querySelector(".splatoon2_weapon_quiz") のこと
+      })
+    },
+
     hyphen_replace(str) {
       return str
       // return str.replace(/-/g, "ー")
