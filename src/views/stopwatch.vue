@@ -12,7 +12,7 @@
           | {{time_format(lap_counter)}}
           |
           span.is-size-4.has-text-grey-light
-            | {{time_format(total_seconds2)}}
+            | {{ja_time_format(total_seconds2)}}
 
         .buttons
           template(v-if="mode === 'standby'")
