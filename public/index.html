@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="<%= NODE_ENV %>">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,9 +16,11 @@
     <noscript>
       <strong>We're sorry but vue_playground doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
+    <% if (NODE_ENV === 'production') { %>
     <script id="script_tag1" type="text/x-template">
       <div>{{foo}}</div>
     </script>
+    <% } %>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
