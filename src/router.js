@@ -33,6 +33,7 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
 
+    { meta: { title: "背景スクロールのモバイル検証", layout: "simple", }, path: '/bg_window_test',                name: 'bg_window_test',                component: () => import(/* webpackChunkName: "bg_window_test" */ './views/bg_window_test.vue'),                       },
     { meta: { title: "ブラウザ情報をcssのクラスに変換して付与",        }, path: '/css_browser_selector_test',                name: 'css_browser_selector_test',                component: () => import(/* webpackChunkName: "css_browser_selector_test" */ './views/css_browser_selector_test.vue'),                       },
     { meta: { title: "transitonで切り替える画像のレスポンシブ対応",    }, path: '/responsive_slide_image',                name: 'responsive_slide_image',                component: () => import(/* webpackChunkName: "responsive_slide_image" */ './views/responsive_slide_image.vue'),                       },
     { meta: { title: "CSS transiton (with Vue.js)",     }, path: '/vue_transition_test',                name: 'vue_transition_test',                component: () => import(/* webpackChunkName: "vue_transition_test" */ './views/vue_transition_test.vue'),                       },

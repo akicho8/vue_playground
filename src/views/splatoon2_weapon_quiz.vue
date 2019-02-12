@@ -1,5 +1,6 @@
 <template lang="pug">
 .splatoon2_weapon_quiz.spla_basic_font.is-unselectable
+  .bg-window
   template(v-if="scene === 'sm_standby' || scene === 'sm_life_zero' || scene === 'sm_all_clear'")
     .is-5.field.title.has-text-centered.has-text-white
       div スプラトゥーン2
@@ -442,105 +443,137 @@ ${window.location.href}`
   position: relative
   top: 2px
 
-$image_height: 40vh
 $transition_x: 90vw        // スライド量
 
-.splatoon2_weapon_quiz
-  padding: 0.5em
+html
+  overflow: hidden
 
-  .title
-    margin-top: 1em
-    color: transparent ! important
-    font-size: 2.5em
-    -webkit-text-stroke: 1px hsla(0, 50%, 100%, 1.0)
+  // 切り替わり時のちらつき軽減のため
+  background: $sp_color_red_light
 
-  .image_box
-    position: relative
-    // border: 1px dotted $primary
+  .splatoon2_weapon_quiz
+    // コンテンツのスクロールを禁止するため
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
 
-    // スライドする画像と同じサイズのエリアを確保するため
-    .sub_image
-      display: block        // inline 要素のままだと隙間ができるため
-      visibility: hidden
-      max-height: 40vh
+    padding: 0.5em
 
-    .main_image
-      position: absolute
+    .bg-window
+      border: 1px dotted $primary
+      background-color: $sp_color_red_dark
+      background-image: repeating-linear-gradient(45deg, $sp_color_red_light, $sp_color_red_light 24px, transparent 0, transparent 48px)
+      height: 2000%             // 200% 以上にする
+
+      position: fixed           // absolute だとモバイルでスクロールしてしまう
       top: 0
       left: 0
       right: 0
       bottom: 0
-      margin: auto
-      // border: 1px dotted $info
-      height: 100%
-      filter: drop-shadow(0px 0px 4px black)
-      border-radius: 10px
+      animation: scroll1 80s linear infinite
+      z-index: -1
 
-    .effect-enter-active, .effect-leave-active
-      transition: all 0.5s ease
-    .effect-enter
-      transform: translateX($transition_x)
-    .effect-leave-to
-      transform: translateX(-$transition_x)
-    .effect-enter, .effect-leave-to
-      opacity: 0
+      @keyframes scroll1
+        0%
+          transform: translate(0, -50%)
+        100%
+          transform: translate(0, 0)
 
-  .start_button
-    margin-top: 2em
-    margin-bottom: 2em
+    .title
+      margin-top: 1em
+      color: transparent ! important
+      font-size: 2.5em
+      -webkit-text-stroke: 1px hsla(0, 50%, 100%, 1.0)
 
-  progress, meter
-    margin: 5px 0
-    width: 100%
-    border-radius: 4px
+    .image_box
+      position: relative
+      // border: 1px dotted $primary
 
-  .selection
-    color: inherit
-    width: 100%
-    font-size: 120%
-    line-height: 220%
-    cursor: pointer
-    padding-left: 1em
-    &:hover
-      border-radius: 1em
-      background: hsla(331, 100%, 0%, 0.1)
+      // スライドする画像と同じサイズのエリアを確保するため
+      .sub_image
+        display: block        // inline 要素のままだと隙間ができるため
+        visibility: hidden
+        max-height: 40vh
 
-  @keyframes bar_anime1
-    0%
+      .main_image
+        position: absolute
+        top: 0
+        left: 0
+        right: 0
+        bottom: 0
+        margin: auto
+        // border: 1px dotted $info
+        height: 100%
+        filter: drop-shadow(0px 0px 4px black)
+        border-radius: 10px
+
+      .effect-enter-active, .effect-leave-active
+        transition: all 0.5s ease
+      .effect-enter
+        transform: translateX($transition_x)
+      .effect-leave-to
+        transform: translateX(-$transition_x)
+      .effect-enter, .effect-leave-to
+        opacity: 0
+
+    .start_button
+      margin-top: 2em
+      margin-bottom: 2em
+
+    progress, meter
+      margin: 5px 0
       width: 100%
-    100%
-      width: 0%
+      border-radius: 4px
 
-  .basic_bar
-    border: 1px solid white
-    background: hsla(0, 50%, 100%, 0.3)
-    transition: all 0.1s 0s linear
-    border-radius: 4px
-    margin-left: auto
-    margin-right: auto
+    .selection
+      color: inherit
+      width: 100%
+      font-size: 120%
+      line-height: 220%
+      cursor: pointer
+      padding-left: 1em
+      &:hover
+        border-radius: 1em
+        background: hsla(331, 100%, 0%, 0.1)
 
-    &.player_life_bar
-      margin-bottom: 5px
-      height: 12px
+    @keyframes bar_anime1
+      0%
+        width: 100%
+      100%
+        width: 0%
 
-    &.time_limit_bar
-      margin-top: 6px
-      margin-bottom: 5px
-      height: 6px
+    .basic_bar
+      border: 1px solid white
+      background: hsla(0, 50%, 100%, 0.3)
+      transition: all 0.1s 0s linear
+      border-radius: 4px
+      margin-left: auto
+      margin-right: auto
 
-  .box
-    text-align: left
+      &.player_life_bar
+        margin-bottom: 5px
+        height: 12px
 
-  .tweet_button
-    margin-top: 1em
+      &.time_limit_bar
+        margin-top: 6px
+        margin-bottom: 5px
+        height: 6px
 
-  .credit
-    position: fixed
-    left: 0%
-    right: 0%
-    bottom: 0%
-    height: 5%
-    margin: auto
+    .box
+      text-align: left
+
+    .tweet_button
+      margin-top: 1em
+
+    .credit
+      position: fixed
+      left: 0%
+      right: 0%
+      bottom: 0%
+      height: 5%
+      margin: auto
 
 // モバイルのとき選択した部分が次の問題になっても残ってしまう対策
 .mobile
@@ -548,29 +581,4 @@ $transition_x: 90vw        // スライド量
     .selection
       &:hover
         background: none
-
-// スクロール禁止(PC用)
-html, body
-  overflow: hidden
-
-.bg-window
-  background-color: $sp_color_red_dark
-  background-image: repeating-linear-gradient(45deg, $sp_color_red_light, $sp_color_red_light 24px, transparent 0, transparent 48px)
-  height: 200%
-  overflow: hidden
-
-  position: absolute
-  top: 0
-  left: 0
-  right: 0
-  bottom: 0
-  animation: scroll1 30s linear infinite
-  z-index: -1
-
-  @keyframes scroll1
-    0%
-      transform: translate3d(0, -50%, 0)
-    100%
-      transform: translate3d(0, 0, 0)
-
 </style>

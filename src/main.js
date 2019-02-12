@@ -54,7 +54,7 @@ Vue.mixin({
       return this.$options.title || this.$route.meta.title
     },
     current_layout() {
-      return this.$route.query.layout || this.$options.layout || this.$route.meta.layout
+      return this.$route.query.layout || this.$options.layout || this.$route.meta.layout || "basic"
     },
   },
 

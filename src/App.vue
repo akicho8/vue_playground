@@ -40,6 +40,7 @@
               MenuElement(name="vue_transition_test")
               MenuElement(name="responsive_slide_image")
               MenuElement(name="css_browser_selector_test")
+              MenuElement(name="bg_window_test")
 
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link Google API
@@ -132,12 +133,15 @@
 
           router-link.navbar-item(:to="{name: 'about'}") About
 
-  div(:class="{section: current_layout !== 'simple'}")
+  template(v-if="current_layout === 'basic'")
     .container.is-fluid
       router-view
 
+  template(v-if="current_layout === 'simple'")
+    router-view
+
   template(v-if="false")
-    template(v-if="current_layout !== 'simple'")
+    template(v-if="current_layout === 'basic'")
       footer.footer
         .content.has-text-centered
           a(href="https://github.com/akicho8/vue_playground") GitHub
