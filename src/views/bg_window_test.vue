@@ -1,6 +1,6 @@
 <template lang="pug">
 .bg_window_test
-  .bg-window
+  .bg_window
   .has-text-white
     | {{current_title}}
 </template>
@@ -34,11 +34,11 @@ html
     bottom: 0
 
     // ここから重要
-    .bg-window
+    .bg_window
       border: 1px dotted $primary
       background-color: $sp_color_green_dark
       background-image: repeating-linear-gradient(45deg, $sp_color_green_light, $sp_color_green_light 24px, transparent 0, transparent 48px)
-      height: 2000%             // 200% 以上にする
+      height: 2000vh            // 200vh 以上にする。200% 表記だとiPhoneでメニューから呼び出したとき縦幅が 200vh にならないので注意
 
       position: fixed           // absolute だとモバイルでスクロールしてしまう
       top: 0

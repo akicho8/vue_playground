@@ -1,6 +1,6 @@
 <template lang="pug">
 .splatoon2_weapon_quiz.spla_basic_font.is-unselectable
-  .bg-window
+  .bg_window
   template(v-if="scene === 'sm_standby' || scene === 'sm_life_zero' || scene === 'sm_all_clear'")
     .is-5.field.title.has-text-centered.has-text-white
       div スプラトゥーン2
@@ -148,7 +148,7 @@ export default {
 
   created() {
 
-    this.bg_window_create()
+    // this.bg_window_create()
 
     this.user_scalable_none()
 
@@ -172,7 +172,7 @@ export default {
   },
 
   beforeDestroy() {
-    this.bg_window_destroy()
+    // this.bg_window_destroy()
 
     if (this.interval_id) {
       clearInterval(this.interval_id)
@@ -392,21 +392,21 @@ export default {
       // }, {passive: false})
     },
 
-    bg_window_create() {
-      const app = document.querySelector("#app")
-      if (app) {
-        const elem = document.createElement("div")
-        elem.classList.add("bg-window")
-        app.appendChild(elem)
-      }
-    },
+    // bg_window_create() {
+    //   const app = document.querySelector("#app")
+    //   if (app) {
+    //     const elem = document.createElement("div")
+    //     elem.classList.add("bg_window")
+    //     app.appendChild(elem)
+    //   }
+    // },
 
-    bg_window_destroy() {
-      const elem = document.querySelector(".bg-window")
-      if (elem) {
-        elem.parentNode.removeChild(elem)
-      }
-    },
+    // bg_window_destroy() {
+    //   const elem = document.querySelector(".bg_window")
+    //   if (elem) {
+    //     elem.parentNode.removeChild(elem)
+    //   }
+    // },
   },
 
   computed: {
@@ -512,11 +512,11 @@ html
 
     padding: 0.5em
 
-    .bg-window
+    .bg_window
       border: 1px dotted $primary
       background-color: $sp_color_red_dark
       background-image: repeating-linear-gradient(45deg, $sp_color_red_light, $sp_color_red_light 24px, transparent 0, transparent 48px)
-      height: 2000%             // 200% 以上にする
+      height: 2000vh            // 200vh 以上にする。200% 表記だとiPhoneでメニューから呼び出したとき縦幅が 200vh にならないので注意
 
       position: fixed           // absolute だとモバイルでスクロールしてしまう
       top: 0
