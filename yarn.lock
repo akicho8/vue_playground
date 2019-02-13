@@ -11559,6 +11559,11 @@ vue-cli-plugin-buefy@^0.3.2:
   resolved "https://registry.yarnpkg.com/vue-cli-plugin-buefy/-/vue-cli-plugin-buefy-0.3.2.tgz#8edf02fd8dc1e15eb220b8e32ef5d868733a3b3a"
   integrity sha512-Tdr3T7VQwrbsbw6clwV57FjQP10rtwQcwIuG5kohw3iUBsVITWa/peXoskPr2rfi0o1Z0wLsUdhFRci91nmO7A==
 
+vue-cli-plugin-meta@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/vue-cli-plugin-meta/-/vue-cli-plugin-meta-0.1.1.tgz#e1abbb48ec2879b47227e04d3121cef34c579dc6"
+  integrity sha512-7D18jl398QWNMhsXscBe85uF3oo1cimO+uKG0k+GPrSyPqAF+RDWe16z5WDGCpTM1cI+ZEFoe5Fme+ZLg9wXUQ==
+
 vue-cli-plugin-pug@^1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/vue-cli-plugin-pug/-/vue-cli-plugin-pug-1.0.7.tgz#6ba0b3d402fdae80c0e788323df63fb9ea2e1598"

@@ -31,7 +31,7 @@
             template(v-if="current_data.master === e")
               span.item_mark.has-text-danger ◎
             template(v-if="e === answerd_data && current_data.master !== e")
-              span.item_mark.has-text-info &#x2716;
+              span.item_mark.has-text-info ×
             span.spla_weapon_font {{hyphen_replace(e.name)}}
 
   template(v-if="scene === 'sm_life_zero' || scene === 'sm_all_clear'")
@@ -60,30 +60,35 @@
         li player_life_bar_rate: {{player_life_bar_rate}}
 
   template(v-if="scene === 'sm_standby' || scene === 'sm_life_zero' || scene === 'sm_all_clear'")
-    a.credit.has-text-white.has-text-centered.is-size-6(@click.prevent="credit_modal_p = true") クレジット
+    a.credit.has-text-white.has-text-centered.is-size-7(@click.prevent="credit_modal_p = true") クレジット
 
   b-modal(:active.sync="credit_modal_p")
     header.modal-card-head
       p.modal-card-title
         | クレジット
-    section.modal-card-body
-      | フォント:
-      a(href="https://aramugi.com/?page_id=807" target="_blank") イカモドキ (あらむぎ)
-      br
-      a(href="http://fizzystack.web.fc2.com/paintball-ja.html" target="_blank") Project Paintball (JapanYoshi)
-      br
-      a(href="https://googlefonts.github.io/japanese/" target="_blank") M PLUS Rounded 1c
-      br
-      | おとそざい:
-      |
-      a(href="https://otologic.jp" target="_blank") OtoLogic
-      br
-      | がぞう:
-      |
-      a(href="https://twitter.com/splatoonjp" target="_blank") スプラトゥーンこうしきツイッター
+    section.modal-card-body.is-size-7
+      table.table.is-fullwidth
+        tbody
+          tr
+            th フォント
+            td
+              a(href="https://aramugi.com/?page_id=807" target="_blank") イカモドキ (あらむぎ)
+              br
+              a(href="http://fizzystack.web.fc2.com/paintball-ja.html" target="_blank") Project Paintball (JapanYoshi)
+              br
+              a(href="https://googlefonts.github.io/japanese/" target="_blank") M PLUS Rounded 1c
+          tr
+            th おとそざい
+            td
+              a(href="https://otologic.jp" target="_blank") OtoLogic
+          tr
+            th がぞう
+            td
+              a(href="https://twitter.com/splatoonjp" target="_blank") スプラトゥーンこうしきツイッター
     template(v-if="true")
       footer.modal-card-foot
-        button.button.is-primary.spla_basic_font(@click.prevent="credit_modal_p = false") とじる
+        .has-text-right
+          button.button.is-primary.spla_basic_font(@click.prevent="credit_modal_p = false") とじる
 
   link(href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet")
 </template>
@@ -589,10 +594,10 @@ html
         &:hover
           cursor: pointer
           border-radius: 1em
-          background: hsla(331, 100%, 0%, 0.075)
+          background: hsla(331, 100%, 0%, 0.1)
       &.selected
         border-radius: 1em
-        background: hsla(331, 100%, 0%, 0.075)
+        background: hsla(331, 100%, 0%, 0.2)
       &.o_item
         padding-left: 0.25em
         font-size: 180%
@@ -628,8 +633,11 @@ html
       &.active
         transition: all 0.1s 0s linear
 
-    .box
-      text-align: left
+    // .box
+    //   text-align: left
+
+    .modal-card-foot
+      justify-content: flex-end
 
     .tweet_button
       margin-top: 1em
@@ -639,7 +647,7 @@ html
       left: 0%
       right: 0%
       bottom: 0%
-      height: 5%
+      height: 3.2%
       margin: auto
 
 // モバイルのとき選択した部分が次の問題になっても残ってしまう対策
