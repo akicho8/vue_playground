@@ -72,7 +72,7 @@ Vue.mixin({
       if (typeof title === 'function') {
         title = title.call(this)
       }
-      if (this.current_layout === "simple") {
+      if (this.current_layout === "nothing") {
         document.title = title
       } else {
         document.title = `${title} - Vue Playground`

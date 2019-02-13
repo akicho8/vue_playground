@@ -46,11 +46,64 @@
             template(v-for="item in sample_images")
               img(:src="item" :key="item")
 
+  .columns
+    .column.is-one-quarter
+      .title.is-5 transition-group で add / remove
+      .buttons
+        a.button(@click="add") Add
+        a.button(@click="remove") Remove
+    .column
+      .example.is-size-7
+        .album_box.type5
+          transition-group(name="my_list" tag="ul")
+            template(v-for="item in items")
+              //- img(:src="item" :key="item")
+              li(:key="item") {{item}}
+
+  .columns
+    .column.is-one-quarter
+      .title.is-5 transition-group で add / remove 画像適用
+      .buttons
+        a.button(@click="sample_images_add") Add
+        a.button(@click="sample_images_remove") Remove
+    .column
+      .example.is-size-7
+        .album_box.type6
+          transition-group(name="my_list" tag="ul")
+            template(v-for="item in sample_images")
+              img(:src="item" :key="item")
+
 </template>
 
 <script>
 export default {
   name: "vue_transition_test",
+
+  data() {
+    return {
+      // for type5
+      items: [1, 2, 3, 4, 5],
+      next_number: 6,
+    }
+  },
+
+  created() {
+    this.img_items = this.sample_images
+  },
+
+  methods: {
+    // for type5
+    random_index() {
+      return Math.floor(Math.random() * this.items.length)
+    },
+    add() {
+      this.items.splice(this.random_index(), 0, this.next_number++)
+    },
+    remove() {
+      this.items.splice(this.random_index(), 1)
+    },
+  },
+
 }
 </script>
 
@@ -117,4 +170,24 @@ $image_height: 64px
         height: $image_height
       .my_list-move
         transition: transform 1s
+
+    &.type5
+      .my_list-item
+        margin-right: 10px
+      .my_list-enter-active, .my_list-leave-active
+        transition: all 1s
+      .my_list-enter, .my_list-leave-to
+        opacity: 0
+        transform: translateX(30px)
+
+    &.type6
+      img
+        height: $image_height
+      .my_list-item
+        margin-right: 10px
+      .my_list-enter-active, .my_list-leave-active
+        transition: all 1s
+      .my_list-enter, .my_list-leave-to
+        opacity: 0
+        transform: translateX(30px)
 </style>

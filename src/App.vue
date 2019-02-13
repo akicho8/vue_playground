@@ -1,6 +1,6 @@
 <template lang="pug">
 #app
-  template(v-if="current_layout !== 'simple'")
+  template(v-if="current_layout !== 'nothing'")
     nav.navbar.is-transparent.is-primary
       .navbar-brand
         router-link.navbar-item(to="/")
@@ -134,10 +134,11 @@
           router-link.navbar-item(:to="{name: 'about'}") About
 
   template(v-if="current_layout === 'basic'")
-    .container.is-fluid
-      router-view
+    .section
+      .container.is-fluid
+        router-view
 
-  template(v-if="current_layout === 'simple'")
+  template(v-if="current_layout === 'nothing'")
     router-view
 
   template(v-if="false")

@@ -15,7 +15,7 @@ export default {
 
   methods: {
     sample_image_index_set_random() {
-      this.sample_image_index = _.random(this.sample_images.length - 1)
+      this.sample_image_index = this.sample_image_random_index_get()
     },
     sample_image_relative_move_to_p(sign) {
       const v = this.sample_image_index + sign
@@ -34,6 +34,23 @@ export default {
     },
     sample_images_shuffle() {
       this.sample_images = this.lodash.shuffle(this.sample_images)
+    },
+
+    sample_image_random_index_get() {
+      return _.random(this.sample_images.length - 1)
+    },
+
+    sample_images_random_get() {
+      return this.sample_images[this.sample_image_random_index_get()]
+    },
+
+    sample_images_add() {
+      const list = Object.values(sample_images_hash)
+      const object = list[_.random(list.length - 1)]
+      this.sample_images.splice(this.sample_image_random_index_get(), 0, object)
+    },
+    sample_images_remove() {
+      this.sample_images.splice(this.sample_image_random_index_get(), 1)
     },
   },
 

@@ -11,21 +11,28 @@
       a.button.is-rounded.start_button(@click.prevent="start_handle") スタート
 
   template(v-if="scene === 'sm_running'")
-    .basic_bar.player_life_bar(:style="{width: `${player_life_bar_rate * 100}%`}")
+    .basic_bar.player_life_bar.active(:style="{width: `${player_life_bar_rate * 100}%`}")
 
     .image_box
       img.sub_image(:src="require(`@/assets/splatoon2_weapon_list/${current_data.master.key}_xlarge.png`)")
       transition(name="effect" appear)
         img.main_image(:src="require(`@/assets/splatoon2_weapon_list/${current_data.master.key}_xlarge.png`)" :key="current_data.master.key")
 
-    .basic_bar.time_limit_bar(:style="{width: `${time_limit_bar_rate * 100}%`}")
+    .basic_bar.time_limit_bar(:style="{visibility: bar_visibility, width: `${time_limit_bar_rate * 100}%`}" :class="{active: count_down >= 1}")
     .box
       ul
-        li.selection(v-for="e in current_data.choice_list" :key="e.key" @click.prevent="answerd_data_set(e)")
-          span.spla_weapon_font
+        template(v-if="scene2 === 'sm2_running'")
+          li.selection.hoverable.sm2_running(v-for="e in current_data.choice_list" :key="e.key" @click.prevent="answerd_data_set(e)")
             template(v-if="NODE_ENV !== 'production' && current_data.master === e")
               | ◎
-            | {{hyphen_replace(e.name)}}
+            span.spla_weapon_font {{hyphen_replace(e.name)}}
+        template(v-else)
+          li.selection.kotaemiru(v-for="e in current_data.choice_list" :key="e.key" :class="{o_item: current_data.master === e, x_item: current_data.master !== e, selected: e === answerd_data}")
+            template(v-if="current_data.master === e")
+              span.item_mark.has-text-danger ◎
+            template(v-if="e === answerd_data && current_data.master !== e")
+              span.item_mark.has-text-info &#x2716;
+            span.spla_weapon_font {{hyphen_replace(e.name)}}
 
   template(v-if="scene === 'sm_life_zero' || scene === 'sm_all_clear'")
     .field.has-text-centered.has-text-white
@@ -44,6 +51,7 @@
     .has-text-white
       ul
         li scene: {{scene}}
+        li scene2: {{scene2}}
         li total_counter: {{total_counter / accuracy}}
         li quiz_list.length: {{quiz_list ? quiz_list.length : ""}}
         li o_count: {{o_count}} {{answer_parcentage}}
@@ -99,7 +107,6 @@ import bgm_mp3 from "@/assets/oto_logic/Loop02.mp3"
 
 export default {
   name: "splatoon2_weapon_quiz",
-  layout: "simple",
   data() {
     return {
       splatoon2_weapon_list,
@@ -128,6 +135,7 @@ export default {
 
       // count_down_bar_class: null,
       scene: "sm_standby",
+      scene2: null,
       credit_modal_p: false,
       sound_list: [],
 
@@ -190,25 +198,30 @@ export default {
 
     interval_handle() {
       if (this.scene === "sm_running") {
+        if (this.scene2 === "sm2_running") {
+        }
         this.total_counter += 1
-
+        this.count_down += 1
         if (this.player_life > 0) {
           this.player_life += this.player_life_add / this.accuracy
           this.player_life_zero_check()
         }
-
-        if (this.scene === "sm_running")
-          if (this.quiz_life > 0) {
-            this.quiz_life -= 1
-            if (this.quiz_life <= 0) {
-              this.count_add("x_count")
+        if (this.scene === "sm_running") {
+          if (this.scene2 === "sm2_running") {
+            if (this.quiz_life > 0) {
+              this.quiz_life -= 1
+              if (this.quiz_life <= 0) {
+                this.count_add("x_count")
+              }
             }
           }
+        }
       }
     },
 
     start_handle() {
       this.scene = "sm_running"
+      this.scene2 = "sm2_running"
 
       this.quiz_list = this.quiz_list_create()
 
@@ -229,6 +242,8 @@ export default {
 
     next_quiz_setup() {
       this.quiz_life = this.quiz_life_max_seconds * this.accuracy
+      this.scene2 = "sm2_running"
+      this.count_down = 0
 
       if (this.$refs.count_down_bar) {
         const parent = this.$refs.count_down_bar.parentElement
@@ -252,23 +267,37 @@ export default {
       this.player_life_zero_check()
 
       this.$data[v] = this.$data[v] + 1
-      this.current_index += 1
 
-      if (!this.current_data) {
-        this.scene = "sm_all_clear"
-        this.sound_stop()
-        this.sound_play({src: all_clear_mp3, autoplay: true, volume: 1.0})
-      }
+      this.scene2 = "kotaemiru"
 
-      if (this.scene === "sm_running") {
-        this.$nextTick(() => {
+      setTimeout(() => {
+        this.current_index += 1
+
+        if (!this.current_data) {
+          this.scene = "sm_all_clear"
+          this.sound_stop()
+          this.sound_play({src: all_clear_mp3, autoplay: true, volume: 1.0})
+        }
+
+        if (this.scene === "sm_running") {
+          // this.$nextTick(() => {
+          //   this.answerd_data = null
+          //   document.activeElement.blur()
+          //   if (this.scene === "sm_running") {
+          //     this.next_quiz_setup()
+          //   }
+          // })
+
           this.answerd_data = null
-          document.activeElement.blur()
-          if (this.scene === "sm_running") {
-            this.next_quiz_setup()
-          }
-        })
-      }
+          //   document.activeElement.blur()
+          // if (this.scene === "sm_running") {
+          this.next_quiz_setup()
+          // }
+          //   }
+        }
+
+      }, 1000 * 0.8)
+
     },
 
     player_life_zero_check() {
@@ -281,10 +310,13 @@ export default {
     },
 
     answerd_data_set(v) {
-      if (this.current_data.master === v) {
-        this.count_add("o_count")
-      } else {
-        this.count_add("x_count")
+      if (this.scene2 === "sm2_running") {
+        this.answerd_data = v
+        if (this.current_data.master === v) {
+          this.count_add("o_count")
+        } else {
+          this.count_add("x_count")
+        }
       }
     },
 
@@ -378,6 +410,21 @@ export default {
   },
 
   computed: {
+    bar_visibility() {
+      if (this.time_limit_bar_rate > 0) {
+        return "visible"
+      } else {
+        return "hidden"
+      }
+      // if (this.scene === "sm_running") {
+      //   if (this.scene2 === "sm2_running") {
+      //     return "visible"
+      //   } else {
+      //     return "hidden"
+      //   }
+      // }
+    },
+
     time_limit_bar_rate() {
       return this.quiz_life / (this.quiz_life_max_seconds * this.accuracy) - 0.02
     },
@@ -388,6 +435,10 @@ export default {
 
     current_data() {
       return this.quiz_list[this.current_index]
+    },
+
+    last_data_p() {
+      return this.current_index === (this.quiz_list.length - 1)
     },
 
     progress_value() {
@@ -472,7 +523,7 @@ html
       left: 0
       right: 0
       bottom: 0
-      animation: scroll1 80s linear infinite
+      animation: scroll1 120s linear infinite
       z-index: -1
 
       @keyframes scroll1
@@ -528,26 +579,39 @@ html
       border-radius: 4px
 
     .selection
+      white-space: nowrap
       color: inherit
       width: 100%
       font-size: 120%
       line-height: 220%
-      cursor: pointer
       padding-left: 1em
-      &:hover
+      &.hoverable
+        &:hover
+          cursor: pointer
+          border-radius: 1em
+          background: hsla(331, 100%, 0%, 0.075)
+      &.selected
         border-radius: 1em
-        background: hsla(331, 100%, 0%, 0.1)
+        background: hsla(331, 100%, 0%, 0.075)
+      &.o_item
+        padding-left: 0.25em
+        font-size: 180%
+      &.x_item
+        // font-size: 100%
+        opacity: 0.5
 
-    @keyframes bar_anime1
-      0%
-        width: 100%
-      100%
-        width: 0%
+      .item_mark
+        margin-right: 2px
+
+    // @keyframes bar_anime1
+    //   0%
+    //     width: 100%
+    //   100%
+    //     width: 0%
 
     .basic_bar
       border: 1px solid white
       background: hsla(0, 50%, 100%, 0.3)
-      transition: all 0.1s 0s linear
       border-radius: 4px
       margin-left: auto
       margin-right: auto
@@ -560,6 +624,9 @@ html
         margin-top: 6px
         margin-bottom: 5px
         height: 6px
+
+      &.active
+        transition: all 0.1s 0s linear
 
     .box
       text-align: left
@@ -579,6 +646,7 @@ html
 .mobile
   .splatoon2_weapon_quiz
     .selection
-      &:hover
-        background: none
+      &.hoverable
+        &:hover
+          background: none
 </style>
