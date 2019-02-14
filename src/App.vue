@@ -6,11 +6,11 @@
         router-link.navbar-item(to="/")
           img(src="@/assets/logo.png" width="32")
           | Vue.js Playground
-        .navbar-burger.burger(data-target="main_navar")
+        .navbar-burger.burger(data-target="main_navbar")
           span
           span
           span
-      #main_navar.navbar-menu
+      #main_navbar.navbar-menu
         .navbar-start
           MenuElement(name="stopwatch")
           MenuElement(name="ruby_code_transpiler")

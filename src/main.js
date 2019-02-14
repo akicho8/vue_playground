@@ -72,11 +72,11 @@ Vue.mixin({
       if (typeof title === 'function') {
         title = title.call(this)
       }
-      if (this.current_layout === "nothing") {
-        document.title = title
-      } else {
-        document.title = `${title} - Vue Playground`
+      if (this.current_layout === "basic") {
+        title = `${title} - Vue.js Playground`
       }
+      document.querySelector("meta[property='og:title']").setAttribute("content", title)
+      document.title = title
     }
   },
 })

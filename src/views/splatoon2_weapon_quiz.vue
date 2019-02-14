@@ -27,7 +27,7 @@
               | ◎
             span.spla_weapon_font {{hyphen_replace(e.name)}}
         template(v-else)
-          li.selection.kotaemiru(v-for="e in current_data.choice_list" :key="e.key" :class="{o_item: current_data.master === e, x_item: current_data.master !== e, selected: e === answerd_data}")
+          li.selection.sm2_answer_open(v-for="e in current_data.choice_list" :key="e.key" :class="{o_item: current_data.master === e, x_item: current_data.master !== e, selected: e === answerd_data}")
             template(v-if="current_data.master === e")
               span.item_mark.has-text-danger ◎
             template(v-if="e === answerd_data && current_data.master !== e")
@@ -273,7 +273,7 @@ export default {
 
       this.$data[v] = this.$data[v] + 1
 
-      this.scene2 = "kotaemiru"
+      this.scene2 = "sm2_answer_open"
 
       setTimeout(() => {
         this.current_index += 1
@@ -598,6 +598,8 @@ html
       &.selected
         border-radius: 1em
         background: hsla(331, 100%, 0%, 0.2)
+      &.sm2_answer_open
+        transition: all 0.15s ease
       &.o_item
         padding-left: 0.25em
         font-size: 180%

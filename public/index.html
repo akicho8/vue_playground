@@ -1,15 +1,35 @@
 <!DOCTYPE html>
 <html lang="ja" class="<%= NODE_ENV %>">
   <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134504422-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-134504422-1');
+    </script>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <link rel="stylesheet" href="//cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7zlJqafBfX426jk42IkZfHZo8b0_sXmA&libraries=drawing,places,geometry,visualization&language=ja"></script>
     <script src="https://cdn.opalrb.com/opal/current/opal.js" onload="Opal.load('opal')"></script>
     <script src="https://cdn.opalrb.com/opal/current/opal-parser.js" onload="Opal.load('opal-parser')"></script>
+
+    <% if (NODE_ENV === 'development') { %>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@example">
+    <meta property="twitter:title" content="My project">
+    <meta property="twitter:description" content="Lorem ipsum dolor sid amet">
+    <meta property="twitter:image:src" content="https://example.com/images/social.jpg">
+    <% } %>
+
+    <meta property="og:title" content="Vue.js Playground">
     <title>Vue.js Playground</title>
   </head>
   <body>
