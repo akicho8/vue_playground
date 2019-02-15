@@ -79,7 +79,7 @@ export default {
       // background-size: 500px 320px
 
       // width: 100%
-      height: 200%
+      height: 200%              // 全画面にするときは 200vh 以上にする(モバイルの場合 % だと画面がスクロールしてしまう)
 
       position: absolute
       top: 0
