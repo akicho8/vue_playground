@@ -68,6 +68,7 @@
           li p or k --- 開始/停止
           li o --- 「○」ボタン
           li x --- 「×」ボタン
+          li z --- 1つ前に戻す
 
       br
       .buttons
@@ -197,6 +198,9 @@ export default {
       }
       if (e.key === "o") {
         this.lap_handle('o')
+      }
+      if (e.key === "z") {
+        this.revert()
       }
       if (e.key === "p" || e.key === "k") {
         this.pause()
