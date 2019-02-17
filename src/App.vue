@@ -41,6 +41,7 @@
               MenuElement(name="responsive_slide_image")
               MenuElement(name="css_browser_selector_test")
               MenuElement(name="bg_window_test")
+              MenuElement(name="css_image_sway_test")
 
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link Google API
