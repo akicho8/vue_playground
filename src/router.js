@@ -33,7 +33,7 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
 
-    { meta: { title: "画像を揺らす",        }, path: '/css_image_sway_test',                name: 'css_image_sway_test',                component: () => import(/* webpackChunkName: "css_image_sway_test" */ './views/css_image_sway_test.vue'),                       },
+    { meta: { title: "CSS 枠の中で画像を揺らす",        }, path: '/css_image_swing',                name: 'css_image_swing',                component: () => import(/* webpackChunkName: "css_image_swing" */ './views/css_image_swing.vue'),                       },
     { meta: { title: "背景スクロールのモバイル検証", layout: "nothing", }, path: '/bg_window_test',                name: 'bg_window_test',                component: () => import(/* webpackChunkName: "bg_window_test" */ './views/bg_window_test.vue'),                       },
     { meta: { title: "ブラウザ情報をcssのクラスに変換して付与",        }, path: '/css_browser_selector_test',                name: 'css_browser_selector_test',                component: () => import(/* webpackChunkName: "css_browser_selector_test" */ './views/css_browser_selector_test.vue'),                       },
     { meta: { title: "transitonで切り替える画像のレスポンシブ対応",    }, path: '/responsive_slide_image',                name: 'responsive_slide_image',                component: () => import(/* webpackChunkName: "responsive_slide_image" */ './views/responsive_slide_image.vue'),                       },
