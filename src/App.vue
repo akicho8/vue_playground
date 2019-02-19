@@ -28,6 +28,7 @@
               MenuElement(name="css_transform")
               MenuElement(name="css_truncate")
               MenuElement(name="css_font_test")
+              MenuElement(name="vue_transition_test")
 
               hr.navbar-divider
               MenuElement(name="arrow_cursor_navigation")
@@ -36,8 +37,7 @@
               MenuElement(name="color_scheme")
               MenuElement(name="css_pattern_test")
               MenuElement(name="css_animation_restart")
-              MenuElement(name="css_pattern_test2")
-              MenuElement(name="vue_transition_test")
+              MenuElement(name="css_image_with_text_pattern")
               MenuElement(name="responsive_slide_image")
               MenuElement(name="css_browser_selector_test")
               MenuElement(name="bg_window_test")

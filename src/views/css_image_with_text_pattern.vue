@@ -1,5 +1,5 @@
 <template lang="pug">
-.css_pattern_test2
+.css_image_with_text_pattern
   h2.title {{current_title}}
   hr
 
@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: "css_pattern_test2",
+  name: "css_image_with_text_pattern",
 }
 </script>
 
