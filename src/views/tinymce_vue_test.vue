@@ -24,7 +24,11 @@
 // ▼ tinymce
 require("tinymce/tinymce.min.js") // window.tinymce に設定される
 
-tinymce.EditorManager.baseURL = "/tinymce"
+if (NODE_ENV === 'production') {
+  tinymce.EditorManager.baseURL = "/vp/tinymce"
+} else {
+  tinymce.EditorManager.baseURL = "/tinymce"
+}
 require('tinymce/themes/modern/theme') // これがないとまともに表示されない
 
 // plugins に指定する場合、あらかじめロードしておく必要がある(面倒)
