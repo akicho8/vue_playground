@@ -24,7 +24,7 @@
 // ▼ tinymce
 require("tinymce/tinymce.min.js") // window.tinymce に設定される
 
-if (NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   tinymce.EditorManager.baseURL = "/vp/tinymce"
 } else {
   tinymce.EditorManager.baseURL = "/tinymce"
