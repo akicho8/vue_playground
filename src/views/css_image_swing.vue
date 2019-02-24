@@ -36,8 +36,9 @@ export default {
 <style scoped lang="sass">
 @import "../assets/scss/variables"
 
-$swing_level: 10px              // 縦横の移動幅
-$swing_rotate: 1deg             // Z軸の回転幅
+$swing_level_x: 20px            // 横の移動幅
+$swing_level_y:  5px            // 縦の移動幅
+$swing_rotate:  5deg            // Z軸の回転幅
 $swing_zoom: 1.15               // 画像の拡大率
 
 img
@@ -64,19 +65,20 @@ img
       transform: scale($swing_zoom)
 
   &.case3
+    border: none
     overflow: hidden
 
 @keyframes kf_translate_x
   0%
-    transform: translateX(-$swing_level)
+    transform: translateX(-$swing_level_x)
   100%
-    transform: translateX($swing_level)
+    transform: translateX($swing_level_x)
 
 @keyframes kf_translate_y
   0%
-    transform: translateY(-$swing_level)
+    transform: translateY(-$swing_level_y)
   100%
-    transform: translateY($swing_level)
+    transform: translateY($swing_level_y)
 
 @keyframes kf_rotate_z
   0%
