@@ -29,6 +29,7 @@
               MenuElement(name="css_truncate")
               MenuElement(name="css_font_test")
               MenuElement(name="vue_transition_test")
+              MenuElement(name="css_vertical_align")
 
               hr.navbar-divider
               MenuElement(name="arrow_cursor_navigation")
