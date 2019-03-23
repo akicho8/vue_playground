@@ -66,6 +66,8 @@
             span.navbar-link その他
             .navbar-dropdown.is-boxed
               MenuElement(name="vue_inline_render_component_test")
+              MenuElement(name="vue_slot_test")
+              hr.navbar-divider
               MenuElement(name="create_object_url_test")
               MenuElement(name="fabric_basic_test")
               MenuElement(name="fabric_export_test")

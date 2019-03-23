@@ -33,11 +33,14 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
 
+    // Vue.js
+    { meta: { title: "Vueの即席コンポでrenderする例",                  }, path: '/vue_inline_render_component_test',                name: 'vue_inline_render_component_test',                component: () => import(/* webpackChunkName: "vue_inline_render_component_test" */ './views/vue_inline_render_component_test.vue'),                       },
+    { meta: { title: "Vue.js Slot 使用例",                             }, path: '/vue_slot_test',                name: 'vue_slot_test',                component: () => import(/* webpackChunkName: "vue_slot_test" */ './views/vue_slot_test.vue'),                       },
+
     { meta: { title: "画像を枠の中で揺らす",        }, path: '/css_image_swing',                name: 'css_image_swing',                component: () => import(/* webpackChunkName: "css_image_swing" */ './views/css_image_swing.vue'),                       },
     { meta: { title: "背景スクロールのモバイル検証", layout: "nothing", }, path: '/bg_window_test',                name: 'bg_window_test',                component: () => import(/* webpackChunkName: "bg_window_test" */ './views/bg_window_test.vue'),                       },
     { meta: { title: "ブラウザ情報をcssのクラスとして付与",        }, path: '/css_browser_selector_test',                name: 'css_browser_selector_test',                component: () => import(/* webpackChunkName: "css_browser_selector_test" */ './views/css_browser_selector_test.vue'),                       },
     { meta: { title: "transitonで切り替える画像のレスポンシブ対応",    }, path: '/responsive_slide_image',                name: 'responsive_slide_image',                component: () => import(/* webpackChunkName: "responsive_slide_image" */ './views/responsive_slide_image.vue'),                       },
-    { meta: { title: "Vueの即席コンポでrenderする例",                  }, path: '/vue_inline_render_component_test',                name: 'vue_inline_render_component_test',                component: () => import(/* webpackChunkName: "vue_inline_render_component_test" */ './views/vue_inline_render_component_test.vue'),                       },
     { meta: { title: "画像の右にテキストを配置する例"                  }, path: '/css_image_with_text_pattern',           name: 'css_image_with_text_pattern',           component: () => import(/* webpackChunkName: "css_image_with_text_pattern" */ './views/css_image_with_text_pattern.vue'),                       },
     { meta: { title: "吹き出し"                                        }, path: '/css_balloon_sample',          name: 'css_balloon_sample',          component: () => import(/* webpackChunkName: "css_balloon_sample" */ './views/css_balloon_sample.vue'),                     },
 
