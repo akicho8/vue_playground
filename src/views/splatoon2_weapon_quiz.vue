@@ -85,6 +85,10 @@
             th がぞう
             td
               a(href="https://twitter.com/splatoonjp" target="_blank") スプラトゥーンこうしきツイッター
+          tr
+            th プログラム
+            td
+              a(href="https://twitter.com/splawarabimochi" target="_blank") @splawarabimochi
     template(v-if="true")
       footer.modal-card-foot
         .has-text-right
