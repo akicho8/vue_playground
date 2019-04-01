@@ -40,12 +40,31 @@ set :keep_releases, 1
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
 
-desc 'npm run build'
-after 'deploy:updated', :build do
-  on roles(:all) do
-    within release_path do
-      execute :yarn
-      execute :yarn, 'run', 'build'
+if ENV["RUN_REMOTE"]
+  desc 'npm run build'
+  after 'deploy:updated', :build do
+    on roles(:all) do
+      within release_path do
+        execute :yarn
+        execute :yarn, 'run', 'build'
+      end
+    end
+  end
+else
+  desc "ローカルで npm run build してデプロイ先にコピーする"
+  after "deploy:updated", :local_build_and_copy_to_remote do
+    run_locally do
+      tmpdir = "/tmp/__repository_#{fetch(:application)}_#{fetch(:stage)}"
+      system "rm -fr #{tmpdir}"
+      system "git clone #{fetch(:repo_url)} --branch #{fetch(:branch)} #{tmpdir}"
+      within tmpdir do
+        system "yarn"
+        system "NODE_ENV=production yarn run build" # execute で実行すると最後にフリーズするため全部 system でやっている
+        roles(:web).each do |e|
+          system "rsync -au --delete -e ssh dist #{e.user}@#{e.hostname}:#{release_path}"
+        end
+      end
+      system "rm -fr #{tmpdir}"
     end
   end
 end
