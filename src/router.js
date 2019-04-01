@@ -34,6 +34,7 @@ export default new Router({
     },
 
     // Vue.js
+    { meta: { title: "リアクティブテスト",                           }, path: '/reactive_test',                name: 'reactive_test',                component: () => import(/* webpackChunkName: "reactive_test" */ './views/reactive_test.vue'),                       },
     { meta: { title: "Vueの即席コンポでrenderする例",                  }, path: '/vue_inline_render_component_test',                name: 'vue_inline_render_component_test',                component: () => import(/* webpackChunkName: "vue_inline_render_component_test" */ './views/vue_inline_render_component_test.vue'),                       },
     { meta: { title: "Vue.js Slot 使用例",                             }, path: '/vue_slot_test',                name: 'vue_slot_test',                component: () => import(/* webpackChunkName: "vue_slot_test" */ './views/vue_slot_test.vue'),                       },
 
