@@ -168,7 +168,7 @@ export default {
       this.quiz_max = this.quiz_max || 50
 
       // this.quiz_max = 3
-      this.quiz_max = this.splatoon2_weapon_list.length
+      // this.quiz_max = this.splatoon2_weapon_list.length
       // this.quiz_life_max_seconds = 10000
       // this.player_life_max = 10000000
     }
