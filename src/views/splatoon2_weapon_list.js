@@ -126,6 +126,19 @@ export default [
   { key: "B125", group: "傘",           sub_group: "スパイガジェット",       name: "スパイガジェットソレーラ",         sub_name: "スプラッシュボム", sp_name: "イカスフィア",               },
   { key: "B126", group: "傘",           sub_group: "キャンピングシェルター", name: "キャンピングシェルターソレーラ",   sub_name: "シールド",         sp_name: "カーリングボムピッチャー",   },
   { key: "B127", group: "傘",           sub_group: "スパイガジェット",       name: "スパイガジェットベッチュー",       sub_name: "トーピード",       sp_name: "インクアーマー",             },
+
+  { key: "B128", group: "シューター",   sub_group: "スパッタリー",           name: "スパッタリークリア",            sub_name: "トーピード",           sp_name: "スーパーチャクチ",       },
+  { key: "B129", group: "傘",           sub_group: "キャンピングシェルター", name: "キャンピングシェルターカーモ",  sub_name: "トラップ",             sp_name: "ウルトラハンコ",         },
+  { key: "B130", group: "チャージャー", sub_group: "スクイックリン",         name: "スクイックリンγ",              sub_name: "キューバンボム",       sp_name: "ジェットパック",         },
+  { key: "B131", group: "ブラシ",       sub_group: "パブロ",                 name: "パーマネント・パブロ",          sub_name: "スプリンクラー",       sp_name: "インクアーマー",         },
+  { key: "B132", group: "バケツ",       sub_group: "バケットスロッシャー",   name: "バケットスロッシャーソーダ",    sub_name: "スプラッシュボム",     sp_name: "クイックボムピッチャー", },
+  { key: "B133", group: "スピナー",     sub_group: "バレルスピナー",         name: "バレルスピナーリミックス",      sub_name: "ポイントセンサー",     sp_name: "ナイスダマ",             },
+  { key: "B134", group: "チャージャー", sub_group: "竹",                     name: "14式竹筒銃・丙",                sub_name: "タンサンボム",         sp_name: "バブルランチャー",       },
+  { key: "B135", group: "ブラスター",   sub_group: "ロングブラスター",       name: "ロングブラスターネクロ",        sub_name: "クイックボム",         sp_name: "マルチミサイル",         },
+  { key: "B136", group: "シューター",   sub_group: "N-ZAP",                  name: "N-ZAP83",                       sub_name: "スプリンクラー",       sp_name: "アメフラシ",             },
+  { key: "B137", group: "シューター",   sub_group: "プロモデラー",           name: "プロモデラーPG",                sub_name: "クイックボム",         sp_name: "ナイスダマ",             },
+  { key: "B138", group: "シューター",   sub_group: "ボールド",               name: "ボールドマーカー7",             sub_name: "スプラッシュボム",     sp_name: "ウルトラハンコ",         },
+  { key: "B139", group: "シューター",   sub_group: "リールガン",             name: "H3リールガンチェリー",          sub_name: "スプラッシュシールド", sp_name: "バブルランチャー",       },
 ]
 
 // .reduce((a, e, i) => ({...a, [e.key]: {code: i, ...e}}), {})
