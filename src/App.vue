@@ -65,6 +65,7 @@
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
             .navbar-dropdown.is-boxed
+              MenuElement(name="shogi_player_test")
               MenuElement(name="reactive_test")
               MenuElement(name="vue_inline_render_component_test")
               MenuElement(name="vue_slot_test")
