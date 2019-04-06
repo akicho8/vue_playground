@@ -37,6 +37,7 @@
     "tiptap-extensions": "^1.7.0",
     "vue": "^2.5.17",
     "vue-carousel": "^0.16.0-rc2",
+    "vue-meta": "^1.6.0",
     "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.0.1",
     "vue-script2": "^2.0.3",
