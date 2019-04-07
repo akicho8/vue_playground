@@ -34,6 +34,15 @@ export default {
   components: {
     form_parts,
   },
+
+  metaInfo: {
+    script: [
+      { src: "https://cdn.opalrb.com/opal/current/opal.js",        onload: "Opal.load('opal') ",       },
+      { src: "https://cdn.opalrb.com/opal/current/opal-parser.js", onload: "Opal.load('opal-parser')", },
+      // { src: 'https://cdn.jsdelivr.net/npm/vue/dist/vue.js', async: true, defer: true },
+    ],
+  },
+
   data() {
     return {
       rb_body: null,
@@ -43,6 +52,7 @@ export default {
       rb_retval: null,
     }
   },
+
   created() {
     console.log(location.hash)
     if (location.hash) {
@@ -55,9 +65,10 @@ p "Hello"
 [:c, :b, :c, :c, :a, :b].group_by(&:itself).transform_values(&:size).to_a`
     }
   },
+
   watch: {
     rb_body() {
-      location.hash = this.rb_body
+      // location.hash = this.rb_body
 
       try {
         this.js_body = Opal.compile(this.rb_body)

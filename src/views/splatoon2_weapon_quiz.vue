@@ -116,6 +116,22 @@ import bgm_mp3 from "@/assets/oto_logic/Loop02.mp3"
 
 export default {
   name: "splatoon2_weapon_quiz",
+
+  metaInfo: {
+    title: 'My Example App', // set a title
+    // titleTemplate: '%s - Yay!', // title is now "My Example App - Yay!"
+    // htmlAttrs: {
+    //   lang: 'ja',
+    //   amp: undefined, // "amp" has no value
+    // }
+
+    link: [
+      { rel: 'stylesheet', href: '/xxxxxxxxxx.css' },
+      // { rel: 'favicon', href: 'favicon.ico' },
+    ],
+
+  },
+
   data() {
     return {
       splatoon2_weapon_list,

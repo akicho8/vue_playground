@@ -75,7 +75,10 @@ Vue.mixin({
       if (this.current_layout === "basic") {
         title = `${title} - Vue.js Playground`
       }
-      document.querySelector("meta[property='og:title']").setAttribute("content", title)
+      const dom = document.querySelector("meta[property='og:title']")
+      if (dom) {
+        dom.setAttribute("content", title)
+      }
       document.title = title
     }
   },
