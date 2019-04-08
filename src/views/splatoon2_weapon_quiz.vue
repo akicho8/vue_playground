@@ -118,18 +118,11 @@ export default {
   name: "splatoon2_weapon_quiz",
 
   metaInfo: {
-    title: 'My Example App', // set a title
-    // titleTemplate: '%s - Yay!', // title is now "My Example App - Yay!"
-    // htmlAttrs: {
-    //   lang: 'ja',
-    //   amp: undefined, // "amp" has no value
-    // }
-
+    title: 'ブキクイズ',
     link: [
-      { rel: 'stylesheet', href: '/xxxxxxxxxx.css' },
-      // { rel: 'favicon', href: 'favicon.ico' },
+      { vmid: "apple-touch-icon", rel: "apple-touch-icon", href: require("@/assets/splatoon2_weapon_quiz.png"), },
+      { vmid: "favicon",          rel: "icon",             href: require("@/assets/splatoon2_weapon_quiz.png"), },
     ],
-
   },
 
   data() {
@@ -172,6 +165,7 @@ export default {
   },
 
   created() {
+    console.debug(this.$meta())
 
     // this.bg_window_create()
 

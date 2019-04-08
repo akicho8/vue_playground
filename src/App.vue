@@ -162,6 +162,18 @@ export default {
   components: {
     MenuElement,
   },
+  metaInfo: {
+    link: [
+      { vmid: "favicon", rel: "icon", href: process.env.BASE_URL + "favicon.ico", },
+    ],
+
+    // title: 'Vue.js Playground', // set a title
+    // titleTemplate: '%s - Yay!', // title is now "My Example App - Yay!"
+    // htmlAttrs: {
+    //   lang: 'ja',
+    //   amp: undefined // "amp" has no value
+    // }
+  }
 }
 </script>
 

@@ -37,8 +37,8 @@ export default {
 
   metaInfo: {
     script: [
-      { src: "https://cdn.opalrb.com/opal/current/opal.js",        onload: "Opal.load('opal') ",       },
-      { src: "https://cdn.opalrb.com/opal/current/opal-parser.js", onload: "Opal.load('opal-parser')", },
+      { src: "https://cdn.opalrb.com/opal/current/opal.js",        onload: "Opal.load('opal') ",       defer: true, },
+      { src: "https://cdn.opalrb.com/opal/current/opal-parser.js", onload: "Opal.load('opal-parser')", defer: true, },
       // { src: 'https://cdn.jsdelivr.net/npm/vue/dist/vue.js', async: true, defer: true },
     ],
   },
@@ -53,22 +53,27 @@ export default {
     }
   },
 
-  created() {
-    console.log(location.hash)
-    if (location.hash) {
-      let s = location.hash
-      s = s.replace(/^#/, "")
-      this.rb_body = decodeURIComponent(s)
-    } else {
-      this.rb_body = `p Time.now
+  mounted() {
+    // ここらへんよくわかってない
+    // opal を読み込んだタイミング(onload？)で実行したいけど同期する方法がよくわからない
+    // 根本的な解決になってないけど 0.5 秒後に実行している
+    setTimeout(() => {
+      console.log(location.hash)
+      if (location.hash) {
+        let s = location.hash
+        s = s.replace(/^#/, "")
+        this.rb_body = decodeURIComponent(s)
+      } else {
+        this.rb_body = `p Time.now
 p "Hello"
 [:c, :b, :c, :c, :a, :b].group_by(&:itself).transform_values(&:size).to_a`
-    }
+      }
+    }, 1000 * 0.5)
   },
 
   watch: {
     rb_body() {
-      // location.hash = this.rb_body
+      location.hash = this.rb_body
 
       try {
         this.js_body = Opal.compile(this.rb_body)
