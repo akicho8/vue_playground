@@ -26,13 +26,15 @@
     <meta property="twitter:image:src" content="https://example.com/images/social.jpg">
     <% } %>
 
-    <meta name="twitter:card" content="summary" data-vue-meta="true">
-    <meta name="twitter:site" content="@splawarabimochi" data-vue-meta="true">
-    <meta name="twitter:creator" content="@splawarabimochi" data-vue-meta="true">
-    <meta property="og:url" content="http://tk2-221-20341.vs.sakura.ne.jp/vp/splatoon2_weapon_quiz" data-vue-meta="true">
-    <meta property="og:title" content="スプラトゥーン2ブキクイズ" data-vue-meta="true">
-    <meta property="og:description" content="スプラトゥーン2のブキ画像を見て名前を当てるだけのクイズアプリです" data-vue-meta="true">
-    <meta property="og:image" content="http://tk2-221-20341.vs.sakura.ne.jp/vp/img/splatoon2_weapon_quiz_large.1251303b.png" data-vue-meta="true">
+    <% if (NODE_ENV === 'development' && false) { %>
+      <meta name="twitter:card" content="summary_large_image" data-vue-meta="true">
+      <meta name="twitter:site" content="@splawarabimochi" data-vue-meta="true">
+      <meta name="twitter:creator" content="@splawarabimochi" data-vue-meta="true">
+      <meta property="og:url" content="http://tk2-221-20341.vs.sakura.ne.jp/vp/splatoon2_weapon_quiz" data-vue-meta="true">
+      <meta property="og:title" content="スプラトゥーン2ブキクイズ" data-vue-meta="true">
+      <meta property="og:description" content="スプラトゥーン2のブキ画像を見て名前を当てるだけのクイズアプリです" data-vue-meta="true">
+      <meta property="og:image" content="http://tk2-221-20341.vs.sakura.ne.jp/vp/img/splatoon2_weapon_quiz_large.1251303b.png" data-vue-meta="true">
+    <% } %>
 
     <title>Vue.js Playground</title>
 
