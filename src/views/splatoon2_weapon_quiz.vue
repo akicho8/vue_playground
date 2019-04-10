@@ -130,7 +130,7 @@ export default {
       { property: "og:url",         content: location.href, },
       { property: "og:title",       content: "スプラトゥーン2ブキクイズ", },
       { property: "og:description", content: "スプラトゥーン2のブキ画像を見て名前を当てるだけのクイズアプリです", },
-      { property: "og:image",       content: require("@/assets/splatoon2_weapon_quiz_large.png"), },
+      { property: "og:image",       content: location.origin + require("@/assets/splatoon2_weapon_quiz_large.png"), },
     ],
   },
 
@@ -174,7 +174,7 @@ export default {
   },
 
   created() {
-    console.debug(this.$meta())
+    // console.debug(this.$meta())
 
     // this.bg_window_create()
 

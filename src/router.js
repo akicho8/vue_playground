@@ -18,8 +18,8 @@ export default new Router({
     // },
     {
       path: '/',
-      meta: { title: "CSS Filter", },
-      component: () => import(/* webpackChunkName: "css_filter" */ './views/css_filter.vue')
+      meta: { title: "ストップウォッチ", },
+      component: () => import(/* webpackChunkName: "css_filter" */ './views/stopwatch.vue')
     },
     {
       path: '/home',

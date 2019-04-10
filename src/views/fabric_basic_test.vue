@@ -1,5 +1,4 @@
 <template lang="pug">
-.fabric_basic_test
   h2.title {{current_title}}
   hr
   canvas(ref="my_canvas" width="320" height="240")
@@ -20,8 +19,9 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
+<style lang="sass">
 @import "../assets/scss/variables"
-canvas
-  border: 1px dashed $primary
+.fabric_basic_test
+  canvas
+    border: 1px dashed $primary
 </style>
