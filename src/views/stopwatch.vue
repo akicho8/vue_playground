@@ -112,6 +112,15 @@
     .column
       article.message.is-primary.is-size-7.compact
         .message-body
+          template(v-for="(row, i) in rows")
+            div
+              | {{quest_name(row)}}
+              | {{time_format(row.lap_counter)}}
+              | {{o_or_x_to_s(row, "", "×")}}
+
+    .column
+      article.message.is-primary.is-size-7.compact
+        .message-body
           template(v-for="(rows, key) in o_group_by_min")
             div.has-text-weight-bold
               | {{human_minute(key, rows)}}
@@ -137,7 +146,7 @@
         .message-body
           template(v-for="(row, i) in rows")
             div
-              | {{o_or_x_to_s(row)}}
+              | {{o_or_x_to_s(row, "○", "×")}}
               | {{quest_name(row)}}
               | -
               | {{time_format(row.lap_counter)}}
@@ -370,13 +379,13 @@ export default {
       // return `${s} - ${rows.length}`
     },
 
-    o_or_x_to_s(row) {
+    o_or_x_to_s(row, o, x) {
       let s = null
       if (this.book_mode === 'with_ox') {
         if (row.o_or_x === 'o') {
-          s = "○"
+          s = o
         } else {
-          s = "×"
+          s = x
         }
       }
       return s
