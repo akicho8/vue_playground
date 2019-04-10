@@ -2,7 +2,7 @@
 .splatoon2_weapon_quiz.spla_basic_font.is-unselectable
   .bg_window
   template(v-if="scene === 'sm_standby' || scene === 'sm_life_zero' || scene === 'sm_all_clear'")
-    .is-5.field.title.has-text-centered.has-text-white
+    .field.title.has-text-centered.has-text-white
       div スプラトゥーン2
       div ブキめいクイズ
 
@@ -118,10 +118,19 @@ export default {
   name: "splatoon2_weapon_quiz",
 
   metaInfo: {
-    title: 'ブキクイズ',
+    title: "ブキクイズ",
     link: [
       { vmid: "apple-touch-icon", rel: "apple-touch-icon", href: require("@/assets/splatoon2_weapon_quiz.png"), },
       { vmid: "favicon",          rel: "icon",             href: require("@/assets/splatoon2_weapon_quiz.png"), },
+    ],
+
+    meta: [
+      { name: "twitter:card",       content: "summary_large_image", },
+      { name: "twitter:site",       content: "@splawarabimochi", },
+      { property: "og:url",         content: location.href, },
+      { property: "og:title",       content: "スプラトゥーン2ブキクイズ", },
+      { property: "og:description", content: "スプラトゥーン2のブキ画像を見て名前を当てるだけのクイズアプリです", },
+      { property: "og:image",       content: require("@/assets/splatoon2_weapon_quiz_large.png"), },
     ],
   },
 
@@ -172,10 +181,10 @@ export default {
     this.user_scalable_none()
 
     this.quiz_max = this.$route.query.quiz_max
-    if (this.NODE_ENV === 'production') {
+    if (this.NODE_ENV === "production") {
       this.quiz_max = this.quiz_max || this.splatoon2_weapon_list.length
     } else {
-      this.quiz_max = this.quiz_max || 50
+      this.quiz_max = this.quiz_max || 3
 
       // this.quiz_max = 3
       // this.quiz_max = this.splatoon2_weapon_list.length
@@ -553,9 +562,12 @@ html
 
     .title
       margin-top: 1em
-      color: transparent ! important
+      color: hsla(0, 0%, 100%, 0.2) ! important
       font-size: 2.5em
       -webkit-text-stroke: 1px hsla(0, 50%, 100%, 1.0)
+
+      @media screen and (min-width: $desktop)
+        font-size: 6em
 
     .image_box
       position: relative
@@ -589,8 +601,8 @@ html
         opacity: 0
 
     .start_button
-      margin-top: 2em
-      margin-bottom: 2em
+      margin-top: 2.5em
+      margin-bottom: 2.5em
 
     progress, meter
       margin: 5px 0

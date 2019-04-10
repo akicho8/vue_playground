@@ -67,6 +67,10 @@ Vue.mixin({
   },
 
   mounted() {
+    if (this.$route.meta.title_set_skip) {
+      return
+    }
+
     let title = this.current_title
     if (title) {
       if (typeof title === 'function') {
@@ -79,6 +83,7 @@ Vue.mixin({
       if (dom) {
         dom.setAttribute("content", title)
       }
+
       document.title = title
     }
   },
