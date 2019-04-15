@@ -31,7 +31,7 @@
     "prismjs": "^1.15.0",
     "register-service-worker": "^1.0.0",
     "sass": "^1.15.3",
-    "shogi-player": "^0.0.104",
+    "shogi-player": "^0.0.109",
     "tinymce": "^4.9.2",
     "tinymce-i18n": "^18.12.25",
     "tiptap": "^1.7.0",
