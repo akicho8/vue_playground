@@ -18,7 +18,7 @@
           template(v-if="mode === 'standby'")
             button.button.is-primary(@click="start_run") 開始
           template(v-else)
-            button.button.is-danger(@click="stop_run") REC
+            button.button.is-danger(@click="stop_run") 停止
 
           template(v-if="mode === 'playing'")
             template(v-if="book_mode === 'time_only'")
@@ -31,16 +31,18 @@
             template(v-if="total_seconds2 >= 1")
               button.button(@click="reset_handle" key="reset_key") リセット
 
-      template(v-if="quest_list.length === 0")
+      template(v-if="quest_list.length === 0 || true")
         .field
           label.label 開始番号
           .control
             input.input(type="number" v-model.number="current_track")
+            a.is-link.is-size-7(@click.prevent="current_track = 1") 1に設定
 
       .field
         //- label.label 番号置換
         .control
           textarea.textarea(v-model.trim="quest_list_str" rows="1" placeholder="スペース区切りで記述すると番号を置き換える")
+          a.is-link.is-size-7(@click.prevent="quest_list_str = ''") クリア
 
       .field
         label.label モード
@@ -52,13 +54,10 @@
             input(type="radio" v-model="book_mode" value="with_ox")
             | 正誤
 
-      .field
-        canvas(ref="my_canvas")
-
       br
       .buttons
-        a.button.is-small(@click.prevent="revert" :disabled="rows.length === 0") 1つ前に戻す
-        a.button.is-small(@click.prevent="rap_reset") 直近ラップのみリセット
+        a.button.is-small(@click.prevent="revert" :disabled="rows.length === 0") 1つ前に戻す(z)
+        a.button.is-small(@click.prevent="rap_reset") 直近ラップのみリセット(r)
         a.button.is-small(@click.prevent="permalink_to_url") パーマリンクをURLに反映
         a.button.is-small(@click.prevent="matigai_set") 不正解だけ再テスト
 
@@ -151,6 +150,10 @@
               | -
               | {{time_format(row.lap_counter)}}
 
+  .columns
+    .column
+      canvas(ref="my_canvas")
+
   template(v-if="NODE_ENV !== 'production'")
     hr
     | {{new_record}}
@@ -211,6 +214,9 @@ export default {
       if (e.key === "z") {
         this.revert()
       }
+      if (e.key === "r") {
+        this.rap_reset()
+      }
       if (e.key === "p" || e.key === "k") {
         this.pause()
       }
@@ -259,7 +265,13 @@ export default {
     },
 
     time_format(seconds) {
-      return dayjs().startOf("year").set("seconds", seconds).format("m:ss")
+      let format = null
+      if ((seconds / 60) >= 60) {
+        format = "h:m:ss"
+      } else {
+        format = "m:ss"
+      }
+      return dayjs().startOf("year").set("seconds", seconds).format(format)
     },
 
     ja_time_format(seconds) {
