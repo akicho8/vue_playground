@@ -19,7 +19,7 @@ export default new Router({
     {
       path: '/',
       meta: { title: "CSS Filter", },
-      component: () => import(/* webpackChunkName: "css_filter" */ './viewsccss_filter.vue')
+      component: () => import(/* webpackChunkName: "css_filter" */ './views/css_filter.vue')
     },
     {
       path: '/home',
@@ -93,7 +93,7 @@ export default new Router({
     { meta: { title: "Markdown変換 (marked)"                           }, path: '/marked_test',                 name: 'marked_test',                 component: () => import(/* webpackChunkName: "marked_test" */ './views/marked_test.vue'),                                   },
     { meta: { title: "圧縮復元 (lzma)"                                 }, path: '/lzma_package_test',           name: 'lzma_package_test',           component: () => import(/* webpackChunkName: "lzma_package_test" */ './views/lzma_package_test.vue'),                       },
     { meta: { title: "コードフォーマット (prism)"                      }, path: '/prism_test',                  name: 'prism_test',                  component: () => import(/* webpackChunkName: "prism_test" */ './views/prism_test.vue'),                                     },
-    { meta: { title: "単一アップロードファイルプレビュー (FileReader)" }, path: '/uploaed_files_preview',       name: 'uploaed_files_preview',       component: () => import(/* webpackChunkName: "uploaed_files_preview" */ './views/uploaed_files_preview.vue'),               },
+    { meta: { title: "複数アップロードファイルプレビュー (FileReader)" }, path: '/uploaed_files_preview',       name: 'uploaed_files_preview',       component: () => import(/* webpackChunkName: "uploaed_files_preview" */ './views/uploaed_files_preview.vue'),               },
     { meta: { title: "単一アップロードファイルプレビュー (FileReader)" }, path: '/uploaed_file_preview',        name: 'uploaed_file_preview',        component: () => import(/* webpackChunkName: "uploaed_file_preview" */ './views/uploaed_file_preview.vue'),                 },
     { meta: { title: "テキストエリア縦幅自動調整"                      }, path: '/textarea_test',               name: 'textarea_test',               component: () => import(/* webpackChunkName: "textarea_test" */ './views/textarea_test.vue'),                               },
     { meta: { title: "JavaScript コンソール (ES2015変換)"              }, path: '/babel_transform',             name: 'babel_transform',             component: () => import(/* webpackChunkName: "babel_transform" */ './views/babel_transform.vue'),                           },
@@ -101,10 +101,6 @@ export default new Router({
     { meta: { title: "グラフ描画 (chart.js)"                           }, path: '/chartjs_test',                name: 'chartjs_test',                component: () => import(/* webpackChunkName: "chartjs_test" */ './views/chartjs_test.vue'),                                 },
     { meta: { title: "Howlerを使ったサウンド再生テスト"                }, path: '/howler_simple_test',          name: 'howler_simple_test',          component: () => import(/* webpackChunkName: "howler_simple_test" */ './views/howler_simple_test.vue'),                     },
     { meta: { title: "各種フォーマットのサウンド再生テスト (Howler)"   }, path: '/howler_play_format_test',     name: 'howler_play_format_test',     component: () => import(/* webpackChunkName: "howler_play_format_test" */ './views/howler_play_format_test.vue'),           },
-    { meta: { title: "スプラトゥーン2ブキめいクイズ", layout: "nothing", title_set_skip: true   }, path: '/splatoon2_weapon_quiz',       name: 'splatoon2_weapon_quiz',       component: () => import(/* webpackChunkName: "splatoon2_weapon_quiz" */ './views/splatoon2_weapon_quiz.vue'),               },
-    { meta: { title: "スプラトゥーン2ブキめいクイズ2"                      }, path: '/splatoon2_weapon_quiz2',       name: 'splatoon2_weapon_quiz2',       component: () => import(/* webpackChunkName: "splatoon2_weapon_quiz2" */ './views/splatoon2_weapon_quiz2.vue'),               },
-    { meta: { title: "スプラトゥーン2ブキめいクイズ3"                      }, path: '/splatoon2_weapon_quiz3',       name: 'splatoon2_weapon_quiz3',       component: () => import(/* webpackChunkName: "splatoon2_weapon_quiz3" */ './views/splatoon2_weapon_quiz3.vue'),               },
-    { meta: { title: "JplistTest"                                      }, path: '/jplist_test',                 name: 'jplist_test',                 component: () => import(/* webpackChunkName: "jplist_test" */ './views/jplist_test.vue'),                                   },
     { meta: { title: "クリップボードへのコピー"                        }, path: '/clipboard_copy_test',         name: 'clipboard_copy_test',         component: () => import(/* webpackChunkName: "clipboard_copy_test" */ './views/clipboard_copy_test.vue'),                   },
     { meta: { title: "SassTest"                                        }, path: '/sass_test',                   name: 'sass_test',                   component: () => import(/* webpackChunkName: "sass_test" */ './views/sass_test.vue'),                                       },
     { meta: { title: "TiptapTest"                                      }, path: '/tiptap_test',                 name: 'tiptap_test',                 component: () => import(/* webpackChunkName: "tiptap_test" */ './views/tiptap_test.vue'),                                   },

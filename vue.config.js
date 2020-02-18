@@ -68,7 +68,6 @@ module.exports = {
         [
           '/',
           '/about',
-          '/splatoon2_weapon_quiz',
         ],
       ),
     ],

@@ -21,8 +21,8 @@ export default {
   metaInfo: {
     title: '(metaInfo.title)',
     link: [
-      { vmid: "apple-touch-icon", rel: "apple-touch-icon", href: require("@/assets/splatoon2_weapon_quiz.png"), },
-      { vmid: "favicon",          rel: "icon",             href: require("@/assets/splatoon2_weapon_quiz.png"), },
+      // { vmid: "apple-touch-icon", rel: "apple-touch-icon", href: require("@/assets/splatoon2_weapon_quiz.png"), },
+      // { vmid: "favicon",          rel: "icon",             href: require("@/assets/splatoon2_weapon_quiz.png"), },
     ],
   },
 
