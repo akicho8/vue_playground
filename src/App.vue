@@ -30,6 +30,7 @@
               MenuElement(name="css_font_test")
               MenuElement(name="vue_transition_test")
               MenuElement(name="css_vertical_align")
+              MenuElement(name="css_icon_with_message")
 
               hr.navbar-divider
               MenuElement(name="arrow_cursor_navigation")
@@ -65,6 +66,8 @@
           .navbar-item.has-dropdown.is-hoverable
             span.navbar-link その他
             .navbar-dropdown.is-boxed
+              MenuElement(name="camera_api_test")
+              MenuElement(name="app_run_test")
               MenuElement(name="vue_meta_test")
               MenuElement(name="shogi_player_test")
               MenuElement(name="reactive_test")

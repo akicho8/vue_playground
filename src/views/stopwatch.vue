@@ -280,9 +280,11 @@ export default {
         if (seconds % 60 > 0) {
           seconds += 60
         }
-        format = "h時間m分"
+        // format = "h時間m分"
+        format = "hh:mm"
       } else {
-        format = "m分s秒"
+        // format = "m分s秒"
+        format = "mm:ss"
       }
       return dayjs().startOf("year").set("seconds", seconds).format(format)
     },
@@ -553,8 +555,12 @@ export default {
       if (this.rows.length >= 1) {
         let v = null
         if (this.avg < 60) {
-          v = Math.floor(this.avg * 100) / 100
+          // v = Math.floor(this.avg * 100) / 100
+          // v = `${v}秒`
+
+          v = Math.ceil(this.avg)
           v = `${v}秒`
+
         } else {
           v = dayjs().startOf("year").set("seconds", this.avg).format("m分s秒")
         }

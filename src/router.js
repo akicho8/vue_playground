@@ -18,8 +18,8 @@ export default new Router({
     // },
     {
       path: '/',
-      meta: { title: "ストップウォッチ", },
-      component: () => import(/* webpackChunkName: "css_filter" */ './views/stopwatch.vue')
+      meta: { title: "カメラ", },
+      component: () => import(/* webpackChunkName: "css_filter" */ './views/camera_api_test.vue')
     },
     {
       path: '/home',
@@ -59,6 +59,7 @@ export default new Router({
     { meta: { title: "CSS text-overflow: ellipsis"                     }, path: '/css_truncate',                name: 'css_truncate',                component: () => import(/* webpackChunkName: "css_truncate" */ './views/css_truncate.vue'),   },
     { meta: { title: "CSS vertical-align",      }, path: '/css_vertical_align',                name: 'css_vertical_align',                component: () => import(/* webpackChunkName: "css_vertical_align" */ './views/css_vertical_align.vue'),                       },
     { meta: { title: "CSS transiton (Vue.js)",     }, path: '/vue_transition_test',                name: 'vue_transition_test',                component: () => import(/* webpackChunkName: "vue_transition_test" */ './views/vue_transition_test.vue'),                       },
+    { meta: { title: "css_icon_with_message",     }, path: '/css_icon_with_message',                name: 'css_icon_with_message',                component: () => import(/* webpackChunkName: "css_icon_with_message" */ './views/css_icon_with_message.vue'),                       },
 
     { meta: { title: "ShogiPlayerの導入方法",                                         }, path: '/shogi_player_test',                name: 'shogi_player_test',                component: () => import(/* webpackChunkName: "shogi_player_test" */ './views/shogi_player_test.vue'),                       },
     { meta: { title: "位置情報取得 (HTML5 Geolocation API)"            }, path: '/html5_geolocation_api',       name: 'html5_geolocation_api',       component: () => import(/* webpackChunkName: "html5_geolocation_api" */ './views/html5_geolocation_api.vue'),               },
@@ -114,5 +115,7 @@ export default new Router({
     { meta: { title: "図形表示 fabric の詳しい使い方",                 }, path: '/fabric_export_test',                name: 'fabric_export_test',                component: () => import(/* webpackChunkName: "fabric_export_test" */ './views/fabric_export_test.vue'),                       },
     { meta: { title: "HTML5 dialog (Chromeしか対応してない)",          }, path: '/html5_dialog_test',                name: 'html5_dialog_test',                component: () => import(/* webpackChunkName: "html5_dialog_test" */ './views/html5_dialog_test.vue'),                       },
     { meta: { title: "データをURL化する createObjectURL のテスト",     }, path: '/create_object_url_test',                name: 'create_object_url_test',                component: () => import(/* webpackChunkName: "create_object_url_test" */ './views/create_object_url_test.vue'),                       },
+    { meta: { title: "ios URLスキーム"                                 }, path: '/app_run_test',            name: 'app_run_test',            component: () => import(/* webpackChunkName: "app_run_test" */ './views/app_run_test.vue'),                         },
+    { meta: { title: "カメラ"                                          }, path: '/camera_api_test',            name: 'camera_api_test',            component: () => import(/* webpackChunkName: "camera_api_test" */ './views/camera_api_test.vue'),                         },
   ]
 })
