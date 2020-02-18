@@ -18,8 +18,8 @@ export default new Router({
     // },
     {
       path: '/',
-      meta: { title: "カメラ", },
-      component: () => import(/* webpackChunkName: "css_filter" */ './views/camera_api_test.vue')
+      meta: { title: "CSS Filter", },
+      component: () => import(/* webpackChunkName: "css_filter" */ './viewsccss_filter.vue')
     },
     {
       path: '/home',
