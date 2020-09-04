@@ -24,7 +24,7 @@
     "jplist-es6": "^1.2.0",
     "lodash": "^4.17.11",
     "lzma": "^2.3.2",
-    "marked": "^0.5.2",
+    "marked": "^0.7.0",
     "mavon-editor": "^2.6.17",
     "object-inspect": "^1.6.0",
     "prerender-spa-plugin": "^3.4.0",
